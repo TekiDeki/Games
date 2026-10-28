@@ -2,7 +2,10 @@
 
 Small browser games, one HTML file each. No account, no ads, no tracking, nothing sent to a server.
 
-**Live:** https://games.freehtml.dev (Cloudflare Pages, auto-deploy from `main`)
+**Live:** https://tekideki.github.io/Games/ (GitHub Pages)
+**Planned canonical:** https://games.freehtml.dev (Cloudflare Pages, waiting on the custom domain)
+
+Shortcut: **https://freehtml.dev/games** (302)
 
 ## Games
 
