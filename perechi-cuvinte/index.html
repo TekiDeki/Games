@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perechi de cuvinte - joc de memorie online, gratuit</title>
+<meta name="description" content="Găsește perechile de cuvinte într-un tabel de cărți întoarse. Joc de memorie gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru variante: română, engleză, sârbă latină, sârbă chirilică.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0f172a">
+<meta property="og:title" content="Perechi de cuvinte - joc de memorie online">
+<meta property="og:description" content="Găsește perechile de cuvinte într-un tabel de cărți întoarse. Gratuit, fără cont, în patru variante.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://games.freehtml.dev/perechi-cuvinte/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='54' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3E%E2%97%A7%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Perechi de cuvinte","url":"https://games.freehtml.dev/perechi-cuvinte/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de memorie cu perechi de cuvinte, gratuit, fara cont, in patru variante de limba."}
+</script>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --back1:#2563eb; --back2:#1e40af;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+    --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    --back1:#2b4b8f; --back2:#16233d;
+  }
+}
+html[data-theme="light"]{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --back1:#2563eb; --back2:#1e40af;
+}
+html[data-theme="dark"]{
+  --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+  --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  --back1:#2b4b8f; --back2:#16233d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:960px; margin:0 auto; padding:18px 16px 48px}
+header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-.01em}
+.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.dot svg{display:block}
+.spacer{flex:1}
+.iconbtn{
+  border:1px solid var(--line); background:var(--panel); color:var(--text);
+  border-radius:10px; padding:8px 10px; cursor:pointer; font-size:15px; line-height:1;
+}
+.iconbtn:hover{border-color:var(--accent)}
+.langs{display:flex; gap:4px; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:3px}
+.langs button{
+  border:0; background:transparent; color:var(--muted); font:inherit; font-size:13px; font-weight:600;
+  padding:6px 9px; border-radius:8px; cursor:pointer;
+}
+.langs button[aria-pressed="true"]{background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  box-shadow:var(--shadow); padding:18px; margin-bottom:16px;
+}
+.topline{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px}
+.chip{
+  font-size:13px; font-weight:600; color:var(--muted); background:var(--panel2);
+  border:1px solid var(--line); border-radius:999px; padding:4px 11px;
+}
+.chip.click{cursor:pointer}
+.chip.click:hover{border-color:var(--accent)}
+.chip b{color:var(--text)}
+.board{
+  display:grid; gap:8px; margin:0 auto 8px; max-width:640px;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.board.p4{max-width:420px}
+.board.p8{max-width:720px}
+.tile{
+  position:relative; aspect-ratio:1/.82; border:0; padding:0; background:transparent;
+  cursor:pointer; perspective:900px; -webkit-tap-highlight-color:transparent;
+}
+.tile:disabled{cursor:default}
+.face{
+  position:absolute; inset:0; border-radius:12px; display:grid; place-items:center;
+  padding:4px; text-align:center; overflow:hidden;
+  transition:transform .32s cubic-bezier(.2,.7,.3,1), opacity .2s;
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  font-weight:700; letter-spacing:.01em; line-height:1.15; word-break:break-word; hyphens:auto;
+}
+.face.back{
+  background:linear-gradient(150deg,var(--back1),var(--back2));
+  color:rgba(255,255,255,.86); font-size:22px; border:1px solid rgba(255,255,255,.16);
+}
+.face.front{
+  background:var(--panel2); color:var(--text); border:1px solid var(--line);
+  transform:rotateY(180deg); box-shadow:var(--shadow);
+}
+.tile.open .face.back{transform:rotateY(-180deg)}
+.tile.open .face.front{transform:rotateY(0)}
+.tile.done .face.front{border-color:var(--good); background:color-mix(in srgb,var(--good) 16%,var(--panel2)); color:var(--good)}
+.tile.done{cursor:default}
+.tile:focus-visible{outline:3px solid var(--accent); outline-offset:3px; border-radius:14px}
+.msg{text-align:center; font-weight:600; min-height:26px; margin:14px 0 8px}
+.msg.win{color:var(--good)}
+.actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px}
+.btn{
+  border:1px solid var(--accent); background:var(--accent); color:#fff;
+  border-radius:11px; padding:11px 18px; font:inherit; font-weight:700; cursor:pointer;
+}
+.btn.ghost{background:transparent; color:var(--text); border-color:var(--line)}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.45; cursor:default; filter:none}
+.stats{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:14px; color:var(--muted); font-size:14px}
+.stats b{color:var(--text); font-size:17px; display:block; text-align:center}
+.stats span{display:block; text-align:center}
+h1{font-size:24px; letter-spacing:-.02em; margin:0 0 8px}
+h2{font-size:18px; margin:22px 0 8px}
+p{margin:0 0 12px; color:var(--muted)}
+p strong{color:var(--text)}
+.note{font-size:13px}
+footer{color:var(--muted); font-size:13px; text-align:center; margin-top:28px; line-height:1.9}
+footer a{color:var(--accent); text-decoration:none; font-weight:600}
+footer a:hover{text-decoration:underline}
+footer .sep{opacity:.5; margin:0 4px}
+@media (max-width:560px){
+  header{gap:8px; margin-bottom:12px}
+  .spacer{display:none}
+  .brand{flex:1 1 auto; min-width:0; font-size:16px}
+  .langs{order:10; width:100%; justify-content:space-between}
+  .langs button{flex:1; padding:6px 7px; font-size:12px}
+  .iconbtn{margin-left:auto}
+  .wrap{padding:12px 10px 32px}
+  .dot{width:26px;height:26px;border-radius:8px;font-size:13px}
+  .card{padding:14px; border-radius:14px}
+  .board{grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px}
+  .board.p8{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .face{border-radius:10px}
+  .face.back{font-size:18px}
+  .chip{font-size:12px; padding:3px 9px}
+  .btn{padding:10px 14px; font-size:15px}
+  .stats{gap:12px; font-size:12px}
+  .stats b{font-size:16px}
+}
+@media (prefers-reduced-motion: reduce){
+  .face{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand"><span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.2" y="3.2" width="9" height="9" rx="2"></rect><rect x="11.8" y="11.8" width="9" height="9" rx="2"></rect></svg></span><span id="brandName">Perechi de cuvinte</span></div>
+  <div class="spacer"></div>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="ro" aria-pressed="true">RO</button>
+    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="sr" aria-pressed="false">SR</button>
+    <button data-lang="src" aria-pressed="false">СР</button>
+  </div>
+  <button class="iconbtn" id="themeBtn" aria-label="Theme">◑</button>
+</header>
+
+<main>
+<div class="card">
+  <div class="topline">
+    <span class="chip click" id="themeChip" title="Next theme">—</span>
+    <span class="chip click" id="sizeChip" title="More pairs">—</span>
+    <span class="spacer"></span>
+    <span class="chip" id="movesChip">0</span>
+    <span class="chip" id="timeChip">0:00</span>
+  </div>
+
+  <div class="board" id="board" role="grid" aria-label="Board"></div>
+
+  <div class="msg" id="msg" aria-live="polite"></div>
+
+  <div class="actions">
+    <button class="btn" id="againBtn">—</button>
+    <button class="btn ghost" id="peekBtn">—</button>
+  </div>
+
+  <div class="stats">
+    <div><b id="stPlayed">0</b><span id="stPlayedL">—</span></div>
+    <div><b id="stWon">0</b><span id="stWonL">—</span></div>
+    <div><b id="stStreak">0</b><span id="stStreakL">—</span></div>
+    <div><b id="stBest">0</b><span id="stBestL">—</span></div>
+  </div>
+</div>
+
+<section class="card" id="about">
+  <h1 id="h1">—</h1>
+  <p id="p1">—</p>
+  <h2 id="h2">—</h2>
+  <p id="p2">—</p>
+  <p class="note" id="p3">—</p>
+</section>
+</main>
+
+<footer>
+  <span id="foot">—</span><br>
+  <span id="supportText">—</span>
+  <a id="supportLink" href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>—</span></a>
+  <span class="sep">·</span>
+  <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">—</a>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- texte pe limbi ---------- */
+var L = {
+  ro:{ name:"Perechi de cuvinte",
+    htmlLang:"ro",
+    title:"Perechi de cuvinte - joc de memorie online, gratuit",
+    desc:"Găsește perechile de cuvinte într-un tabel de cărți întoarse. Joc de memorie gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru variante: română, engleză, sârbă latină, sârbă chirilică.",
+    cats:{animale:"Animale", mancare:"Mâncare", locuri:"Locuri"},
+    pairs:"perechi", moves:"Mutări", time:"Timp",
+    again:"Joc nou", peek:"Arată tot (o mutare)",
+    peekBusy:"Stai puțin.",
+    win:"Gata! Toate perechile găsite în ",
+    winTail:" mutări.",
+    played:"Jucate", won:"Câștigate", streak:"Serie", best:"Record",
+    bestUnit:" mutări",
+    h1:"Perechi de cuvinte - joc de memorie, în patru variante",
+    p1:"Un tabel de cărți întoarse. Fiecare cuvânt apare de două ori: întorci două cărți, iar dacă se potrivesc rămân deschise. Treaba ta e să ții minte unde erau.",
+    h2:"Cum se joacă bine",
+    p2:"Începe cu patru perechi până prinzi ritmul, apoi crește la șase și la opt. Butonul „Arată tot” îți descoperă tabla pentru o clipă și costă o mutare, deci merită doar când ești aproape de final. Totul se joacă pe un singur ecran, fără instalare și fără cont.",
+    p3:"Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
+    foot:"Joc fără cont, fără reclame, fără urmărire. Merge și fără internet după prima încărcare.",
+    supportText:"Jocul e gratuit și rămâne gratuit.", supportLink:"Susține munca",
+    report:"Ai văzut o greșeală? Spune-mi." },
+
+  en:{ name:"Word pairs",
+    htmlLang:"en",
+    title:"Word Pairs - free memory game online",
+    desc:"Find the matching word pairs on a board of face down cards. Free memory game, no account, no ads, works on phone and desktop. Four versions: Romanian, English, Serbian Latin, Serbian Cyrillic.",
+    cats:{animale:"Animals", mancare:"Food", locuri:"Places"},
+    pairs:"pairs", moves:"Moves", time:"Time",
+    again:"New game", peek:"Show all (one move)",
+    peekBusy:"Hold on.",
+    win:"Done! Every pair found in ",
+    winTail:" moves.",
+    played:"Played", won:"Won", streak:"Streak", best:"Best",
+    bestUnit:" moves",
+    h1:"Word Pairs - a memory game in four versions",
+    p1:"A board of face down cards. Every word appears twice: you turn two cards, and if they match they stay open. Your job is to remember where they were.",
+    h2:"How to play it well",
+    p2:"Start with four pairs until you find the rhythm, then go to six and eight. The show-all button reveals the board for a moment and costs one move, so it is only worth it near the end. Everything runs on one screen, nothing to install, no account.",
+    p3:"The game only stores your local stats in the browser. Nothing is sent to a server.",
+    foot:"No account, no ads, no tracking. Works offline after the first load.",
+    supportText:"The game is free and stays free.", supportLink:"Support the work",
+    report:"Spotted a mistake? Tell me." },
+
+  sr:{ name:"Parovi reči",
+    htmlLang:"sr-Latn",
+    title:"Parovi reči - besplatna igra pamćenja na mreži",
+    desc:"Pronađi parove reči na tabli sa kartama okrenutim na poleđinu. Besplatna igra pamćenja, bez naloga, bez reklama, radi na telefonu i računaru. Četiri varijante: srpski latinica, srpski ćirilica, engleski, rumunski.",
+    cats:{animale:"Životinje", mancare:"Hrana", locuri:"Mesta"},
+    pairs:"parova", moves:"Poteza", time:"Vreme",
+    again:"Nova igra", peek:"Prikaži sve (jedan potez)",
+    peekBusy:"Sačekaj malo.",
+    win:"Gotovo! Svi parovi nađeni u ",
+    winTail:" poteza.",
+    played:"Odigrano", won:"Pobede", streak:"Niz", best:"Rekord",
+    bestUnit:" poteza",
+    h1:"Parovi reči - igra pamćenja na četiri jezika",
+    p1:"Tabla sa kartama okrenutim na poleđinu. Svaka reč se pojavljuje dvaput: okreneš dve karte, a ako se poklope ostaju otvorene. Tvoj posao je da zapamtiš gde su bile.",
+    h2:"Kako igrati dobro",
+    p2:"Počni sa četiri para dok ne uhvatiš ritam, pa pređi na šest i osam. Dugme za prikazivanje otkriva tablu na trenutak i košta jedan potez, pa se isplati samo pri kraju. Sve radi na jednom ekranu, bez instalacije i bez naloga.",
+    p3:"Igra pamti samo tvoju lokalnu statistiku u pregledaču. Ništa se ne šalje na server.",
+    foot:"Bez naloga, bez reklama, bez praćenja. Radi i bez interneta posle prvog učitavanja.",
+    supportText:"Igra je besplatna i ostaje besplatna.", supportLink:"Podrži rad",
+    report:"Vidiš grešku? Reci mi." },
+
+  src:{ name:"Парови речи",
+    htmlLang:"sr-Cyrl",
+    title:"Парови речи - бесплатна игра памћења на мрежи",
+    desc:"Пронађи парове речи на табли са картама окренутим на полеђину. Бесплатна игра памћења, без налога, без реклама, ради на телефону и рачунару. Четири варијанте: српски ћирилица, српски латиница, енглески, румунски.",
+    cats:{animale:"Животиње", mancare:"Храна", locuri:"Места"},
+    pairs:"парова", moves:"Потеза", time:"Време",
+    again:"Нова игра", peek:"Прикажи све (један потез)",
+    peekBusy:"Сачекај мало.",
+    win:"Готово! Сви парови нађени у ",
+    winTail:" потеза.",
+    played:"Одиграно", won:"Победе", streak:"Низ", best:"Рекорд",
+    bestUnit:" потеза",
+    h1:"Парови речи - игра памћења на четири језика",
+    p1:"Табла са картама окренутим на полеђину. Свака реч се појављује двапут: окренеш две карте, а ако се поклопе остају отворене. Твој посао је да запамтиш где су биле.",
+    h2:"Како играти добро",
+    p2:"Почни са четири пара док не ухватиш ритам, па пређи на шест и осам. Дугме за приказивање открива таблу на тренутак и кошта један потез, па се исплати само при крају. Све ради на једном екрану, без инсталације и без налога.",
+    p3:"Игра памти само твоју локалну статистику у прегледачу. Ништа се не шаље на сервер.",
+    foot:"Без налога, без реклама, без праћења. Ради и без интернета после првог учитавања.",
+    supportText:"Игра је бесплатна и остаје бесплатна.", supportLink:"Подржи рад",
+    report:"Видиш грешку? Реци ми." }
+};
+
+/* ---------- cuvinte: aceleasi 24 de cuvinte pe tema, in fiecare limba ---------- */
+/* sarba in ambele pisme, cu diacriticele corecte; rusa nu exista in serie */
+var W = {
+  ro:{
+    animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","DORMIȘOARĂ"],
+    mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI"],
+    locuri:["MUNTE","CASTEL","ORAȘ","BISERICĂ","POD","PORT","PALAT","TURN"]
+  },
+  en:{
+    animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK"],
+    mancare:["PANCAKE","NOODLES","CHEESE","PUMPKIN","SAUSAGE","OMELETTE","BISCUIT","YOGURT"],
+    locuri:["CASTLE","HARBOUR","LIBRARY","STADIUM","MUSEUM","BRIDGE","VILLAGE","LIGHTHOUSE"]
+  },
+  sr:{
+    animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN"],
+    mancare:["PALAČINKE","KAJMAK","PROJA","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA"],
+    locuri:["TVRĐAVA","MOST","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO"]
+  },
+  src:{
+    animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН"],
+    mancare:["ПАЛАЧИНКЕ","КАЈМАК","ПРОЈА","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА"],
+    locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО"]
+  }
+};
+
+var SIZES = [4,6,8];
+var KEY = "perechi-cuvinte-v1";
+
+var $ = function(id){ return document.getElementById(id); };
+
+var state = {
+  lang:"ro",
+  theme:"animale",
+  pairs:6,
+  deck:[],          /* [{w, pair}] */
+  open:[],          /* indicii intorsi acum */
+  done:{},          /* pereche -> true */
+  moves:0,
+  start:0,
+  over:false,
+  busy:false,
+  peekUsed:0,
+  stats:{ro:{p:0,w:0,s:0,b:0},en:{p:0,w:0,s:0,b:0},sr:{p:0,w:0,s:0,b:0},src:{p:0,w:0,s:0,b:0}}
+};
+
+/* ---------- persistenta ---------- */
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    var d = JSON.parse(raw);
+    if(d && d.stats){
+      for(var k in state.stats){
+        if(d.stats[k]) state.stats[k] = {
+          p:+d.stats[k].p||0, w:+d.stats[k].w||0, s:+d.stats[k].s||0, b:+d.stats[k].b||0
+        };
+      }
+    }
+    if(d && d.lang && L[d.lang]) state.lang = d.lang;
+    if(d && d.theme && W[state.lang][d.theme]) state.theme = d.theme;
+    if(d && SIZES.indexOf(+d.pairs) !== -1) state.pairs = +d.pairs;
+  }catch(e){}
+}
+function save(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify({
+      stats:state.stats, lang:state.lang, theme:state.theme, pairs:state.pairs
+    }));
+  }catch(e){}
+}
+
+/* ---------- tema light/dark ---------- */
+function applyTheme(t){
+  if(t){ document.documentElement.setAttribute("data-theme", t); }
+  else { document.documentElement.removeAttribute("data-theme"); }
+}
+function initTheme(){
+  var saved = null;
+  try{ saved = localStorage.getItem(KEY + "-theme"); }catch(e){}
+  applyTheme(saved);
+  $("themeBtn").addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    applyTheme(next);
+    try{ localStorage.setItem(KEY + "-theme", next); }catch(e){}
+  });
+}
+
+/* ---------- texte ---------- */
+function t(){ return L[state.lang]; }
+
+function applyTexts(){
+  var d = t();
+  document.documentElement.lang = d.htmlLang;
+  document.title = d.title;
+  var m = document.querySelector('meta[name="description"]');
+  if(m) m.setAttribute("content", d.desc);
+  $("brandName").textContent = d.name;
+  $("againBtn").textContent = d.again;
+  $("peekBtn").textContent = d.peek;
+  $("stPlayedL").textContent = d.played;
+  $("stWonL").textContent = d.won;
+  $("stStreakL").textContent = d.streak;
+  $("stBestL").textContent = d.best;
+  $("h1").textContent = d.h1;
+  $("p1").textContent = d.p1;
+  $("h2").textContent = d.h2;
+  $("p2").textContent = d.p2;
+  $("p3").textContent = d.p3;
+  $("foot").textContent = d.foot;
+  $("supportText").textContent = d.supportText + " ";
+  $("supportLink").querySelector("span").textContent = d.supportLink;
+  $("report").textContent = d.report;
+  $("board").setAttribute("aria-label", d.name);
+  var btns = document.querySelectorAll(".langs button");
+  for(var i=0;i<btns.length;i++){
+    btns[i].setAttribute("aria-pressed", btns[i].getAttribute("data-lang") === state.lang ? "true" : "false");
+  }
+}
+
+/* ---------- tabla ---------- */
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var x = a[i]; a[i] = a[j]; a[j] = x;
+  }
+  return a;
+}
+
+function buildDeck(){
+  var list = W[state.lang][state.theme].slice(0, state.pairs);
+  var cards = [];
+  for(var i=0;i<list.length;i++){
+    cards.push({ w:list[i], pair:i });
+    cards.push({ w:list[i], pair:i });
+  }
+  state.deck = shuffle(cards);
+}
+
+function fontSizeFor(word){
+  var n = word.length;
+  if(n <= 4) return "clamp(18px,4.4vw,26px)";
+  if(n <= 6) return "clamp(15px,3.6vw,22px)";
+  if(n <= 8) return "clamp(12px,3vw,18px)";
+  if(n <= 10) return "clamp(10px,2.4vw,15px)";
+  return "clamp(9px,2.1vw,13px)";
+}
+
+function renderBoard(){
+  var b = $("board");
+  b.innerHTML = "";
+  b.className = "board" + (state.pairs === 4 ? " p4" : (state.pairs === 8 ? " p8" : ""));
+  for(var i=0;i<state.deck.length;i++){
+    var c = state.deck[i];
+    var t = document.createElement("button");
+    t.type = "button";
+    t.className = "tile";
+    t.setAttribute("data-i", i);
+    t.setAttribute("role", "gridcell");
+    var open = state.open.indexOf(i) !== -1 || state.done[c.pair];
+    if(open) t.className += " open";
+    if(state.done[c.pair]) t.className += " done";
+    t.setAttribute("aria-label", open ? c.w : "?");
+
+    var back = document.createElement("span");
+    back.className = "face back";
+    back.textContent = "?";
+
+    var front = document.createElement("span");
+    front.className = "face front";
+    front.textContent = c.w;
+    front.style.fontSize = fontSizeFor(c.w);
+
+    t.appendChild(back);
+    t.appendChild(front);
+    t.disabled = !!state.done[c.pair];
+    t.addEventListener("click", (function(idx){ return function(){ turn(idx); }; })(i));
+    b.appendChild(t);
+  }
+}
+
+function renderChips(){
+  var d = t();
+  $("themeChip").textContent = d.cats[state.theme];
+  $("sizeChip").textContent = state.pairs + " " + d.pairs;
+  $("movesChip").textContent = d.moves + ": " + state.moves;
+  var s = state.stats[state.lang];
+  $("stPlayed").textContent = s.p;
+  $("stWon").textContent = s.w;
+  $("stStreak").textContent = s.s;
+  $("stBest").textContent = s.b ? s.b + d.bestUnit : "0";
+}
+
+/* ---------- cronometru ---------- */
+var tick = null;
+function startClock(){
+  if(tick) return;
+  state.start = Date.now();
+  tick = setInterval(function(){
+    var sec = Math.floor((Date.now() - state.start)/1000);
+    $("timeChip").textContent = t().time + ": " + mmss(sec);
+  }, 500);
+}
+function stopClock(){ if(tick){ clearInterval(tick); tick = null; } }
+function mmss(sec){
+  var m = Math.floor(sec/60), s = sec % 60;
+  return m + ":" + (s < 10 ? "0" + s : s);
+}
+
+/* ---------- logica ---------- */
+function newGame(){
+  stopClock();
+  state.open = [];
+  state.done = {};
+  state.moves = 0;
+  state.over = false;
+  state.busy = false;
+  state.peekUsed = 0;
+  $("msg").textContent = "";
+  $("msg").className = "msg";
+  $("timeChip").textContent = t().time + ": 0:00";
+  $("peekBtn").disabled = false;
+  buildDeck();
+  renderBoard();
+  renderChips();
+}
+
+function turn(i){
+  if(state.over || state.busy) return;
+  if(state.done[state.deck[i].pair]) return;
+  if(state.open.indexOf(i) !== -1) return;
+  startClock();
+  state.open.push(i);
+
+  if(state.open.length === 1){
+    renderBoard();
+    return;
+  }
+
+  /* a doua carte */
+  var a = state.open[0], b = state.open[1];
+  state.moves++;
+  var same = state.deck[a].pair === state.deck[b].pair;
+  renderBoard();
+  renderChips();
+
+  if(same){
+    state.done[state.deck[a].pair] = true;
+    state.open = [];
+    renderBoard();
+    if(isWin()) win();
+  } else {
+    state.busy = true;
+    setTimeout(function(){
+      state.open = [];
+      state.busy = false;
+      renderBoard();
+    }, 720);
+  }
+}
+
+function isWin(){
+  for(var k in state.deck){
+    if(!state.done[state.deck[k].pair]) return false;
+  }
+  return true;
+}
+
+function win(){
+  var d = t();
+  state.over = true;
+  stopClock();
+  var s = state.stats[state.lang];
+  s.p++; s.w++; s.s++;
+  if(!s.b || state.moves < s.b) s.b = state.moves;
+  save();
+  $("msg").textContent = d.win + state.moves + d.winTail;
+  $("msg").className = "msg win";
+  $("peekBtn").disabled = true;
+  renderChips();
+}
+
+function peek(){
+  if(state.over || state.busy) return;
+  var hidden = [];
+  for(var i=0;i<state.deck.length;i++){
+    if(!state.done[state.deck[i].pair] && state.open.indexOf(i) === -1) hidden.push(i);
+  }
+  if(!hidden.length) return;
+  startClock();
+  state.busy = true;
+  state.moves++;
+  state.peekUsed++;
+  var before = state.open.slice();
+  state.open = hidden.slice();
+  renderBoard();
+  renderChips();
+  setTimeout(function(){
+    state.open = before;
+    state.busy = false;
+    renderBoard();
+  }, 900);
+}
+
+/* ---------- limba / tema / marime ---------- */
+function setLang(l){
+  if(!L[l]) return;
+  state.lang = l;
+  if(!W[l][state.theme]) state.theme = "animale";
+  applyTexts();
+  newGame();
+  save();
+}
+
+function cycleTheme(){
+  var keys = Object.keys(W[state.lang]);
+  var i = keys.indexOf(state.theme);
+  state.theme = keys[(i+1) % keys.length];
+  newGame();
+  save();
+}
+
+function cycleSize(){
+  var i = SIZES.indexOf(state.pairs);
+  state.pairs = SIZES[(i+1) % SIZES.length];
+  newGame();
+  save();
+}
+
+/* ---------- start ---------- */
+load();
+applyTexts();
+initTheme();
+state.theme = Object.keys(W[state.lang]).indexOf(state.theme) >= 0 ? state.theme : "animale";
+newGame();
+
+$("againBtn").addEventListener("click", newGame);
+$("peekBtn").addEventListener("click", peek);
+$("themeChip").addEventListener("click", cycleTheme);
+$("sizeChip").addEventListener("click", cycleSize);
+
+var langBtns = document.querySelectorAll(".langs button");
+for(var i=0;i<langBtns.length;i++){
+  langBtns[i].addEventListener("click", (function(b){ return function(){ setLang(b.getAttribute("data-lang")); }; })(langBtns[i]));
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){ newGame(); return; }
+  if(e.key === " " && document.activeElement === document.body){ e.preventDefault(); peek(); }
+});
+
+})();
+</script>
+</body>
+</html>
