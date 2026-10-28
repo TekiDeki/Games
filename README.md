@@ -2,8 +2,8 @@
 
 Small browser games, one HTML file each. No account, no ads, no tracking, nothing sent to a server.
 
-**Live:** https://tekideki.github.io/Games/ (GitHub Pages)
-**Planned canonical:** https://games.freehtml.dev (Cloudflare Pages, waiting on the custom domain)
+**Live:** https://games.freehtml.dev (Cloudflare Pages, canonical)
+**Mirror:** https://tekideki.github.io/Games/ (GitHub Pages, same files, canonical points here)
 
 Shortcut: **https://freehtml.dev/games** (302)
 
