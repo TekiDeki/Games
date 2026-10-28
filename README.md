@@ -13,6 +13,7 @@ Shortcut: **https://freehtml.dev/games** (302)
 |---|---|---|---|
 | Guess the word | `/ghiceste-cuvantul/` | EN, RO, SR Latin, SR Cyrillic | Hangman on themes. 96 words, 6 lives, one letter hint, local stats. |
 | Word pairs | `/perechi-cuvinte/` | EN, RO, SR Latin, SR Cyrillic | Memory game. Same 96 words, board of 4, 6 or 8 pairs, moves and time, local stats. |
+| Word scramble | `/amesteca-literele/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
 
 ## House rules
 
@@ -31,10 +32,13 @@ ghiceste-cuvantul/
   index.html               the game (single file)
 perechi-cuvinte/
   index.html               the game (single file)
+amesteca-literele/
+  index.html               the game (single file)
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap
 tests/test_ui.py           Playwright: 4 languages, win, lose, hint, theme switch
 tests/test_perechi.py      Playwright: 4 languages, board sizes, pairs, peek, win
+tests/test_amesteca.py     Playwright: 4 languages, place/remove/clear, hint, keyboard, win
 ```
 
 ## Development
@@ -50,6 +54,7 @@ Tests (needs `pip install playwright` and `python -m playwright install chromium
 ```
 python tests/test_ui.py
 python tests/test_perechi.py
+python tests/test_amesteca.py
 ```
 
 ## Deploy
