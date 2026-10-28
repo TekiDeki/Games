@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free browser games - no account, no ads, four languages</title>
+<meta name="description" content="Small word and logic games that run entirely in your browser. No account, no ads, no tracking, works offline. English, Romanian, Serbian Latin and Serbian Cyrillic.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0f172a">
+<link rel="canonical" href="https://games.freehtml.dev/">
+<meta property="og:title" content="Free browser games - no account, no ads">
+<meta property="og:description" content="Small word and logic games in one HTML file. No account, no ads, no tracking.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3E%3E%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Free browser games","url":"https://games.freehtml.dev/","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"description":"Small word and logic games that run entirely in the browser, free, with no account and no ads."}
+</script>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+    --line:#26334b; --accent:#6b9dff; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:880px; margin:0 auto; padding:40px 18px 60px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; margin-bottom:28px}
+.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:800}
+h1{font-size:32px; letter-spacing:-.025em; margin:0 0 12px}
+.lede{color:var(--muted); font-size:18px; margin:0 0 32px; max-width:60ch}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
+  padding:20px; text-decoration:none; color:inherit; display:block; transition:transform .15s, border-color .15s}
+.card:hover{transform:translateY(-2px); border-color:var(--accent)}
+.card h2{font-size:19px; margin:0 0 6px}
+.card p{margin:0; color:var(--muted); font-size:14px}
+.tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px}
+.tag{font-size:12px; font-weight:600; color:var(--muted); background:var(--panel2);
+  border:1px solid var(--line); border-radius:999px; padding:3px 9px}
+footer{margin-top:44px; color:var(--muted); font-size:13px; line-height:1.9}
+footer a{color:var(--accent); text-decoration:none; font-weight:600}
+footer a:hover{text-decoration:underline}
+.sep{opacity:.5; margin:0 4px}
+.soon{border-style:dashed; opacity:.65}
+.soon:hover{transform:none; border-color:var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="brand"><span class="dot">&gt;</span><span>games.freehtml.dev</span></div>
+
+<h1>Small games that run in your browser</h1>
+<p class="lede">One HTML file each. No account, no ads, no tracking, nothing sent anywhere.
+Works offline after the first load. English, Romanian, Serbian Latin and Serbian Cyrillic.</p>
+
+<div class="grid">
+
+  <a class="card" href="ghiceste-cuvantul/">
+    <h2>Guess the word</h2>
+    <p>Pick a theme, guess the hidden word letter by letter. Six lives, 96 words.</p>
+    <div class="tags"><span class="tag">words</span><span class="tag">4 languages</span><span class="tag">offline</span></div>
+  </a>
+
+  <div class="card soon">
+    <h2>Memory pairs</h2>
+    <p>Match the pairs before the clock runs out. Same themes, same languages.</p>
+    <div class="tags"><span class="tag">coming</span></div>
+  </div>
+
+  <div class="card soon">
+    <h2>Word scramble</h2>
+    <p>Letters out of order, one word to rebuild. Same dictionaries as Guess the word.</p>
+    <div class="tags"><span class="tag">coming</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Everything here is free and stays free.</span>
+  <a href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ Support the work</a>
+  <span class="sep">·</span>
+  <a href="https://github.com/TekiDeki" target="_blank" rel="noopener">Spotted a mistake? Tell me.</a>
+  <br>
+  <a href="https://freehtml.dev/">More free tools on freehtml.dev</a>
+</footer>
+</div>
+</body>
+</html>
