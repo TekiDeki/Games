@@ -362,21 +362,8 @@ var state = {
 };
 
 /* ---------- persistenta ---------- */
-function limbaBrowser(){
-  /* limba paginii la prima vizita: dupa limba din browser.
-     romana -> ro, sarba -> sr (latina) sau src (chirilica), orice altceva -> en */
-  var lista = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || "en"];
-  for(var i=0;i<lista.length;i++){
-    var l = String(lista[i] || "").toLowerCase();
-    if(l.indexOf("ro") === 0) return "ro";
-    if(l.indexOf("sr") === 0) return (l.indexOf("cyrl") >= 0 || l.indexOf("cyrillic") >= 0) ? "src" : "sr";
-    if(l.indexOf("en") === 0) return "en";
-  }
-  return "en";
-}
-
 function load(){
-  state.lang = limbaBrowser();
+  state.lang = "en";              /* limba principala: engleza (regula 29.10.2026) */
   try{
     var raw = localStorage.getItem(KEY);
     if(!raw) return;
