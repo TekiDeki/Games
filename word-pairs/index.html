@@ -19,6 +19,7 @@
 :root{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
   --back1:#2563eb; --back2:#1e40af;
 }
@@ -26,6 +27,7 @@
   :root{
     --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
     --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
     --back1:#2b4b8f; --back2:#16233d;
   }
@@ -33,12 +35,14 @@
 html[data-theme="light"]{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
   --back1:#2563eb; --back2:#1e40af;
 }
 html[data-theme="dark"]{
   --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
   --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
   --back1:#2b4b8f; --back2:#16233d;
 }
@@ -115,7 +119,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .tile.open .face.back{transform:rotateY(-180deg)}
 .tile.open .face.front{transform:rotateY(0)}
-.tile.done .face.front{border-color:var(--good); background:color-mix(in srgb,var(--good) 16%,var(--panel2)); color:var(--good)}
+.tile.done .face.front{border-color:var(--good); background:color-mix(in srgb,var(--good) 16%,var(--panel2)); color:var(--good-ink)}
 .tile.done{cursor:default}
 .tile:focus-visible{outline:3px solid var(--accent); outline-offset:3px; border-radius:14px}
 .msg{text-align:center; font-weight:600; min-height:26px; margin:14px 0 8px}

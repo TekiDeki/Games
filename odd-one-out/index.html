@@ -19,6 +19,7 @@
 :root{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --good-soft:#dcf3e3; --bad-soft:#fbe0dd;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
 }
@@ -26,6 +27,7 @@
   :root{
     --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
     --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
     --good-soft:#14321f; --bad-soft:#3a1a17;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
   }
@@ -33,12 +35,14 @@
 html[data-theme="light"]{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --good-soft:#dcf3e3; --bad-soft:#fbe0dd;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
 }
 html[data-theme="dark"]{
   --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
   --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
   --good-soft:#14321f; --bad-soft:#3a1a17;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
 }
@@ -87,7 +91,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
   background:var(--panel2); border:1px solid var(--line); color:var(--muted);
   border-radius:999px; padding:5px 11px; white-space:nowrap;
 }
-.chip.strong{background:var(--accent-soft); color:var(--accent); border-color:transparent}
+.chip.strong{background:var(--accent-soft); color:var(--accent-ink); border-color:transparent}
 
 /* bara de timp */
 .barwrap{height:8px; background:var(--panel2); border-radius:999px; overflow:hidden; margin-bottom:16px}
@@ -123,7 +127,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .tile.revealed .tag{visibility:visible}
 .tile.good{background:var(--good-soft); border-color:var(--good); border-bottom-color:var(--good)}
-.tile.good .w{color:var(--good)}
+.tile.good .w{color:var(--good-ink)}
 .tile.bad{background:var(--bad-soft); border-color:var(--bad); border-bottom-color:var(--bad)}
 .tile.bad .w{color:var(--bad)}
 .tile.off{opacity:.55}
@@ -133,6 +137,12 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
   60%{transform:translateX(-3px)} 80%{transform:translateX(3px)}
 }
 .tile.shake{animation:shake .34s ease}
+/* cine a cerut mai putina miscare primeste tot feedback-ul, dar fara scuturare:
+   starea .bad (fundal rosu, chenar rosu, litera rosie) ramane vizibila */
+@media (prefers-reduced-motion: reduce){
+  .tile.shake{animation:none}
+  .tile{transition:none}
+}
 
 .msg{min-height:26px; text-align:center; font-weight:600; margin:0 0 12px}
 .msg.good{color:var(--good)}

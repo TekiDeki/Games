@@ -19,6 +19,7 @@
 :root{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --tile:#ffffff; --tile-line:#cfd6e4;
   --ok-bg:#157f3c; --ok-ink:#ffffff; --near-bg:#c98a00; --near-ink:#ffffff;
   --off-bg:#8b93a3; --off-ink:#ffffff;
@@ -28,6 +29,7 @@
   :root{
     --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
     --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
     --tile:#111a2b; --tile-line:#2b3a55;
     --ok-bg:#1f7a44; --ok-ink:#ffffff; --near-bg:#8a6200; --near-ink:#ffffff;
     --off-bg:#3a465e; --off-ink:#dfe6f2;
@@ -37,6 +39,7 @@
 html[data-theme="light"]{
   --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
   --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --accent-ink:#1d4ed8; --good-ink:#126b32;
   --tile:#ffffff; --tile-line:#cfd6e4;
   --ok-bg:#157f3c; --ok-ink:#ffffff; --near-bg:#c98a00; --near-ink:#ffffff;
   --off-bg:#8b93a3; --off-ink:#ffffff;
@@ -45,6 +48,7 @@ html[data-theme="light"]{
 html[data-theme="dark"]{
   --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
   --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --accent-ink:#6b9dff; --good-ink:#4ade80;
   --tile:#111a2b; --tile-line:#2b3a55;
   --ok-bg:#1f7a44; --ok-ink:#ffffff; --near-bg:#8a6200; --near-ink:#ffffff;
   --off-bg:#3a465e; --off-ink:#dfe6f2;
@@ -93,7 +97,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .chip.click{cursor:pointer}
 .chip.click:hover{border-color:var(--accent); color:var(--text)}
-.chip.mode{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+.chip.mode{color:var(--accent-ink); border-color:var(--accent); background:var(--accent-soft)}
 
 /* tabla */
 .board{display:flex; flex-direction:column; gap:6px; align-items:center; margin:6px 0 4px}
