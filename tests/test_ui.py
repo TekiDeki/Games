@@ -19,7 +19,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 RADACINA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-URL = "file://" + os.path.join(RADACINA, "ghiceste-cuvantul", "index.html")
+URL = "file://" + os.path.join(RADACINA, "guess-the-word", "index.html")
 
 LIMBI = [
     ("ro", "ro", 31),
@@ -138,10 +138,10 @@ def main():
         check("Ghiceste" in pg.content() or "Guess the word" in pg.content(),
               "hub-ul listeaza jocul")
         link = pg.eval_on_selector('a.card[href]', "e=>e.getAttribute('href')")
-        check(link == "ghiceste-cuvantul/", "link relativ corect: " + link)
+        check(link == "guess-the-word/", "link relativ corect: " + link)
         carduri = pg.eval_on_selector_all("a.card[href]", "as=>as.map(a=>a.getAttribute('href'))")
-        check(carduri == ["ghiceste-cuvantul/", "perechi-cuvinte/", "amesteca-literele/",
-                          "cuvantul-zilei/", "gaseste-intrusul/", "word-search/"],
+        check(carduri == ["guess-the-word/", "word-pairs/", "word-scramble/",
+                          "word-of-the-day/", "odd-one-out/", "word-search/"],
               "hub-ul listeaza toate cele 6 jocuri: " + ", ".join(carduri))
         for cale in carduri:
             check(os.path.exists(os.path.join(RADACINA, cale, "index.html")),

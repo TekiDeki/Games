@@ -11,11 +11,11 @@ Shortcut: **https://freehtml.dev/games** (302)
 
 | Game | Path | Languages | What it is |
 |---|---|---|---|
-| Guess the word | `/ghiceste-cuvantul/` | EN, RO, SR Latin, SR Cyrillic | Hangman on themes. 96 words, 6 lives, one letter hint, local stats. |
-| Word pairs | `/perechi-cuvinte/` | EN, RO, SR Latin, SR Cyrillic | Memory game. Same 96 words, board of 4, 6 or 8 pairs, moves and time, local stats. |
-| Word scramble | `/amesteca-literele/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
-| Word of the day | `/cuvantul-zilei/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
-| Odd one out | `/gaseste-intrusul/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
+| Guess the word | `/guess-the-word/` | EN, RO, SR Latin, SR Cyrillic | Hangman on themes. 96 words, 6 lives, one letter hint, local stats. |
+| Word pairs | `/word-pairs/` | EN, RO, SR Latin, SR Cyrillic | Memory game. Same 96 words, board of 4, 6 or 8 pairs, moves and time, local stats. |
+| Word scramble | `/word-scramble/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
+| Word of the day | `/word-of-the-day/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
+| Odd one out | `/odd-one-out/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
 | Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 96 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
 
 ## House rules
@@ -33,15 +33,15 @@ Shortcut: **https://freehtml.dev/games** (302)
 
 ```
 index.html                 hub, lists the games
-ghiceste-cuvantul/
+guess-the-word/
   index.html               the game (single file)
-perechi-cuvinte/
+word-pairs/
   index.html               the game (single file)
-amesteca-literele/
+word-scramble/
   index.html               the game (single file)
-cuvantul-zilei/
+word-of-the-day/
   index.html               the game (single file)
-gaseste-intrusul/
+odd-one-out/
   index.html               the game (single file)
 word-search/
   index.html               the game (single file)
@@ -57,7 +57,7 @@ tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong d
 
 ## Development
 
-Nothing to build. Open `ghiceste-cuvantul/index.html` in a browser, or serve the folder:
+Nothing to build. Open `guess-the-word/index.html` in a browser, or serve the folder:
 
 ```
 python -m http.server 8000

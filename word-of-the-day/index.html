@@ -10,10 +10,10 @@
 <meta property="og:title" content="Word of the Day">
 <meta property="og:description" content="Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions.">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://games.freehtml.dev/cuvantul-zilei/">
+<link rel="canonical" href="https://games.freehtml.dev/word-of-the-day/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EC%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Word of the day","url":"https://games.freehtml.dev/cuvantul-zilei/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word of the day","url":"https://games.freehtml.dev/word-of-the-day/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions."}
 </script>
 <style>
 :root{
@@ -388,7 +388,7 @@ var W = {
   }
 };
 
-var KEY = "cuvantul-zilei-v1";
+var KEY = "word-of-the-day-v1";
 var MAX_TRIES = 6;
 var HOME_LBL = {ro:"Jocuri", en:"Games", sr:"Igre", src:"Игре"};
 var HOME_TTL = {ro:"Inapoi la toate jocurile", en:"Back to all games",
@@ -851,7 +851,7 @@ function copiaza(){
     for(var i=0;i<state.rows[r].score.length;i++) linie += emoji[state.rows[r].score[i]];
     linii.push(linie);
   }
-  linii.push("https://games.freehtml.dev/cuvantul-zilei/");
+  linii.push("https://games.freehtml.dev/word-of-the-day/");
   var text = linii.join("\n");
   function gata(){
     $("msg").textContent = d.copied;

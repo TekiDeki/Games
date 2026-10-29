@@ -16,9 +16,9 @@ import html, json, re, subprocess, time, urllib.parse
 
 import os
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JOC = os.path.join(REPO, "ghiceste-cuvantul", "index.html")
+JOC = os.path.join(REPO, "guess-the-word", "index.html")
 if not os.path.exists(JOC):                       # script copiat in alta parte
-    JOC = os.path.join(os.getcwd(), "ghiceste-cuvantul", "index.html")
+    JOC = os.path.join(os.getcwd(), "guess-the-word", "index.html")
 
 def liste():
     """listeaza cuvintele din jocul 1 (lista canonica a site-ului)"""

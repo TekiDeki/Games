@@ -23,7 +23,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 RADACINA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BAZA = "file://" + os.path.join(RADACINA, "gaseste-intrusul", "index.html")
+BAZA = "file://" + os.path.join(RADACINA, "odd-one-out", "index.html")
 URL = BAZA + "?pauza=3000"      # pauza lunga: se poate observa ce se intampla dupa raspuns
 URL_REPEDE = BAZA + "?pauza=60"  # pentru jocurile complete, jucate runda dupa runda
 PAUZA = 3200

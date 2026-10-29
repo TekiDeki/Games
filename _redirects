@@ -2,6 +2,17 @@
 # the extensionless path for any .html. A 200 rewrite serves the token at the exact URL.
 /googlee27c9c9c38210b47.html  /verify-token.txt  200
 
-# Jocul 6 si-a schimbat adresa in engleza (29.10.2026); linkurile vechi merg mai departe.
-/cautare-de-cuvinte/  /word-search/  301
-/cautare-de-cuvinte/*  /word-search/  301
+# Adresele jocurilor sunt in engleza (29.10.2026). Vechile adrese romanesti dau 301,
+# ca linkurile deja impartasite (inclusiv descrierea video-ului 31) sa nu se strice.
+/cautare-de-cuvinte/    /word-search/     301
+/cautare-de-cuvinte/*   /word-search/     301
+/ghiceste-cuvantul/     /guess-the-word/  301
+/ghiceste-cuvantul/*    /guess-the-word/  301
+/perechi-cuvinte/       /word-pairs/      301
+/perechi-cuvinte/*      /word-pairs/      301
+/amesteca-literele/     /word-scramble/   301
+/amesteca-literele/*    /word-scramble/   301
+/cuvantul-zilei/        /word-of-the-day/ 301
+/cuvantul-zilei/*       /word-of-the-day/ 301
+/gaseste-intrusul/      /odd-one-out/     301
+/gaseste-intrusul/*     /odd-one-out/     301

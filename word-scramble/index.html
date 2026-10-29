@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guess the Word - free online word game</title>
-<meta name="description" content="Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
+<title>Word Scramble - free word game online</title>
+<meta name="description" content="The letters of a word are scrambled: put them back in order. Free word game, no account, no ads, works on phone and desktop. Four versions: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0f172a">
-<meta property="og:title" content="Guess the Word">
-<meta property="og:description" content="Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
+<meta property="og:title" content="Word Scramble">
+<meta property="og:description" content="The letters of a word are scrambled: put them back in order. Free word game, no account, no ads, works on phone and desktop. Four versions: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://games.freehtml.dev/ghiceste-cuvantul/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='58' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://games.freehtml.dev/word-scramble/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Guess the word","url":"https://games.freehtml.dev/ghiceste-cuvantul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word scramble","url":"https://games.freehtml.dev/word-scramble/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"The letters of a word are scrambled: put them back in order. Free word game, no account, no ads, works on phone and desktop. Four versions: Romanian, English, Serbian Latin, Serbian Cyrillic."}
 </script>
 <style>
 :root{
@@ -47,7 +47,8 @@ body{
 .wrap{max-width:960px; margin:0 auto; padding:18px 16px 48px}
 header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px}
 .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-.01em}
-.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:17px;font-weight:800}
+.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.dot svg{display:block}
 .spacer{flex:1}
 .iconbtn{
   border:1px solid var(--line); background:var(--panel); color:var(--text);
@@ -74,38 +75,36 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
   background:var(--panel); border:1px solid var(--line); border-radius:16px;
   box-shadow:var(--shadow); padding:18px; margin-bottom:16px;
 }
-.topline{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+.topline{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px}
 .chip{
   font-size:13px; font-weight:600; color:var(--muted); background:var(--panel2);
   border:1px solid var(--line); border-radius:999px; padding:4px 11px;
 }
+.chip.click{cursor:pointer}
+.chip.click:hover{border-color:var(--accent)}
 .chip b{color:var(--text)}
-.hang{display:block; margin:0 auto 10px; width:180px; height:190px}
-.hang line,.hang circle{stroke:var(--text); stroke-width:4; stroke-linecap:round; fill:none}
-.hang .base{stroke:var(--muted)}
-.word{display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:6px 0 18px; min-height:52px}
-.letter{
-  min-width:38px; height:48px; display:grid; place-items:center;
-  border-bottom:3px solid var(--line); font-size:26px; font-weight:700; letter-spacing:.02em;
-  background:var(--panel2); border-radius:8px 8px 0 0;
+.slots{display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:6px 0 22px; min-height:56px}
+.slot{
+  min-width:42px; height:54px; display:grid; place-items:center; cursor:pointer;
+  border-bottom:3px solid var(--line); background:var(--panel2); border-radius:9px 9px 0 0;
+  font-size:27px; font-weight:700; text-transform:uppercase; color:var(--text);
+  border-top:0; border-left:0; border-right:0; font-family:inherit; padding:0 6px;
 }
-.letter.on{border-bottom-color:var(--accent)}
-.letter.miss{border-bottom-color:var(--bad); color:var(--bad)}
-.word.done .letter{border-bottom-color:var(--good)}
-.kb{display:flex; flex-direction:column; gap:6px; align-items:center}
-.krow{display:flex; gap:6px; justify-content:center; flex-wrap:wrap}
-.key{
-  min-width:38px; height:42px; padding:0 8px; border-radius:9px; cursor:pointer;
+.slot.filled{border-bottom-color:var(--accent)}
+.slot.hinted{border-bottom-color:var(--accent); color:var(--accent)}
+.slot.bad{border-bottom-color:var(--bad); color:var(--bad)}
+.slots.done .slot{border-bottom-color:var(--good); color:var(--good)}
+.rack{display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:0 0 6px}
+.rack .tile{
+  min-width:42px; height:48px; padding:0 10px; border-radius:10px; cursor:pointer;
   border:1px solid var(--line); background:var(--panel2); color:var(--text);
-  font:inherit; font-size:16px; font-weight:600; text-transform:uppercase;
+  font:inherit; font-size:21px; font-weight:700; text-transform:uppercase;
 }
-.key:hover:not(:disabled){border-color:var(--accent)}
-.key:disabled{opacity:.35; cursor:default}
-.key.hit{background:var(--good); border-color:var(--good); color:#fff; opacity:1}
-.key.miss{background:transparent; color:var(--muted); opacity:.5}
-.key:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
-.msg{text-align:center; font-weight:600; min-height:26px; margin:14px 0 8px}
-.msg.win{color:var(--good)} .msg.lose{color:var(--bad)}
+.rack .tile:hover:not(:disabled){border-color:var(--accent)}
+.rack .tile:disabled{opacity:.25; cursor:default}
+.rack .tile:focus-visible,.slot:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.msg{text-align:center; font-weight:600; min-height:26px; margin:16px 0 8px}
+.msg.win{color:var(--good)} .msg.bad{color:var(--bad)}
 .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px}
 .btn{
   border:1px solid var(--accent); background:var(--accent); color:#fff;
@@ -113,6 +112,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .btn.ghost{background:transparent; color:var(--text); border-color:var(--line)}
 .btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.45; cursor:default; filter:none}
 .stats{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:14px; color:var(--muted); font-size:14px}
 .stats b{color:var(--text); font-size:17px; display:block; text-align:center}
 .stats span{display:block; text-align:center}
@@ -125,27 +125,33 @@ footer{color:var(--muted); font-size:13px; text-align:center; margin-top:28px; l
 footer a{color:var(--accent); text-decoration:none; font-weight:600}
 footer a:hover{text-decoration:underline}
 footer .sep{opacity:.5; margin:0 4px}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  75%{transform:translateX(6px)}
+}
+.shake{animation:shake .3s ease-in-out 2}
 @media (max-width:560px){
   header{gap:8px; margin-bottom:12px}
   .spacer{display:none}
-  .brand{flex:1 1 auto; min-width:0}
+  .brand{flex:1 1 auto; min-width:0; font-size:16px}
   .langs{order:10; width:100%; justify-content:space-between}
-  .langs button{flex:1}
+  .langs button{flex:1; padding:6px 7px; font-size:12px}
   .iconbtn{margin-left:auto}
   .wrap{padding:12px 10px 32px}
-  .brand{font-size:16px}
-  .dot{width:26px;height:26px;border-radius:8px;font-size:15px}
+  .dot{width:26px;height:26px;border-radius:8px}
   .card{padding:14px; border-radius:14px}
-  .word{gap:4px; margin-bottom:14px; padding:0 2px}
-  .letter{min-width:0; flex:1 1 auto; max-width:44px; height:40px; font-size:20px}
-  .krow{gap:4px}
-  .key{min-width:30px; height:40px; font-size:15px; padding:0 4px}
-  .hang{width:132px; height:142px}
+  .slot{min-width:32px; height:46px; font-size:22px; padding:0 3px}
+  .rack .tile{min-width:34px; height:44px; font-size:19px; padding:0 7px}
+  .slots{gap:5px; margin-bottom:18px}
+  .rack{gap:5px}
   .chip{font-size:12px; padding:3px 9px}
-  .langs button{padding:6px 7px; font-size:12px}
   .btn{padding:10px 14px; font-size:15px}
   .stats{gap:12px; font-size:12px}
   .stats b{font-size:16px}
+}
+@media (prefers-reduced-motion: reduce){
+  .shake{animation:none}
 }
 </style>
 </head>
@@ -154,7 +160,11 @@ footer .sep{opacity:.5; margin:0 4px}
 
 <header>
   <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Games</span></a>
-  <div class="brand"><span class="dot">A</span><span id="brandName">Guess the word</span></div>
+  <div class="brand"><span class="dot" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M4 7h5M4 7l3-3M4 7l3 3"></path>
+      <path d="M20 17h-5M20 17l-3-3M20 17l-3 3"></path>
+    </svg></span><span id="brandName">Word scramble</span></div>
   <div class="spacer"></div>
   <div class="langs" role="group" aria-label="Language">
     <button data-lang="en" aria-pressed="true">EN</button>
@@ -168,36 +178,21 @@ footer .sep{opacity:.5; margin:0 4px}
 <main>
 <div class="card">
   <div class="topline">
-    <span class="chip" id="themeChip">—</span>
-    <span class="chip" id="livesChip">—</span>
+    <span class="chip click" id="themeChip" title="Next theme">—</span>
+    <span class="chip" id="lenChip">—</span>
     <span class="spacer"></span>
     <span class="chip" id="scoreChip">0</span>
   </div>
 
-  <svg class="hang" viewBox="0 0 200 210" aria-hidden="true">
-    <line class="base" x1="20" y1="196" x2="150" y2="196"></line>
-    <line x1="55" y1="196" x2="55" y2="18"></line>
-    <line x1="55" y1="18" x2="140" y2="18"></line>
-    <line x1="140" y1="18" x2="140" y2="45"></line>
-    <g id="parts">
-      <circle id="part1" cx="140" cy="66" r="21" style="display:none"></circle>
-      <line id="part2" x1="140" y1="87" x2="140" y2="140" style="display:none"></line>
-      <line id="part3" x1="140" y1="100" x2="110" y2="126" style="display:none"></line>
-      <line id="part4" x1="140" y1="100" x2="170" y2="126" style="display:none"></line>
-      <line id="part5" x1="140" y1="140" x2="115" y2="180" style="display:none"></line>
-      <line id="part6" x1="140" y1="140" x2="165" y2="180" style="display:none"></line>
-    </g>
-  </svg>
-
-  <div class="word" id="word" aria-live="polite"></div>
-
-  <div class="kb" id="kb"></div>
+  <div class="slots" id="slots" aria-live="polite"></div>
+  <div class="rack" id="rack"></div>
 
   <div class="msg" id="msg" aria-live="assertive"></div>
 
   <div class="actions">
     <button class="btn" id="againBtn">—</button>
     <button class="btn ghost" id="hintBtn">—</button>
+    <button class="btn ghost" id="clearBtn">—</button>
   </div>
 
   <div class="stats">
@@ -232,93 +227,92 @@ footer .sep{opacity:.5; margin:0 4px}
 
 /* ---------- texte pe limbi ---------- */
 var L = {
-  ro:{ name:"Ghicește cuvântul",
+  ro:{ name:"Amestecă literele",
     htmlLang:"ro",
-    title:"Ghicește cuvântul - joc de cuvinte online, gratuit",
-    desc:"Ghicește cuvântul ascuns literă cu literă. Joc gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru limbi: română, engleză, sârbă latină, sârbă chirilică.",
+    title:"Amestecă literele - joc de cuvinte online, gratuit",
+    desc:"Literele unui cuvânt sunt amestecate: pune-le în ordine. Joc de cuvinte gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru limbi: română, engleză, sârbă latină, sârbă chirilică.",
     cats:{animale:"Animale", mancare:"Mâncare", locuri:"Locuri"},
-    lives:"Vieți", score:"Puncte",
-    win:"Corect! Cuvântul era ", lose:"Ai pierdut. Cuvântul era ",
-    again:"Cuvânt nou", hint:"Arată o literă",
+    letters:"litere", score:"Puncte",
+    hint:"Arată o literă", clear:"Golește", again:"Cuvânt nou",
     hintNone:"Nu mai am ce să arăt.",
+    shake:"Nu încă. Scoate o literă și încearcă din nou.",
+    win:"Corect! Cuvântul era ",
+    already:"Deja pusă.",
     played:"Jucate", won:"Câștigate", streak:"Serie", best:"Record",
-    h1:"Ghicește cuvântul - joc gratuit, în patru limbi",
-    p1:"Un joc simplu: se alege un cuvânt la întâmplare dintr-o temă, iar tu îl ghicești literă cu literă. Ai șase încercări greșite. Literele corecte apar pe loc, cele greșite rămân marcate.",
+    h1:"Amestecă literele - anagrame simple, în patru limbi",
+    p1:"Un cuvânt ales la întâmplare din temă, cu literele amestecate. Le pui la loc în ordine, apăsând pe ele. Literele corecte stau pe loc, cele greșite se pot scoate oricând.",
     h2:"De ce merge bine pe telefon",
-    p2:"Totul se joacă dintr-un singur ecran, fără instalare, fără cont și fără să trimită nimic către niciun server. Poți juca și cu tastatura fizică - apeși litera și ea se marchează singură. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
+    p2:"Apeși litera, ea sare în cuvânt, iar dacă ai greșit o scoți cu un clic pe ea. Merge și cu tastatura fizică: tasta scrie, Backspace șterge, Enter aduce un cuvânt nou. Fără instalare, fără cont, fără să trimită nimic către niciun server. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
     p3:"Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
     foot:"Joc fără cont, fără reclame, fără urmărire. Merge și fără internet după prima încărcare.",
     supportText:"Jocul e gratuit și rămâne gratuit.", supportLink:"Susține munca",
     report:"Ai văzut o greșeală? Spune-mi." },
 
-  en:{ name:"Guess the word",
+  en:{ name:"Word scramble",
     htmlLang:"en",
-    title:"Guess the Word - free online word game",
-    desc:"Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.",
+    title:"Word Scramble - free word game online",
+    desc:"The letters of a word are scrambled: put them back in order. Free word game, no account, no ads, works on phone and desktop. Four versions: Romanian, English, Serbian Latin, Serbian Cyrillic.",
     cats:{animale:"Animals", mancare:"Food", locuri:"Places"},
-    lives:"Lives", score:"Score",
-    win:"Correct! The word was ", lose:"You lost. The word was ",
-    again:"New word", hint:"Reveal a letter",
+    letters:"letters", score:"Score",
+    hint:"Reveal a letter", clear:"Clear", again:"New word",
     hintNone:"Nothing left to reveal.",
+    shake:"Not yet. Take a letter out and try again.",
+    win:"Correct! The word was ",
+    already:"Already placed.",
     played:"Played", won:"Won", streak:"Streak", best:"Best",
-    h1:"Guess the Word - free game in four languages",
-    p1:"A simple game: a random word is picked from a theme and you guess it letter by letter. You get six wrong guesses. Correct letters appear immediately, wrong ones stay marked.",
+    h1:"Word Scramble - simple anagrams in four languages",
+    p1:"A random word from the theme, with its letters shuffled. You put them back in order by tapping them. Correct letters stay, wrong ones can be taken out at any time.",
     h2:"Why it works on a phone",
-    p2:"Everything happens on one screen - nothing to install, no account, nothing sent anywhere. You can also play with a physical keyboard: press a letter and it is marked for you.",
+    p2:"You tap a letter, it jumps into the word, and if you got it wrong you tap it again to take it out. It works with a physical keyboard too: a key types, Backspace deletes, Enter brings a new word. Nothing to install, no account, nothing sent anywhere.",
     p3:"The game only stores your local stats in the browser. Nothing is sent to a server.",
     foot:"No account, no ads, no tracking. Works offline after the first load.",
     supportText:"The game is free and stays free.", supportLink:"Support the work",
     report:"Spotted a mistake? Tell me." },
 
-  sr:{ name:"Pogodi reč",
+  sr:{ name:"Pomešaj slova",
     htmlLang:"sr-Latn",
-    title:"Pogodi reč - besplatna igra rečima na mreži",
-    desc:"Pogodi skrivenu reč slovo po slovo. Besplatna igra, bez naloga, bez reklama, radi na telefonu i računaru. Četiri varijante: srpski latinica, srpski ćirilica, engleski, rumunski.",
+    title:"Pomešaj slova - besplatna igra rečima na mreži",
+    desc:"Slova reči su pomešana: vrati ih u red. Besplatna igra rečima, bez naloga, bez reklama, radi na telefonu i računaru. Četiri varijante: srpski latinica, srpski ćirilica, engleski, rumunski.",
     cats:{animale:"Životinje", mancare:"Hrana", locuri:"Mesta"},
-    lives:"Životi", score:"Poeni",
-    win:"Tačno! Reč je ", lose:"Izgubio si. Reč je ",
-    again:"Nova reč", hint:"Otkrij slovo",
+    letters:"slova", score:"Poeni",
+    hint:"Otkrij slovo", clear:"Isprazni", again:"Nova reč",
     hintNone:"Nema više šta da se otkrije.",
+    shake:"Još ne. Izvadi slovo i probaj ponovo.",
+    win:"Tačno! Reč je ",
+    already:"Već je postavljeno.",
     played:"Odigrano", won:"Pobede", streak:"Niz", best:"Rekord",
-    h1:"Pogodi reč - besplatna igra na četiri jezika",
-    p1:"Jednostavna igra: nasumična reč iz izabrane teme, a ti je pogađaš slovo po slovo. Imaš šest promašaja. Tačna slova se odmah pojavljuju, promašena ostaju označena.",
+    h1:"Pomešaj slova - jednostavne anagrame na četiri jezika",
+    p1:"Nasumična reč iz teme, sa pomešanim slovima. Vraćaš ih u red dodirom. Tačna slova ostaju, promašena možeš izvaditi u svakom trenutku.",
     h2:"Zašto radi dobro na telefonu",
-    p2:"Sve se dešava na jednom ekranu - nema instalacije, nema naloga, ništa se ne šalje. Možeš igrati i na tastaturi: pritisneš slovo i ono se samo označava.",
+    p2:"Dodirneš slovo, ono skoči u reč, a ako si pogrešio, dodirneš ga ponovo i ono izađe. Radi i na tastaturi: taster upisuje, Backspace briše, Enter daje novu reč. Bez instalacije, bez naloga, ništa se ne šalje.",
     p3:"Igra pamti samo tvoju lokalnu statistiku u pregledaču. Ništa se ne šalje na server.",
     foot:"Bez naloga, bez reklama, bez praćenja. Radi i bez interneta posle prvog učitavanja.",
     supportText:"Igra je besplatna i ostaje besplatna.", supportLink:"Podrži rad",
     report:"Vidiš grešku? Reci mi." },
 
-  src:{ name:"Погоди реч",
+  src:{ name:"Помешај слова",
     htmlLang:"sr-Cyrl",
-    title:"Погоди реч - бесплатна игра речима на мрежи",
-    desc:"Погоди скривену реч слово по слово. Бесплатна игра, без налога, без реклама, ради на телефону и рачунару. Четири варијанте: српски ћирилица, српски латиница, енглески, румунски.",
+    title:"Помешај слова - бесплатна игра речима на мрежи",
+    desc:"Слова речи су помешана: врати их у ред. Бесплатна игра речима, без налога, без реклама, ради на телефону и рачунару. Четири варијанте: српски ћирилица, српски латиница, енглески, румунски.",
     cats:{animale:"Животиње", mancare:"Храна", locuri:"Места"},
-    lives:"Животи", score:"Поени",
-    win:"Тачно! Реч је ", lose:"Изгубио си. Реч је ",
-    again:"Нова реч", hint:"Откриј слово",
+    letters:"слова", score:"Поени",
+    hint:"Откриј слово", clear:"Испразни", again:"Нова реч",
     hintNone:"Нема више шта да се открије.",
+    shake:"Још не. Извади слово и пробај поново.",
+    win:"Тачно! Реч је ",
+    already:"Већ је постављено.",
     played:"Одиграно", won:"Победе", streak:"Низ", best:"Рекорд",
-    h1:"Погоди реч - бесплатна игра на четири језика",
-    p1:"Једноставна игра: насумична реч из изабране теме, а ти је погађаш слово по слово. Имаш шест промашаја. Тачна слова се одмах појављују, промашена остају означена.",
+    h1:"Помешај слова - једноставне анаграме на четири језика",
+    p1:"Насумична реч из теме, са помешаним словима. Враћаш их у ред додиром. Тачна слова остају, промашена можеш извадити у сваком тренутку.",
     h2:"Зашто ради добро на телефону",
-    p2:"Све се дешава на једном екрану - нема инсталације, нема налога, ништа се не шаље. Можеш играти и на тастатури: притиснеш слово и оно се само означава.",
+    p2:"Додирнеш слово, оно скочи у реч, а ако си погрешио, додирнеш га поново и оно изађе. Ради и на тастатури: тастер уписује, Backspace брише, Enter даје нову реч. Без инсталације, без налога, ништа се не шаље.",
     p3:"Игра памти само твоју локалну статистику у прегледачу. Ништа се не шаље на сервер.",
     foot:"Без налога, без реклама, без праћења. Ради и без интернета после првог учитавања.",
     supportText:"Игра је бесплатна и остаје бесплатна.", supportLink:"Подржи рад",
     report:"Видиш грешку? Реци ми." }
 };
 
-/* ---------- alfabete ---------- */
-var ABC = {
-  ro:"AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZ",
-  en:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  sr:"ABCČĆDĐEFGHIJKLMNOPRSŠTUVZŽ",
-  src:"АБВГДЂЕЖЗИЈКЛЉМНЊОПРСТЋУФХЦЧЏШ"
-};
-
-/* ---------- cuvinte ---------- */
-/* aceleasi cuvinte in ambele pisma sarbe: latinica si chirilica */
+/* ---------- cuvinte: aceleasi 24 pe tema, in fiecare limba ---------- */
 var W = {
   ro:{
     animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","PÂRȘ"],
@@ -342,8 +336,7 @@ var W = {
   }
 };
 
-var MAX_LIVES = 6;
-var KEY = "ghiceste-cuvantul-v1";
+var KEY = "word-scramble-v1";
 
 var $ = function(id){ return document.getElementById(id); };
 
@@ -351,11 +344,12 @@ var state = {
   lang:"en",
   theme:"animale",
   word:"",
-  guessed:{},     /* litera -> true */
-  wrong:0,
-  hints:0,
+  rack:[],        /* [{ch, used}] */
+  slots:[],       /* index in rack sau null */
+  hinted:[],      /* pozitii completate cu indiciu */
   score:0,
   over:false,
+  busy:false,
   stats:{ro:{p:0,w:0,s:0,b:0},en:{p:0,w:0,s:0,b:0},sr:{p:0,w:0,s:0,b:0},src:{p:0,w:0,s:0,b:0}}
 };
 
@@ -439,6 +433,7 @@ function applyTexts(){
   $("brandName").textContent = d.name;
   $("againBtn").textContent = d.again;
   $("hintBtn").textContent = d.hint;
+  $("clearBtn").textContent = d.clear;
   $("stPlayedL").textContent = d.played;
   $("stWonL").textContent = d.won;
   $("stStreakL").textContent = d.streak;
@@ -458,57 +453,94 @@ function applyTexts(){
   }
 }
 
-/* ---------- desen ---------- */
-function drawParts(){
-  for(var i=1;i<=MAX_LIVES;i++){
-    $("part"+i).style.display = (i <= state.wrong) ? "" : "none";
+/* ---------- joc ---------- */
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var x = a[i]; a[i] = a[j]; a[j] = x;
   }
+  return a;
 }
 
-function renderWord(){
-  var box = $("word");
-  box.innerHTML = "";
-  box.className = "word" + (state.over && isWon() ? " done" : "");
-  for(var i=0;i<state.word.length;i++){
-    var ch = state.word[i];
-    var el = document.createElement("div");
-    var shown = state.guessed[ch] || state.over;
-    el.className = "letter" + (state.guessed[ch] ? " on" : "") + ((state.over && !state.guessed[ch]) ? " miss" : "");
-    el.textContent = shown ? ch : "";
-    box.appendChild(el);
+function buildRack(word){
+  var litere = word.split("");
+  var amestec = shuffle(litere.slice());
+  /* daca din întâmplare iese exact cuvântul, mai amestecăm o dată */
+  var incercari = 0;
+  while(amestec.join("") === word && incercari < 12){
+    amestec = shuffle(litere.slice());
+    incercari++;
   }
+  return amestec.map(function(ch){ return { ch:ch, used:false }; });
 }
 
-function renderKeyboard(){
-  var abc = ABC[state.lang];
-  var kb = $("kb");
-  kb.innerHTML = "";
-  /* numarul de coloane se adapteaza la latimea ecranului */
-  var w = window.innerWidth || 900;
-  var per = w < 380 ? 7 : (w < 460 ? 8 : (w < 620 ? 9 : 11));
-  for(var i=0;i<abc.length;i+=per){
-    var row = document.createElement("div");
-    row.className = "krow";
-    for(var j=i;j<i+per && j<abc.length;j++){
-      var ch = abc[j];
-      var b = document.createElement("button");
-      b.className = "key";
-      b.type = "button";
-      b.textContent = ch;
-      b.setAttribute("data-k", ch);
-      if(state.guessed[ch] === true){ b.className += " hit"; b.disabled = true; }
-      else if(state.guessed[ch] === false){ b.className += " miss"; b.disabled = true; }
-      b.addEventListener("click", (function(c){ return function(){ guess(c); }; })(ch));
-      row.appendChild(b);
-    }
-    kb.appendChild(row);
-  }
+function pickWord(){
+  var list = W[state.lang][state.theme];
+  var pool = list.filter(function(w){ return w !== state.word; });
+  if(!pool.length) pool = list;
+  return pool[Math.floor(Math.random()*pool.length)];
 }
 
-function renderChips(){
+function newGame(){
+  state.word = pickWord();
+  state.rack = buildRack(state.word);
+  state.slots = new Array(state.word.length).fill(null);
+  state.hinted = [];
+  state.over = false;
+  state.busy = false;
+  $("slots").className = "slots";
+  $("msg").textContent = "";
+  $("msg").className = "msg";
+  $("hintBtn").disabled = false;
+  $("clearBtn").disabled = false;
+  render();
+}
+
+function render(){
   var d = t();
-  $("themeChip").innerHTML = d.cats[state.theme];
-  $("livesChip").innerHTML = d.lives + ": <b>" + (MAX_LIVES - state.wrong) + "</b>";
+
+  /* sloturi */
+  var box = $("slots");
+  box.innerHTML = "";
+  box.className = "slots" + (state.over ? " done" : "");
+  for(var i=0;i<state.slots.length;i++){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "slot";
+    var ri = state.slots[i];
+    if(ri !== null){
+      b.className += " filled";
+      if(state.hinted.indexOf(i) !== -1) b.className += " hinted";
+      b.textContent = state.rack[ri].ch;
+      b.setAttribute("aria-label", state.rack[ri].ch);
+      b.addEventListener("click", (function(pos){ return function(){ takeOut(pos); }; })(i));
+    } else {
+      b.setAttribute("aria-label", "?");
+      b.textContent = "";
+      b.disabled = true;
+    }
+    box.appendChild(b);
+  }
+
+  /* literele amestecate */
+  var rack = $("rack");
+  rack.innerHTML = "";
+  for(var j=0;j<state.rack.length;j++){
+    var t2 = document.createElement("button");
+    t2.type = "button";
+    t2.className = "tile";
+    t2.textContent = state.rack[j].ch;
+    t2.setAttribute("data-k", state.rack[j].ch);
+    t2.disabled = state.rack[j].used || state.over;
+    if(!t2.disabled){
+      t2.addEventListener("click", (function(idx){ return function(){ place(idx); }; })(j));
+    }
+    rack.appendChild(t2);
+  }
+
+  /* chip-uri si statistici */
+  $("themeChip").textContent = d.cats[state.theme];
+  $("lenChip").textContent = state.word.length + " " + d.letters;
   $("scoreChip").textContent = d.score + ": " + state.score;
   var s = state.stats[state.lang];
   $("stPlayed").textContent = s.p;
@@ -517,101 +549,130 @@ function renderChips(){
   $("stBest").textContent = s.b;
 }
 
-/* ---------- logica ---------- */
-function isWon(){
-  for(var i=0;i<state.word.length;i++){
-    if(!state.guessed[state.word[i]]) return false;
+function firstEmpty(){
+  for(var i=0;i<state.slots.length;i++) if(state.slots[i] === null) return i;
+  return -1;
+}
+
+function place(idx){
+  if(state.over || state.busy) return;
+  if(state.rack[idx].used) return;
+  var slot = firstEmpty();
+  if(slot === -1) return;
+  state.rack[idx].used = true;
+  state.slots[slot] = idx;
+  state.hinted = state.hinted.filter(function(p){ return p !== slot; });
+  render();
+  check();
+}
+
+function takeOut(pos){
+  if(state.over || state.busy) return;
+  var ri = state.slots[pos];
+  if(ri === null) return;
+  state.rack[ri].used = false;
+  state.slots[pos] = null;
+  state.hinted = state.hinted.filter(function(p){ return p !== pos; });
+  render();
+}
+
+function clearAll(){
+  if(state.over) return;
+  state.busy = false;
+  $("slots").className = "slots";
+  for(var i=0;i<state.slots.length;i++){
+    if(state.slots[i] !== null){
+      state.rack[state.slots[i]].used = false;
+      state.slots[i] = null;
+    }
   }
-  return true;
-}
-
-function pickWord(){
-  var list = W[state.lang][state.theme];
-  /* scoatem cuvantul curent din variante, ca sa nu repete si sa nu se blocheze */
-  var pool = list.filter(function(w){ return w !== state.word; });
-  if(!pool.length) pool = list;
-  return pool[Math.floor(Math.random()*pool.length)];
-}
-
-function newGame(){
-  state.word = pickWord();
-  state.guessed = {};
-  state.wrong = 0;
-  state.hints = 0;
-  state.over = false;
+  state.hinted = [];
   $("msg").textContent = "";
   $("msg").className = "msg";
-  drawParts();
-  renderKeyboard();
-  renderWord();
-  renderChips();
-  $("hintBtn").disabled = false;
+  render();
 }
 
-function guess(ch){
-  if(state.over) return;
-  if(state.guessed[ch] !== undefined) return;
-  var inWord = state.word.indexOf(ch) !== -1;
-  state.guessed[ch] = inWord;
-  if(!inWord) state.wrong++;
-  renderKeyboard();
-  renderWord();
-  renderChips();
-  drawParts();
-  checkEnd();
+function current(){
+  var out = "";
+  for(var i=0;i<state.slots.length;i++){
+    out += state.slots[i] === null ? "?" : state.rack[state.slots[i]].ch;
+  }
+  return out;
 }
 
-function checkEnd(){
+function check(){
+  if(firstEmpty() !== -1) return;
   var d = t();
-  if(isWon()){
+  if(current() === state.word){
     state.over = true;
-    state.score += Math.max(1, (MAX_LIVES - state.wrong) - state.hints);
+    var castig = Math.max(1, state.word.length - state.hinted.length);
+    state.score += castig;
     var s = state.stats[state.lang];
     s.p++; s.w++; s.s++;
     if(s.s > s.b) s.b = s.s;
     save();
     $("msg").textContent = d.win + state.word;
     $("msg").className = "msg win";
-    renderWord();
-    renderChips();
+    $("hintBtn").disabled = true;
+    $("clearBtn").disabled = true;
+    render();
     return;
   }
-  if(state.wrong >= MAX_LIVES){
-    state.over = true;
-    var s2 = state.stats[state.lang];
-    s2.p++; s2.s = 0;
-    save();
-    $("msg").textContent = d.lose + state.word;
-    $("msg").className = "msg lose";
-    renderWord();
-    renderChips();
-    return;
-  }
-  /* litera gresita - feedback scurt */
-  $("msg").textContent = "";
+  /* nu e bine: scuturăm și lăsăm literele pe loc, ca să poți scoate */
+  state.busy = true;
+  $("msg").textContent = d.shake;
+  $("msg").className = "msg bad";
+  $("slots").className = "slots shake";
+  setTimeout(function(){
+    state.busy = false;
+    $("slots").className = "slots";
+  }, 650);
+  var s2 = state.stats[state.lang];
+  /* o încercare greșită nu încheie jocul, dar rupe seria */
+  if(s2.s !== 0){ s2.s = 0; save(); }
+  render();
 }
 
 function revealHint(){
-  if(state.over) return;
+  if(state.over || state.busy) return;
   var d = t();
-  var hidden = [];
-  for(var i=0;i<state.word.length;i++){
-    var ch = state.word[i];
-    if(state.guessed[ch] === undefined) hidden.push(ch);
+  var slot = firstEmpty();
+  if(slot === -1){
+    /* toate plin dar greșit: scoatem întâi pozitiile greșite si aratam urmatoarea */
+    for(var i=0;i<state.slots.length;i++){
+      var ri = state.slots[i];
+      if(ri !== null && state.rack[ri].ch !== state.word[i] && state.hinted.indexOf(i) === -1){
+        slot = i;
+        break;
+      }
+    }
+    if(slot === -1){ $("msg").textContent = d.hintNone; return; }
   }
-  if(!hidden.length){
-    $("msg").textContent = d.hintNone;
-    return;
+  var litera = state.word[slot];
+  /* cautam o litera nefolosita care se potriveste */
+  var gasit = -1;
+  for(var j=0;j<state.rack.length;j++){
+    if(!state.rack[j].used && state.rack[j].ch === litera){ gasit = j; break; }
   }
-  var ch = hidden[Math.floor(Math.random()*hidden.length)];
-  state.hints++;
-  state.guessed[ch] = true;
-  renderKeyboard();
-  renderWord();
-  checkEnd();
+  if(gasit === -1){
+    /* nu exista: luam orice litera libera si o transformam */
+    for(var k=0;k<state.rack.length;k++){
+      if(!state.rack[k].used){ gasit = k; state.rack[k].ch = litera; break; }
+    }
+  }
+  if(gasit === -1){ $("msg").textContent = d.hintNone; return; }
+  /* daca slotul era ocupat cu altceva, eliberam litera veche */
+  if(state.slots[slot] !== null) state.rack[state.slots[slot]].used = false;
+  state.rack[gasit].used = true;
+  state.slots[slot] = gasit;
+  if(state.hinted.indexOf(slot) === -1) state.hinted.push(slot);
+  $("msg").textContent = "";
+  $("msg").className = "msg";
+  render();
+  check();
 }
 
-/* ---------- schimbare limba / tema ---------- */
+/* ---------- limba / tema ---------- */
 function setLang(l){
   if(!L[l]) return;
   state.lang = l;
@@ -638,33 +699,45 @@ newGame();
 
 $("againBtn").addEventListener("click", newGame);
 $("hintBtn").addEventListener("click", revealHint);
+$("clearBtn").addEventListener("click", clearAll);
 $("themeChip").addEventListener("click", cycleTheme);
-$("themeChip").style.cursor = "pointer";
-$("themeChip").setAttribute("title", "Next theme");
 
 var langBtns = document.querySelectorAll(".langs button");
 for(var i=0;i<langBtns.length;i++){
   langBtns[i].addEventListener("click", (function(b){ return function(){ setLang(b.getAttribute("data-lang")); }; })(langBtns[i]));
 }
 
-var lastW = window.innerWidth;
-window.addEventListener("resize", function(){
-  var w = window.innerWidth;
-  if((w < 620) !== (lastW < 620) || Math.abs(w - lastW) > 80){
-    lastW = w;
-    if(typeof renderKeyboard === "function") renderKeyboard();
-  }
-});
-
 document.addEventListener("keydown", function(e){
-  if(e.key === "Enter" && state.over){ newGame(); return; }
+  if(e.key === "Enter"){
+    /* Enter nu trebuie sa apese si butonul care are focusul */
+    e.preventDefault();
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    newGame();
+    return;
+  }
+  if(e.key === "Backspace"){
+    e.preventDefault();
+    for(var i=state.slots.length-1;i>=0;i--){
+      if(state.slots[i] !== null){ takeOut(i); return; }
+    }
+    return;
+  }
   if(e.ctrlKey || e.metaKey || e.altKey) return;
   if(e.key.length !== 1) return;
+
   var ch = e.key.toUpperCase();
-  if(ABC[state.lang].indexOf(ch) !== -1){
-    e.preventDefault();
-    guess(ch);
+  /* potrivire exacta intai (pentru diacritice), apoi fara diacritice */
+  var gol = function(s){ return s.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); };
+  var idx = -1;
+  for(var j=0;j<state.rack.length;j++){
+    if(!state.rack[j].used && state.rack[j].ch === ch){ idx = j; break; }
   }
+  if(idx === -1){
+    for(var k=0;k<state.rack.length;k++){
+      if(!state.rack[k].used && gol(state.rack[k].ch) === gol(ch)){ idx = k; break; }
+    }
+  }
+  if(idx !== -1){ e.preventDefault(); place(idx); }
 });
 
 })();

@@ -21,7 +21,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 RADACINA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-URL = "file://" + os.path.join(RADACINA, "perechi-cuvinte", "index.html")
+URL = "file://" + os.path.join(RADACINA, "word-pairs", "index.html")
 
 LIMBI = [
     ("ro", "ro", "perechi"),
