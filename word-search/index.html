@@ -10,10 +10,10 @@
 <meta property="og:title" content="Word Search">
 <meta property="og:description" content="Eight words hidden in a grid of letters: find them across, down and diagonally. Free game, no account, no ads, in four languages (English, Romanian, Serbian Latin and Serbian Cyrillic).">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://games.freehtml.dev/cautare-de-cuvinte/">
+<link rel="canonical" href="https://games.freehtml.dev/word-search/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EW%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Word search","url":"https://games.freehtml.dev/cautare-de-cuvinte/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Eight words hidden in a grid of letters: find them across, down and diagonally. Free game, no account, no ads, in four languages (English, Romanian, Serbian Latin and Serbian Cyrillic)."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word search","url":"https://games.freehtml.dev/word-search/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Eight words hidden in a grid of letters: find them across, down and diagonally. Free game, no account, no ads, in four languages (English, Romanian, Serbian Latin and Serbian Cyrillic)."}
 </script>
 <style>
 :root{
@@ -307,7 +307,7 @@ var L = {
     report:"Spotted a mistake? Tell me." },
 
   sr:{ name:"Pronađi reči",
-    htmlLang:"sr",
+    htmlLang:"sr-Latn",
     title:"Pronađi reči - besplatna igra rečima",
     desc:"Osam reči skrivenih u mreži slova: nađi ih vodoravno, uspravno i dijagonalno. Besplatna igra, bez naloga, bez reklama, na četiri jezika.",
     cats:{animale:"životinje", mancare:"hrana", locuri:"mesta"},
@@ -329,7 +329,7 @@ var L = {
     report:"Vidiš grešku? Reci mi." },
 
   src:{ name:"Пронађи речи",
-    htmlLang:"sr",
+    htmlLang:"sr-Cyrl",
     title:"Пронађи речи - бесплатна игра речима",
     desc:"Осам речи скривених у мрежи слова: нађи их водоравно, усправно и дијагонално. Бесплатна игра, без налога, без реклама, на четири језика.",
     cats:{animale:"животиње", mancare:"храна", locuri:"места"},
@@ -351,7 +351,7 @@ var L = {
     report:"Видиш грешку? Реци ми." }
 };
 
-var KEY = "cautare-de-cuvinte-v1";
+var KEY = "word-search-v1";
 var N = 12;                                   /* grila N x N */
 var DIRS = [[1,0],[0,1],[1,1],[1,-1],[-1,0],[0,-1],[-1,-1],[-1,1]];
 var TEMA_KEYS = ["animale","mancare","locuri"];
@@ -366,7 +366,21 @@ function $(id){ return document.getElementById(id); }
 function t(){ return L[state.lang]; }
 
 /* ---------- salvare locala ---------- */
+function limbaBrowser(){
+  /* limba paginii la prima vizita: dupa limba din browser.
+     romana -> ro, sarba -> sr (latina) sau src (chirilica), orice altceva -> en */
+  var lista = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || "en"];
+  for(var i=0;i<lista.length;i++){
+    var l = String(lista[i] || "").toLowerCase();
+    if(l.indexOf("ro") === 0) return "ro";
+    if(l.indexOf("sr") === 0) return (l.indexOf("cyrl") >= 0 || l.indexOf("cyrillic") >= 0) ? "src" : "sr";
+    if(l.indexOf("en") === 0) return "en";
+  }
+  return "en";
+}
+
 function load(){
+  state.lang = limbaBrowser();
   try{
     var raw = localStorage.getItem(KEY);
     if(!raw) return;
@@ -642,7 +656,7 @@ function copiaza(){
   var d = t(), text = [
     d.name + " · " + d.cats[state.tema],
     state.gasite.length + "/" + state.cuvinte.length + " · " + mmss((state.gata ? state.start : Date.now()) && (Date.now() - state.start)),
-    "https://games.freehtml.dev/cautare-de-cuvinte/"
+    "https://games.freehtml.dev/word-search/"
   ].join("\n");
   var gataC = function(){
     mesaj(d.copied, "good");

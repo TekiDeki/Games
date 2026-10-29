@@ -1,3 +1,7 @@
 # Search Console asks for the exact file name, and Cloudflare Pages answers a 307 to
 # the extensionless path for any .html. A 200 rewrite serves the token at the exact URL.
 /googlee27c9c9c38210b47.html  /verify-token.txt  200
+
+# Jocul 6 si-a schimbat adresa in engleza (29.10.2026); linkurile vechi merg mai departe.
+/cautare-de-cuvinte/  /word-search/  301
+/cautare-de-cuvinte/*  /word-search/  301

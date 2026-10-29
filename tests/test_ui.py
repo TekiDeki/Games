@@ -141,7 +141,7 @@ def main():
         check(link == "ghiceste-cuvantul/", "link relativ corect: " + link)
         carduri = pg.eval_on_selector_all("a.card[href]", "as=>as.map(a=>a.getAttribute('href'))")
         check(carduri == ["ghiceste-cuvantul/", "perechi-cuvinte/", "amesteca-literele/",
-                          "cuvantul-zilei/", "gaseste-intrusul/", "cautare-de-cuvinte/"],
+                          "cuvantul-zilei/", "gaseste-intrusul/", "word-search/"],
               "hub-ul listeaza toate cele 6 jocuri: " + ", ".join(carduri))
         for cale in carduri:
             check(os.path.exists(os.path.join(RADACINA, cale, "index.html")),

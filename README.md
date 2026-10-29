@@ -16,13 +16,14 @@ Shortcut: **https://freehtml.dev/games** (302)
 | Word scramble | `/amesteca-literele/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
 | Word of the day | `/cuvantul-zilei/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
 | Odd one out | `/gaseste-intrusul/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
-| Word search | `/cautare-de-cuvinte/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 96 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
+| Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 96 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
 
 ## House rules
 
 - Single file per game: HTML, CSS, JS and SVG all inline. No build step, no dependencies, no CDN.
 - Four language versions everywhere: `en`, `ro`, `sr-Latn`, `sr-Cyrl`. Not Russian - Serbian Cyrillic, 30 letters, no Ё Ъ Ы Э Ю Я Щ.
-- **English is the primary language.** Every link opens in English (`<html lang="en">`, English title, meta, OG and JSON-LD, EN button first); the other three are one click away. A returning visitor keeps the language they picked.
+- **English is the primary language, in the URL too:** every game lives at an English path (`/word-search/`, not `/cautare-de-cuvinte/`); the old Romanian paths 301 to the English ones (see `_redirects`).
+- **English is the default in the page:** Every link opens in English (`<html lang="en">`, English title, meta, OG and JSON-LD, EN button first); the other three are one click away. A returning visitor keeps the language they picked.
 - `<html lang>`, `<title>`, `<meta description>` and the JSON-LD all change with the language.
 - Light and dark, follows the system setting, manual toggle.
 - Support line in the footer: `https://PayPal.me/TekiDeki`. No Ko-fi, no Patreon.
@@ -42,7 +43,7 @@ cuvantul-zilei/
   index.html               the game (single file)
 gaseste-intrusul/
   index.html               the game (single file)
-cautare-de-cuvinte/
+word-search/
   index.html               the game (single file)
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap

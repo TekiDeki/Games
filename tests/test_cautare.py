@@ -22,7 +22,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-URL = "file://" + os.path.join(ROOT, "cautare-de-cuvinte", "index.html")
+URL = "file://" + os.path.join(ROOT, "word-search", "index.html")
 N = 12
 
 ok = 0
@@ -138,7 +138,7 @@ def main():
         check(st["stats"][0] == "1", "statisticile raman dupa joc nou")
 
         print("== limbi")
-        for limba, astept in (("en", "en"), ("sr", "sr"), ("src", "sr"), ("ro", "ro")):
+        for limba, astept in (("en", "en"), ("sr", "sr-Latn"), ("src", "sr-Cyrl"), ("ro", "ro")):
             pg.click('.langs button[data-lang="%s"]' % limba)
             pg.wait_for_timeout(250)
             st = stare(pg)
