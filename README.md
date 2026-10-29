@@ -22,6 +22,7 @@ Shortcut: **https://freehtml.dev/games** (302)
 
 - Single file per game: HTML, CSS, JS and SVG all inline. No build step, no dependencies, no CDN.
 - Four language versions everywhere: `en`, `ro`, `sr-Latn`, `sr-Cyrl`. Not Russian - Serbian Cyrillic, 30 letters, no Ё Ъ Ы Э Ю Я Щ.
+- **English is the primary language.** Every link opens in English (`<html lang="en">`, English title, meta, OG and JSON-LD, EN button first); the other three are one click away. A returning visitor keeps the language they picked.
 - `<html lang>`, `<title>`, `<meta description>` and the JSON-LD all change with the language.
 - Light and dark, follows the system setting, manual toggle.
 - Support line in the footer: `https://PayPal.me/TekiDeki`. No Ko-fi, no Patreon.
