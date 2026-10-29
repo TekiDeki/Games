@@ -282,7 +282,7 @@ var L = {
     cats:{animale:"animale", mancare:"mâncare", locuri:"locuri"},
     themeLbl:"Tema", foundLbl:"Găsite", timeLbl:"Timp",
     prompt:"Găsește cele opt cuvinte în grilă, pe orizontală, verticală sau diagonală.",
-    good:"Cuvânt găsit: ", already:"Cuvântul acesta e deja găsit.", picking:"Selectezi: ",
+    good:"Cuvânt găsit: ", already:"Cuvântul acesta e deja găsit.", picking:"Selectezi: ", kbd:"Tastatură: săgeți pentru mutare, Enter pentru început și sfârșit, Shift cu săgeți pentru selecție.",
     done:"Gata! Toate cele opt cuvinte găsite în ",
     again:"Joc nou", share:"Copiază rezultatul",
     copied:"Rezultatul e copiat. Lipește-l oriunde.",
@@ -305,7 +305,7 @@ var L = {
     cats:{animale:"animals", mancare:"food", locuri:"places"},
     themeLbl:"Theme", foundLbl:"Found", timeLbl:"Time",
     prompt:"Find the eight words in the grid: across, down or diagonally.",
-    good:"Found: ", already:"That word is already found.", picking:"Selecting: ",
+    good:"Found: ", already:"That word is already found.", picking:"Selecting: ", kbd:"Keyboard: arrows to move, Enter for start and end, Shift with arrows to select.",
     done:"Done! All eight words found in ",
     again:"New game", share:"Copy result",
     copied:"Result copied. Paste it anywhere.",
@@ -328,7 +328,7 @@ var L = {
     cats:{animale:"životinje", mancare:"hrana", locuri:"mesta"},
     themeLbl:"Tema", foundLbl:"Nađeno", timeLbl:"Vreme",
     prompt:"Nađi osam reči u mreži: vodoravno, uspravno ili dijagonalno.",
-    good:"Nađena reč: ", already:"Ta reč je već nađena.", picking:"Biraš: ",
+    good:"Nađena reč: ", already:"Ta reč je već nađena.", picking:"Biraš: ", kbd:"Tastatura: strelice za kretanje, Enter za početak i kraj, Shift sa strelicama za izbor.",
     done:"Gotovo! Svih osam reči nađeno za ",
     again:"Nova igra", share:"Kopiraj rezultat",
     copied:"Rezultat je kopiran. Nalepi ga gde želiš.",
@@ -351,7 +351,7 @@ var L = {
     cats:{animale:"животиње", mancare:"храна", locuri:"места"},
     themeLbl:"Тема", foundLbl:"Нађено", timeLbl:"Време",
     prompt:"Нађи осам речи у мрежи: водоравно, усправно или дијагонално.",
-    good:"Нађена реч: ", already:"Та реч је већ нађена.", picking:"Бираш: ",
+    good:"Нађена реч: ", already:"Та реч је већ нађена.", picking:"Бираш: ", kbd:"Тастатура: стрелице за кретање, Ентер за почетак и крај, Shift са стрелицама за избор.",
     done:"Готово! Свих осам речи нађено за ",
     again:"Нова игра", share:"Копирај резултат",
     copied:"Резултат је копиран. Налепи га где желиш.",
@@ -772,6 +772,11 @@ $("grid").addEventListener("focusin", function(ev){
   state.cur = coord(el);
   for(i=0;i<toate.length;i++) toate[i].tabIndex = -1;
   el.tabIndex = 0;
+  /* daca focusul vine de la tastatura (nu de la un clic), spunem ce fac tastele -
+     exact in momentul in care se intra in grila, nu undeva in textul de descriere */
+  if(el.matches && el.matches(":focus-visible") && !state.anchor && state.sel.length === 0 && !state.gata){
+    mesaj(t().kbd, "neutral");
+  }
 });
 $("grid").addEventListener("keydown", function(ev){
   var el = ev.target;

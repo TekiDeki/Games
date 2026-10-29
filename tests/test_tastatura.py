@@ -107,6 +107,26 @@ def main():
                         break
             check(ajuns, "Tab ajunge intr-o celula a grilei")
 
+            # 2b. la intrarea in grila, indicatia de tastatura apare contextual
+            mesaj_intrare = text(pg, "#msg").lower()
+            check("keyboard" in mesaj_intrare or "тастатур" in mesaj_intrare,
+                  f"intrarea in grila arata ce fac tastele: {mesaj_intrare[:60]}")
+
+            # 2c. un clic cu mouse-ul NU arata indicatia de tastatura
+            ctx2 = browser.new_context(viewport={"width": 1024, "height": 900}, locale="en-US")
+            pg2 = ctx2.new_page()
+            pg2.goto(PAGINA.as_uri(), wait_until="load")
+            pg2.wait_for_timeout(300)
+            if limba != "en":
+                pg2.click(f'.langs button[data-lang="{limba}"]')
+                pg2.wait_for_timeout(400)
+            pg2.click('.cell[data-x="1"][data-y="1"]')
+            pg2.wait_for_timeout(150)
+            mesaj_clic = text(pg2, "#msg").lower()
+            check(not mesaj_clic.startswith(("keyboard", "тастатура")),
+                  f"un clic cu mouse-ul nu inlocuieste mesajul cu indicatia de tastatura: {mesaj_clic[:50]}")
+            ctx2.close()
+
             # 3. sagetile muta focusul, nu deruleaza pagina
             scroll_inainte = pg.evaluate("() => window.scrollY")
             focuseaza(pg, 3, 3)
