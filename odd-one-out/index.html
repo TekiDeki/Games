@@ -95,7 +95,8 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 
 /* bara de timp */
 .barwrap{height:8px; background:var(--panel2); border-radius:999px; overflow:hidden; margin-bottom:16px}
-.bar{height:100%; width:100%; background:var(--accent); border-radius:999px; transition:width .1s linear, background .2s}
+.bar{height:100%; width:100%; background:var(--accent); border-radius:999px;
+  transform-origin:left center; transition:transform .1s linear, background .2s}
 .bar.low{background:var(--bad)}
 
 .prompt{font-size:17px; font-weight:600; margin:0 0 14px; text-align:center; text-wrap:balance}
@@ -142,6 +143,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 @media (prefers-reduced-motion: reduce){
   .tile.shake{animation:none}
   .tile{transition:none}
+  .bar{transition:none}
 }
 
 .msg{min-height:26px; text-align:center; font-weight:600; margin:0 0 12px}
@@ -615,7 +617,7 @@ function pornesteRunda(){
   $("roundChip").textContent = d.roundLbl + " " + state.runda + "/" + RUNDE;
   $("scoreChip").textContent = d.scoreLbl + ": " + state.scor;
   $("bar").className = "bar";
-  $("bar").style.width = "100%";
+  $("bar").style.transform = "scaleX(1)";
   $("timeChip").textContent = SECUNDE + d.seconds;
   state.sfarsit = Date.now() + SECUNDE * 1000;
   opresteCronometrul();
@@ -625,7 +627,7 @@ function pornesteRunda(){
 function tic(){
   var ramas = Math.max(0, state.sfarsit - Date.now());
   var proc = ramas / (SECUNDE * 1000);
-  $("bar").style.width = (proc * 100).toFixed(1) + "%";
+  $("bar").style.transform = "scaleX(" + proc.toFixed(3) + ")";
   $("bar").className = proc < 0.3 ? "bar low" : "bar";
   $("timeChip").textContent = Math.ceil(ramas / 1000) + t().seconds;
   if(ramas <= 0){ expira(); }
@@ -654,7 +656,7 @@ function finalizeaza(){
   state.gata = true;
   opresteCronometrul();
   opresteUrmatorul();
-  $("bar").style.width = "0%";
+  $("bar").style.transform = "scaleX(0)";
   $("timeChip").textContent = "0" + d.seconds;
 
   st.p = (st.p||0) + 1;

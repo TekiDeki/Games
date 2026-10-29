@@ -132,10 +132,12 @@ def main():
             check(text(pg, "#roundChip").startswith(text(pg, "#roundChip").split()[0]), "chip-ul de runda: " + text(pg, "#roundChip"))
             check("/10" in text(pg, "#roundChip"), "rundele sunt din 10: " + text(pg, "#roundChip"))
             check(text(pg, "#timeChip") in ("12s", "12с", "12 s"), "cronometrul porneste de la 12: " + text(pg, "#timeChip"))
-            lat1 = pg.eval_on_selector("#bar", "e=>e.style.width")
+            # bara e animata cu transform: scaleX, nu cu width (compositor, nu layout)
+            lat1 = pg.eval_on_selector("#bar", "e=>getComputedStyle(e).transform")
             pg.wait_for_timeout(900)
-            lat2 = pg.eval_on_selector("#bar", "e=>e.style.width")
-            check(float(lat2.rstrip("%")) < float(lat1.rstrip("%")), "bara de timp scade: " + lat1 + " -> " + lat2)
+            lat2 = pg.eval_on_selector("#bar", "e=>getComputedStyle(e).transform")
+            scara = lambda t: float(t[t.index("(") + 1:].split(",")[0]) if t.startswith("matrix") else 1.0
+            check(scara(lat2) < scara(lat1), "bara de timp scade: " + lat1 + " -> " + lat2)
 
             # raspuns GRESIT
             alege_neintrus(pg)
