@@ -1,0 +1,194 @@
+[
+ {
+  "limba": "ro",
+  "tema": "animale",
+  "cuvant": "BROASCĂ",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> BRO A SCĂ, broaște, s. f. I. Nume dat mai multor animale amfibii din clasa batracienilor, fă",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "ro",
+  "tema": "animale",
+  "cuvant": "VEVERIȚĂ",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> V E VERIȚĂ, veverițe, s. f. Mamifer rozător arboricol, de talie mică, cu blană roșcată sau n",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "ro",
+  "tema": "mancare",
+  "cuvant": "MĂMĂLIGĂ",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> MĂMĂL I GĂ, mămăligi, s. f. Aliment preparat din făină de porumb (mai rar de mei, hrișcă etc",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "ro",
+  "tema": "mancare",
+  "cuvant": "CIORBĂ",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> CI O RBĂ, ciorbe, s. f. Fel de mâncare care constă dintr-o zeamă (acrită) preparată cu legum",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "ro",
+  "tema": "locuri",
+  "cuvant": "MUNTE",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> M U NTE, munți, s. m. 1. Ridicătură a scoarței pământului mai mare decât dealul, de obicei s",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "ro",
+  "tema": "locuri",
+  "cuvant": "CASTEL",
+  "ok": true,
+  "definitie": "class=\"def\" title=\"Clic pentru a naviga la acest cuvânt\"> CAST E L, castele, s. n. 1. Clădire mare, medievală, prevăzută cu turnuri și cu creneluri, î",
+  "sursa": "dexonline"
+ },
+ {
+  "limba": "en",
+  "tema": "animale",
+  "cuvant": "ELEPHANT",
+  "ok": true,
+  "definitie": "noun: A mammal of the order Proboscidea, having a trunk, and two large ivory tusks jutting from the upper jaw.",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "en",
+  "tema": "animale",
+  "cuvant": "PENGUIN",
+  "ok": true,
+  "definitie": "noun: Any of several flightless sea birds, of order Sphenisciformes, found in the Southern Hemisphere, marked by their usual upright stance, walking o",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "en",
+  "tema": "mancare",
+  "cuvant": "PANCAKE",
+  "ok": true,
+  "definitie": "noun: A thin batter cake fried in a pan or on a griddle in oil or butter.",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "en",
+  "tema": "mancare",
+  "cuvant": "NOODLES",
+  "ok": true,
+  "definitie": "noun: (usually in the plural) a string or strip of pasta",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "en",
+  "tema": "locuri",
+  "cuvant": "CASTLE",
+  "ok": true,
+  "definitie": "noun: A large building that is fortified and contains many defences; in previous ages often inhabited by a nobleman or king.",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "en",
+  "tema": "locuri",
+  "cuvant": "HARBOUR",
+  "ok": true,
+  "definitie": "noun: Any place of shelter.",
+  "sursa": "dictionaryapi.dev"
+ },
+ {
+  "limba": "sr",
+  "tema": "animale",
+  "cuvant": "VEVERICA",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] vjȅverica ( Ijekavian )",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "sr",
+  "tema": "animale",
+  "cuvant": "KORNJAČA",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /kǒrɲat͡ʃa/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "sr",
+  "tema": "mancare",
+  "cuvant": "PALAČINKE",
+  "ok": false,
+  "definitie": "en.wiktionary: pagina lipseste (HTTP 404)",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "sr",
+  "tema": "mancare",
+  "cuvant": "KAJMAK",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /kǎjmak/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "sr",
+  "tema": "locuri",
+  "cuvant": "TVRĐAVA",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /tʋř̩d͡ʑaʋa/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "sr",
+  "tema": "locuri",
+  "cuvant": "MOST",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /môːst/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "animale",
+  "cuvant": "ВЕВЕРИЦА",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] вје̏верица ( Ijekavian )",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "animale",
+  "cuvant": "КОРЊАЧА",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /kǒrɲat͡ʃa/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "mancare",
+  "cuvant": "ПАЛАЧИНКЕ",
+  "ok": false,
+  "definitie": "en.wiktionary: pagina lipseste (HTTP 404)",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "mancare",
+  "cuvant": "КАЈМАК",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /kǎjmak/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "locuri",
+  "cuvant": "ТВРЂАВА",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /tʋř̩d͡ʑaʋa/",
+  "sursa": "en.wiktionary"
+ },
+ {
+  "limba": "src",
+  "tema": "locuri",
+  "cuvant": "МОСТ",
+  "ok": true,
+  "definitie": "[Serbo-Croatian] IPA ( key ) : /môːst/",
+  "sursa": "en.wiktionary"
+ }
+]
