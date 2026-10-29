@@ -28,6 +28,9 @@ LIMBI = [
     ("src", "sr-Cyrl", 30),
 ]
 
+# eticheta linkului de intoarcere la hub, pe limbi
+HOME = {"ro": "Jocuri", "en": "Games", "sr": "Igre", "src": "Игре"}
+
 ok = 0
 rau = 0
 
@@ -71,6 +74,14 @@ def main():
 
             check(pg.evaluate("document.documentElement.lang") == lang_asteptat,
                   "<html lang> = " + lang_asteptat)
+            # link de intoarcere la hub-ul de jocuri
+            check(pg.get_attribute("#homeBtn", "href") == "../", "linkul spre hub are href ../")
+            check(pg.is_visible("#homeBtn"), "linkul spre hub e vizibil")
+            check(pg.inner_text("#homeLbl") == HOME[cheie],
+                  "eticheta linkului in " + cheie + ": " + pg.inner_text("#homeLbl"))
+            check(len((pg.get_attribute("#homeBtn", "aria-label") or "").strip()) > 3,
+                  "linkul spre hub are aria-label tradus")
+
 
             taste = pg.eval_on_selector_all(".key", "ks=>ks.map(k=>k.dataset.k)")
             check(len(taste) == nr_litere,
