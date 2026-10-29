@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuvântul zilei - joc de deducție cu litere, gratuit</title>
+<meta name="description" content="Șase încercări să ghicești cuvântul zilei: după fiecare încercare vezi ce litere sunt la locul lor. Alt cuvânt în fiecare zi, fără cont, fără reclame, în patru variante de limbă.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0f172a">
+<meta property="og:title" content="Cuvântul zilei - joc de deducție cu litere">
+<meta property="og:description" content="Șase încercări, un cuvânt pe zi, la fel pentru toată lumea. Gratuit, fără cont, în patru variante.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://games.freehtml.dev/cuvantul-zilei/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EC%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Cuvantul zilei","url":"https://games.freehtml.dev/cuvantul-zilei/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de deducție: un cuvânt pe zi, șase încercări, feedback pe litere. Gratuit, fără cont, în patru variante de limbă."}
+</script>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --tile:#ffffff; --tile-line:#cfd6e4;
+  --ok-bg:#157f3c; --ok-ink:#ffffff; --near-bg:#c98a00; --near-ink:#ffffff;
+  --off-bg:#8b93a3; --off-ink:#ffffff;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+    --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+    --tile:#111a2b; --tile-line:#2b3a55;
+    --ok-bg:#1f7a44; --ok-ink:#ffffff; --near-bg:#8a6200; --near-ink:#ffffff;
+    --off-bg:#3a465e; --off-ink:#dfe6f2;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+html[data-theme="light"]{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --tile:#ffffff; --tile-line:#cfd6e4;
+  --ok-bg:#157f3c; --ok-ink:#ffffff; --near-bg:#c98a00; --near-ink:#ffffff;
+  --off-bg:#8b93a3; --off-ink:#ffffff;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+}
+html[data-theme="dark"]{
+  --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+  --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --tile:#111a2b; --tile-line:#2b3a55;
+  --ok-bg:#1f7a44; --ok-ink:#ffffff; --near-bg:#8a6200; --near-ink:#ffffff;
+  --off-bg:#3a465e; --off-ink:#dfe6f2;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:960px; margin:0 auto; padding:18px 16px 48px}
+header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-.01em}
+.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.dot svg{display:block}
+.spacer{flex:1}
+.iconbtn{
+  border:1px solid var(--line); background:var(--panel); color:var(--text);
+  border-radius:10px; padding:8px 10px; cursor:pointer; font-size:15px; line-height:1;
+}
+.iconbtn:hover{border-color:var(--accent)}
+/* link de intoarcere la hub-ul de jocuri */
+.homebtn{
+  display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+  border:1px solid var(--line); background:var(--panel); color:var(--text);
+  border-radius:10px; padding:8px 12px; font-size:14px; font-weight:600; line-height:1;
+}
+.homebtn:hover{border-color:var(--accent); color:var(--accent)}
+.homebtn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.homebtn .arw{font-size:15px; line-height:1}
+.langs{display:flex; gap:4px; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:3px}
+.langs button{
+  border:0; background:transparent; color:var(--muted); font:inherit; font-size:13px; font-weight:600;
+  padding:6px 9px; border-radius:8px; cursor:pointer;
+}
+.langs button[aria-pressed="true"]{background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  box-shadow:var(--shadow); padding:18px; margin-bottom:16px;
+}
+.topline{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px}
+.chip{
+  font-size:13px; font-weight:600; color:var(--muted); background:var(--panel2);
+  border:1px solid var(--line); border-radius:999px; padding:4px 11px;
+}
+.chip.click{cursor:pointer}
+.chip.click:hover{border-color:var(--accent); color:var(--text)}
+.chip.mode{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+
+/* tabla */
+.board{display:flex; flex-direction:column; gap:6px; align-items:center; margin:6px 0 4px}
+.row{display:flex; gap:6px}
+.cell{
+  width:52px; height:52px; border-radius:9px; border:2px solid var(--tile-line);
+  background:var(--tile); display:grid; place-items:center;
+  font-size:24px; font-weight:800; text-transform:uppercase; color:var(--text);
+  transition:background .15s, border-color .15s, color .15s;
+}
+.cell.filled{border-color:var(--accent)}
+.cell.hinted{border-style:dashed; border-color:var(--accent); color:var(--accent)}
+.cell.good{background:var(--ok-bg); border-color:var(--ok-bg); color:var(--ok-ink)}
+.cell.near{background:var(--near-bg); border-color:var(--near-bg); color:var(--near-ink)}
+.cell.off{background:var(--off-bg); border-color:var(--off-bg); color:var(--off-ink)}
+.row.done .cell{animation:none}
+
+/* tastatura */
+.kbd{display:flex; flex-direction:column; gap:6px; align-items:center; margin-top:16px}
+.krow{display:flex; gap:5px; justify-content:center; flex-wrap:nowrap}
+.key{
+  min-width:34px; height:46px; padding:0 6px; border-radius:8px; cursor:pointer;
+  border:1px solid var(--line); background:var(--panel2); color:var(--text);
+  font:inherit; font-size:15px; font-weight:700; text-transform:uppercase;
+}
+.key:hover{border-color:var(--accent)}
+.key:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.key.wide{min-width:110px; font-size:15px}
+.key.good{background:var(--ok-bg); border-color:var(--ok-bg); color:var(--ok-ink)}
+.key.near{background:var(--near-bg); border-color:var(--near-bg); color:var(--near-ink)}
+.key.off{background:var(--off-bg); border-color:var(--off-bg); color:var(--off-ink)}
+.key:disabled{opacity:.35; cursor:default}
+
+.msg{text-align:center; font-weight:600; min-height:26px; margin:14px 0 6px}
+.msg.win{color:var(--good)} .msg.bad{color:var(--bad)}
+.actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px}
+.btn{
+  border:1px solid var(--accent); background:var(--accent); color:#fff;
+  border-radius:11px; padding:11px 18px; font:inherit; font-weight:700; cursor:pointer;
+}
+.btn.ghost{background:transparent; color:var(--text); border-color:var(--line)}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.45; cursor:default; filter:none}
+.stats{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:14px; color:var(--muted); font-size:14px}
+.stats b{color:var(--text); font-size:17px; display:block; text-align:center}
+.stats span{display:block; text-align:center}
+h1{font-size:24px; letter-spacing:-.02em; margin:0 0 8px}
+h2{font-size:18px; margin:22px 0 8px}
+p{margin:0 0 12px; color:var(--muted)}
+p strong{color:var(--text)}
+.note{font-size:13px}
+footer{color:var(--muted); font-size:13px; text-align:center; margin-top:28px; line-height:1.9}
+footer a{color:var(--accent); text-decoration:none; font-weight:600}
+footer a:hover{text-decoration:underline}
+footer .sep{opacity:.5; margin:0 4px}
+.shake{animation:shake .3s ease-in-out 2}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (max-width:560px){
+  header{gap:8px; margin-bottom:12px}
+  .spacer{display:none}
+  .brand{flex:1 1 auto; min-width:0; font-size:16px}
+  .langs{order:10; width:100%; justify-content:space-between}
+  .langs button{flex:1; padding:6px 7px; font-size:12px}
+  .iconbtn{margin-left:auto}
+  .wrap{padding:12px 10px 32px}
+  .dot{width:26px;height:26px;border-radius:8px}
+  .card{padding:14px; border-radius:14px}
+  .cell{width:40px; height:40px; font-size:19px; border-width:2px}
+  .row{gap:5px}
+  .key{min-width:27px; height:42px; font-size:13px; padding:0 4px}
+  .key.wide{min-width:96px; font-size:14px}
+  .krow{gap:4px}
+  .chip{font-size:12px; padding:3px 9px}
+  .btn{padding:10px 14px; font-size:15px}
+  .stats{gap:12px; font-size:12px}
+  .stats b{font-size:16px}
+}
+@media (prefers-reduced-motion: reduce){ .shake{animation:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
+  <div class="brand"><span class="dot" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4.5" width="18" height="15" rx="3"></rect>
+      <path d="M7.5 9.5h2M11 9.5h2M14.5 9.5h2M7.5 14.5h9"></path>
+    </svg></span><span id="brandName">Cuvântul zilei</span></div>
+  <div class="spacer"></div>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="ro" aria-pressed="true">RO</button>
+    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="sr" aria-pressed="false">SR</button>
+    <button data-lang="src" aria-pressed="false">СР</button>
+  </div>
+  <button class="iconbtn" id="themeBtn" aria-label="Theme">◑</button>
+</header>
+
+<main>
+<div class="card">
+  <div class="topline">
+    <span class="chip mode" id="modeChip">—</span>
+    <span class="chip" id="themeChip">—</span>
+    <span class="chip" id="lenChip">—</span>
+    <span class="spacer"></span>
+    <span class="chip" id="triesChip">—</span>
+  </div>
+
+  <div class="board" id="board" aria-live="polite"></div>
+  <div class="kbd" id="kbd"></div>
+
+  <div class="msg" id="msg" aria-live="assertive"></div>
+
+  <div class="actions">
+    <button class="btn ghost" id="hintBtn">—</button>
+    <button class="btn" id="againBtn">—</button>
+    <button class="btn ghost" id="shareBtn">—</button>
+  </div>
+
+  <div class="stats">
+    <div><b id="stPlayed">0</b><span id="stPlayedL">—</span></div>
+    <div><b id="stWon">0</b><span id="stWonL">—</span></div>
+    <div><b id="stStreak">0</b><span id="stStreakL">—</span></div>
+    <div><b id="stBest">0</b><span id="stBestL">—</span></div>
+  </div>
+</div>
+
+<section class="card" id="about">
+  <h1 id="h1">—</h1>
+  <p id="p1">—</p>
+  <h2 id="h2">—</h2>
+  <p id="p2">—</p>
+  <p class="note" id="p3">—</p>
+</section>
+</main>
+
+<footer>
+  <span id="foot">—</span><br>
+  <span id="supportText">—</span>
+  <a id="supportLink" href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>—</span></a>
+  <span class="sep">·</span>
+  <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">—</a>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- texte pe limbi ---------- */
+var L = {
+  ro:{ name:"Cuvântul zilei",
+    htmlLang:"ro",
+    title:"Cuvântul zilei - joc de deducție cu litere, gratuit",
+    desc:"Șase încercări să ghicești cuvântul zilei: după fiecare încercare vezi ce litere sunt la locul lor. Alt cuvânt în fiecare zi, fără cont, fără reclame, în patru variante de limbă.",
+    cats:{animale:"Animale", mancare:"Mâncare", locuri:"Locuri"},
+    letters:"litere", themeLbl:"Tema", tries:"Încercări",
+    modeDay:"Cuvântul zilei", modeFree:"Joc liber",
+    hint:"Arată o literă", again:"Cuvânt nou", freeBtn:"Joacă liber", share:"Copiază rezultatul",
+    short:"Prea puține litere.",
+    win:"Ai ghicit din ", winTries:" încercări.",
+    winOne:"Ai ghicit din prima.",
+    lose:"Nu ai ghicit. Cuvântul era ",
+    done:"Ai jucat deja cuvântul zilei. Revino mâine sau joacă liber.",
+    copied:"Rezultat copiat. Lipește-l unde vrei.",
+    hintNone:"Nu mai am ce să arăt.",
+    penalty:"Indiciul costă o încercare.",
+    already:"Cuvantul zilei e jucat. Apasa pe „Joaca liber”.",
+    played:"Jucate", won:"Câștigate", streak:"Serie", best:"Record",
+    h1:"Cuvântul zilei - șase încercări, deducție pură",
+    p1:"Un cuvânt se alege o dată pe zi, la fel pentru toată lumea, din cele 96 de cuvinte ale jocurilor de pe site. Ai șase încercări, iar după fiecare vezi ce litere ai nimerit.",
+    h2:"Cum se citește rezultatul",
+    p2:"Verde înseamnă că litera e la locul ei. Galben, că litera e în cuvânt, dar în alt loc. Gri, că litera nu apare deloc. Literele de pe tastatură se colorează la fel, ca să nu încerci de două ori ceva ce știi deja.",
+    p3:"Tema cuvântului e afișată ca indiciu, iar „Arată o literă” costă o încercare. Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
+    foot:"Joc fără cont, fără reclame, fără urmărire. Merge și fără internet după prima încărcare.",
+    supportText:"Jocul e gratuit și rămâne gratuit.", supportLink:"Susține munca",
+    report:"Ai văzut o greșeală? Spune-mi." },
+
+  en:{ name:"Word of the day",
+    htmlLang:"en",
+    title:"Word of the Day - a free letter deduction game",
+    desc:"Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions.",
+    cats:{animale:"Animals", mancare:"Food", locuri:"Places"},
+    letters:"letters", themeLbl:"Theme", tries:"Tries",
+    modeDay:"Word of the day", modeFree:"Free play",
+    hint:"Reveal a letter", again:"New word", freeBtn:"Play free", share:"Copy result",
+    short:"Not enough letters.",
+    win:"You got it in ", winTries:" tries.",
+    winOne:"You got it first time.",
+    lose:"Not this time. The word was ",
+    done:"You already played today's word. Come back tomorrow or play free.",
+    copied:"Result copied. Paste it anywhere.",
+    hintNone:"Nothing left to reveal.",
+    penalty:"The hint costs one try.",
+    already:"Today's word is done. Tap Play free.",
+    played:"Played", won:"Won", streak:"Streak", best:"Best",
+    h1:"Word of the Day - six tries, pure deduction",
+    p1:"One word is picked per day, the same for everyone, from the 96 words of the games on this site. You get six tries, and after each one you see which letters you got right.",
+    h2:"How to read the colours",
+    p2:"Green means the letter is in the right place. Yellow means the letter is in the word but somewhere else. Grey means the letter is not in the word at all. The keyboard colours the same way, so you do not try the same letter twice.",
+    p3:"The theme of the word is shown as a clue, and Reveal a letter costs one try. The game only stores your local stats in the browser. Nothing is sent to a server.",
+    foot:"No account, no ads, no tracking. Works offline after the first load.",
+    supportText:"The game is free and stays free.", supportLink:"Support the work",
+    report:"Spotted a mistake? Tell me." },
+
+  sr:{ name:"Reč dana",
+    htmlLang:"sr-Latn",
+    title:"Reč dana - besplatna igra pogađanja reči",
+    desc:"Šest pokušaja da pogodiš reč dana: posle svakog pokušaja vidiš koja su slova na pravom mestu. Nova reč svakog dana, bez naloga, bez reklama, u četiri jezičke varijante.",
+    cats:{animale:"Životinje", mancare:"Hrana", locuri:"Mesta"},
+    letters:"slova", themeLbl:"Tema", tries:"Pokušaji",
+    modeDay:"Reč dana", modeFree:"Slobodna igra",
+    hint:"Otkrij slovo", again:"Nova reč", freeBtn:"Igraj slobodno", share:"Kopiraj rezultat",
+    short:"Premalo slova.",
+    win:"Pogođeno iz ", winTries:" pokušaja.",
+    winOne:"Pogođeno iz prvog pokušaja.",
+    lose:"Nije pogođeno. Reč je bila ",
+    done:"Reč dana je već odigrana. Vrati se sutra ili igraj slobodno.",
+    copied:"Rezultat je kopiran. Nalepi ga gde želiš.",
+    hintNone:"Nema više šta da se otkrije.",
+    penalty:"Indicija košta jedan pokušaj.",
+    already:"Reč dana je odigrana. Klikni na „Igraj slobodno”.",
+    played:"Odigrano", won:"Pobede", streak:"Niz", best:"Rekord",
+    h1:"Reč dana - šest pokušaja, čisto pogađanje",
+    p1:"Jedna reč se bira po danu, ista za sve, iz 96 reči igara na sajtu. Imaš šest pokušaja, a posle svakog vidiš koja si slova pogodio.",
+    h2:"Kako se čitaju boje",
+    p2:"Zeleno znači da je slovo na pravom mestu. Žuto, da je slovo u reči ali na drugom mestu. Sivo, da slovo nije u reči. Slova na tastaturi se boje isto, da ne probaš dvaput ono što već znaš.",
+    p3:"Tema reči je prikazana kao indicija, a „Otkrij slovo” košta jedan pokušaj. Igra pamti samo tvoju lokalnu statistiku u pregledaču. Ništa se ne šalje na server.",
+    foot:"Bez naloga, bez reklama, bez praćenja. Radi i bez interneta posle prvog učitavanja.",
+    supportText:"Igra je besplatna i ostaje besplatna.", supportLink:"Podrži rad",
+    report:"Vidiš grešku? Reci mi." },
+
+  src:{ name:"Реч дана",
+    htmlLang:"sr-Cyrl",
+    title:"Реч дана - бесплатна игра погађања речи",
+    desc:"Шест покушаја да погодиш реч дана: после сваког покушаја видиш која су слова на правом месту. Нова реч сваког дана, без налога, без реклама, у четири језичке варијанте.",
+    cats:{animale:"Животиње", mancare:"Храна", locuri:"Места"},
+    letters:"слова", themeLbl:"Тема", tries:"Покушаји",
+    modeDay:"Реч дана", modeFree:"Слободна игра",
+    hint:"Откриј слово", again:"Нова реч", freeBtn:"Играј слободно", share:"Копирај резултат",
+    short:"Премало слова.",
+    win:"Погођено из ", winTries:" покушаја.",
+    winOne:"Погођено из првог покушаја.",
+    lose:"Није погођено. Реч је била ",
+    done:"Реч дана је већ одиграна. Врати се сутра или играј слободно.",
+    copied:"Резултат је копиран. Налепи га где желиш.",
+    hintNone:"Нема више шта да се открије.",
+    penalty:"Индиција кошта један покушај.",
+    already:"Реч дана је одиграна. Кликни на „Играј слободно”.",
+    played:"Одиграно", won:"Победе", streak:"Низ", best:"Рекорд",
+    h1:"Реч дана - шест покушаја, чисто погађање",
+    p1:"Једна реч се бира по дану, иста за све, из 96 речи игара на сајту. Имаш шест покушаја, а после сваког видиш која си слова погодио.",
+    h2:"Како се читају боје",
+    p2:"Зелено значи да је слово на правом месту. Жуто, да је слово у речи али на другом месту. Сиво, да слово није у речи. Слова на тастатури се боје исто, да не пробаш двапут оно што већ знаш.",
+    p3:"Тема речи је приказана као индиција, а „Откриј слово” кошта један покушај. Игра памти само твоју локалну статистику у прегледачу. Ништа се не шаље на сервер.",
+    foot:"Без налога, без реклама, без праћења. Ради и без интернета после првог учитавања.",
+    supportText:"Игра је бесплатна и остаје бесплатна.", supportLink:"Подржи рад",
+    report:"Видиш грешку? Реци ми." }
+};
+
+/* ---------- alfabete (aceleasi ca la celelalte jocuri) ---------- */
+var ABC = {
+  ro:"AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZ",
+  en:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  sr:"ABCČĆDĐEFGHIJKLMNOPRSŠTUVZŽ",
+  src:"АБВГДЂЕЖЗИЈКЛЉМНЊОПРСТЋУФХЦЧЏШ"
+};
+
+/* ---------- cuvinte: aceleasi 96, ca la celelalte jocuri ---------- */
+var W = {
+  ro:{
+    animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","DORMIȘOARĂ"],
+    mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI"],
+    locuri:["MUNTE","CASTEL","ORAȘ","BISERICĂ","POD","PORT","PALAT","TURN"]
+  },
+  en:{
+    animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK"],
+    mancare:["PANCAKE","NOODLES","CHEESE","PUMPKIN","SAUSAGE","OMELETTE","BISCUIT","YOGURT"],
+    locuri:["CASTLE","HARBOUR","LIBRARY","STADIUM","MUSEUM","BRIDGE","VILLAGE","LIGHTHOUSE"]
+  },
+  sr:{
+    animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN"],
+    mancare:["PALAČINKE","KAJMAK","PROJA","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA"],
+    locuri:["TVRĐAVA","MOST","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO"]
+  },
+  src:{
+    animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН"],
+    mancare:["ПАЛАЧИНКЕ","КАЈМАК","ПРОЈА","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА"],
+    locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО"]
+  }
+};
+
+var KEY = "cuvantul-zilei-v1";
+var MAX_TRIES = 6;
+var HOME_LBL = {ro:"Jocuri", en:"Games", sr:"Igre", src:"Игре"};
+var HOME_TTL = {ro:"Inapoi la toate jocurile", en:"Back to all games",
+                sr:"Nazad na sve igre", src:"Назад на све игре"};
+
+var $ = function(id){ return document.getElementById(id); };
+
+var state = {
+  lang:"ro",
+  mode:"day",          /* "day" sau "free" */
+  answer:"",
+  theme:"",
+  rows:[],             /* [{word:"", score:["good","near","off"]}] */
+  cur:[],              /* literele tastate, null pe pozitiile libere */
+  locked:[],           /* pozitii completate de indiciu */
+  penalty:0,           /* incercari consumate de indicii */
+  over:false,
+  won:false,
+  dayDone:false,
+  stats:{ro:{p:0,w:0,s:0,b:0}, en:{p:0,w:0,s:0,b:0}, sr:{p:0,w:0,s:0,b:0}, src:{p:0,w:0,s:0,b:0}},
+  days:{ro:null, en:null, sr:null, src:null}
+};
+
+/* ---------- ziua ---------- */
+function ziUtc(){
+  var d = new Date();
+  return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+}
+function numarZi(){
+  /* ziua 1 = 1 ianuarie 2026 */
+  return ziUtc() - Math.floor(Date.UTC(2026,0,1) / 86400000) + 1;
+}
+function pool(lang){
+  var out = [], tema, lista, i;
+  for(tema in W[lang]){
+    lista = W[lang][tema];
+    for(i=0;i<lista.length;i++) out.push({w:lista[i], t:tema});
+  }
+  return out;
+}
+function ziCuvant(lang){
+  var p = pool(lang);
+  return p[ziUtc() % p.length];
+}
+function liber(lang, fara){
+  var p = pool(lang), x, incercari = 0;
+  do{ x = p[Math.floor(Math.random()*p.length)]; incercari++; }
+  while(x.w === fara && incercari < 12);
+  return x;
+}
+
+/* ---------- persistenta ---------- */
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    var d = JSON.parse(raw);
+    if(d && d.stats){
+      for(var k in state.stats){
+        if(d.stats[k]) state.stats[k] = {
+          p:+d.stats[k].p||0, w:+d.stats[k].w||0, s:+d.stats[k].s||0, b:+d.stats[k].b||0
+        };
+      }
+    }
+    if(d && d.days){
+      for(var j in state.days){
+        if(d.days[j] && d.days[j].zi === ziUtc()) state.days[j] = d.days[j];
+      }
+    }
+    if(d && d.lang && L[d.lang]) state.lang = d.lang;
+  }catch(e){}
+}
+function save(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify({stats:state.stats, days:state.days, lang:state.lang}));
+  }catch(e){}
+}
+
+/* ---------- tema light/dark ---------- */
+function applyTheme(t){
+  if(t){ document.documentElement.setAttribute("data-theme", t); }
+  else { document.documentElement.removeAttribute("data-theme"); }
+}
+function initTheme(){
+  var salvat = null;
+  try{ salvat = localStorage.getItem(KEY + "-theme"); }catch(e){}
+  applyTheme(salvat);
+  $("themeBtn").addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    applyTheme(next);
+    try{ localStorage.setItem(KEY + "-theme", next); }catch(e){}
+  });
+}
+
+/* ---------- texte ---------- */
+function t(){ return L[state.lang]; }
+
+function applyHome(){
+  var a = $("homeBtn"), l = $("homeLbl");
+  if(!a || !l) return;
+  l.textContent = HOME_LBL[state.lang] || "Games";
+  a.setAttribute("aria-label", HOME_TTL[state.lang] || "Back to all games");
+  a.setAttribute("title", HOME_TTL[state.lang] || "Back to all games");
+}
+
+function applyTexts(){
+  var d = t();
+  applyHome();
+  document.documentElement.lang = d.htmlLang;
+  document.title = d.title;
+  var m = document.querySelector('meta[name="description"]');
+  if(m) m.setAttribute("content", d.desc);
+  $("brandName").textContent = d.name;
+  $("hintBtn").textContent = d.hint;
+  $("shareBtn").textContent = d.share;
+  $("stPlayedL").textContent = d.played;
+  $("stWonL").textContent = d.won;
+  $("stStreakL").textContent = d.streak;
+  $("stBestL").textContent = d.best;
+  $("h1").textContent = d.h1;
+  $("p1").textContent = d.p1;
+  $("h2").textContent = d.h2;
+  $("p2").textContent = d.p2;
+  $("p3").textContent = d.p3;
+  $("foot").textContent = d.foot;
+  $("supportText").textContent = d.supportText + " ";
+  $("supportLink").querySelector("span").textContent = d.supportLink;
+  $("report").textContent = d.report;
+  var btns = document.querySelectorAll(".langs button");
+  for(var i=0;i<btns.length;i++){
+    btns[i].setAttribute("aria-pressed", btns[i].getAttribute("data-lang") === state.lang ? "true" : "false");
+  }
+  $("themeBtn").setAttribute("aria-label", state.lang === "en" ? "Theme" : (state.lang === "ro" ? "Tema" : "Tema"));
+}
+
+/* ---------- joc ---------- */
+function porneste(mod, cuvant){
+  var c = cuvant || (mod === "day" ? ziCuvant(state.lang) : liber(state.lang, state.answer));
+  state.mode = mod;
+  state.answer = c.w;
+  state.theme = c.t;
+  state.rows = [];
+  state.cur = new Array(c.w.length).fill(null);
+  state.locked = new Array(c.w.length).fill(null);
+  state.penalty = 0;
+  state.over = false;
+  state.won = false;
+  state.dayDone = false;
+  $("msg").textContent = "";
+  $("msg").className = "msg";
+  render();
+}
+
+function incarcaZiua(){
+  var rec = state.days[state.lang];
+  if(rec && rec.zi === ziUtc()){
+    var c = ziCuvant(state.lang);
+    state.mode = "day";
+    state.answer = c.w;
+    state.theme = c.t;
+    state.cur = new Array(c.w.length).fill(null);
+    state.locked = new Array(c.w.length).fill(null);
+    state.rows = (rec.rows || []).map(function(r){
+      return {word:r, score:score(r, c.w)};
+    });
+    state.penalty = rec.penalty || 0;
+    state.won = !!rec.won;
+    state.over = true;
+    state.dayDone = true;
+    render();
+    $("msg").textContent = state.won ? (t().win + state.rows.length + t().winTries) : t().done;
+    $("msg").className = "msg " + (state.won ? "win" : "bad");
+    return true;
+  }
+  return false;
+}
+
+function score(ghicit, raspuns){
+  var n = raspuns.length, res = new Array(n).fill(null), folosit = new Array(n).fill(false), i, j;
+  for(i=0;i<n;i++){
+    if(ghicit[i] === raspuns[i]){ res[i] = "good"; folosit[i] = true; }
+  }
+  for(i=0;i<n;i++){
+    if(res[i] !== null) continue;
+    for(j=0;j<n;j++){
+      if(!folosit[j] && raspuns[j] === ghicit[i]){ res[i] = "near"; folosit[j] = true; break; }
+    }
+    if(res[i] === null) res[i] = "off";
+  }
+  return res;
+}
+
+function litereTastate(){
+  return state.cur.filter(function(x){ return x !== null; }).length +
+         state.locked.filter(function(x){ return x !== null; }).length;
+}
+
+function render(){
+  var d = t();
+  var n = state.answer.length;
+
+  /* chip-uri */
+  $("modeChip").textContent = state.mode === "day" ? d.modeDay : d.modeFree;
+  $("themeChip").textContent = d.themeLbl + ": " + d.cats[state.theme];
+  $("lenChip").textContent = n + " " + d.letters;
+  /* arata cate incercari s-au folosit, nu cate au mai ramas (mai putin confuz) */
+  var folosite = Math.min(MAX_TRIES, state.rows.length + state.penalty);
+  $("triesChip").textContent = d.tries + ": " + folosite + "/" + MAX_TRIES;
+
+  /* tabla */
+  var board = $("board");
+  board.innerHTML = "";
+  for(var r=0;r<MAX_TRIES;r++){
+    var row = document.createElement("div");
+    row.className = "row";
+    var cuv = null, sc = null;
+    if(state.rows[r]){ cuv = state.rows[r].word; sc = state.rows[r].score; }
+    else if(r === state.rows.length && !state.over){ cuv = combinatie(); }
+
+    for(var i=0;i<n;i++){
+      var c = document.createElement("div");
+      c.className = "cell";
+      var litera = "";
+      if(cuv && cuv[i]) litera = cuv[i];
+      if(litera) c.textContent = litera;
+      if(sc && sc[i]) c.className += " " + sc[i];
+      if(!sc && r === state.rows.length && !state.over){
+        if(litera) c.className += " filled";
+        if(state.locked[i]) c.className += " hinted";
+      }
+      row.appendChild(c);
+    }
+    if(sc) row.className += " done";
+    board.appendChild(row);
+  }
+
+  /* tastatura */
+  var kbd = $("kbd");
+  kbd.innerHTML = "";
+  var abc = ABC[state.lang].split("");
+  var stari = starileLiterelor();
+  var i;
+  var per = Math.ceil(abc.length / 3);
+  var randuri = [abc.slice(0, per), abc.slice(per, per * 2), abc.slice(per * 2)];
+  var k;
+  for(k=0;k<randuri.length;k++){
+    var kr = document.createElement("div");
+    kr.className = "krow";
+    for(i=0;i<randuri[k].length;i++) kr.appendChild(tasta(randuri[k][i], stari));
+    kbd.appendChild(kr);
+  }
+  /* stergere si trimitere, pe randul lor, ca sa incapa pe telefon */
+  var ultim = document.createElement("div");
+  ultim.className = "krow";
+  ultim.appendChild(tastaSpeciala("back", "⌫"));
+  ultim.appendChild(tastaSpeciala("enter", "⏎"));
+  kbd.appendChild(ultim);
+
+  /* butoane */
+  var gol = litereTastate() === 0;
+  $("hintBtn").disabled = state.over || state.locked.indexOf(null) === -1 ||
+                          (state.rows.length + state.penalty) >= MAX_TRIES - 1;
+  if(state.mode === "day" && state.over && !state.dayDone){
+    $("againBtn").textContent = d.freeBtn;
+  } else if(state.mode === "day" && state.dayDone){
+    $("againBtn").textContent = d.freeBtn;
+  } else {
+    $("againBtn").textContent = d.again;
+  }
+  $("shareBtn").disabled = state.rows.length === 0;
+
+  /* statistici */
+  var s = state.stats[state.lang];
+  $("stPlayed").textContent = s.p;
+  $("stWon").textContent = s.w;
+  $("stStreak").textContent = s.s;
+  $("stBest").textContent = s.b;
+}
+
+function combinatie(){
+  var out = [], n = state.answer.length;
+  for(var i=0;i<n;i++) out.push(state.locked[i] || state.cur[i] || "");
+  return out.join("");
+}
+
+function starileLitereaLitere(){
+  /* cel mai bun rezultat al fiecarei litere, pentru colorarea tastaturii */
+  var rang = {good:3, near:2, off:1};
+  var out = {};
+  for(var r=0;r<state.rows.length;r++){
+    var cuv = state.rows[r].word, sc = state.rows[r].score;
+    for(var i=0;i<cuv.length;i++){
+      var ch = cuv[i];
+      if(!out[ch] || rang[sc[i]] > rang[out[ch]]) out[ch] = sc[i];
+    }
+  }
+  return out;
+}
+function starileLiterelor(){ return starileLitereaLitere(); }
+
+function tasta(ch, stari){
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "key";
+  b.textContent = ch;
+  b.setAttribute("data-k", ch);
+  if(stari[ch]) b.className += " " + stari[ch];
+  if(state.over) b.disabled = true;
+  b.addEventListener("click", function(){ apasa(ch); });
+  return b;
+}
+
+function tastaSpeciala(ce, text){
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "key wide";
+  b.textContent = text;
+  b.setAttribute("data-k", ce);
+  if(state.over) b.disabled = true;
+  b.addEventListener("click", function(){
+    if(ce === "back") sterge();
+    else incearca();
+  });
+  return b;
+}
+
+/* ---------- actiuni ---------- */
+function apasa(ch){
+  if(state.over) return;
+  if(litereTastate() >= state.answer.length) return;
+  for(var i=0;i<state.answer.length;i++){
+    if(state.locked[i]) continue;
+    if(state.cur[i] === null){ state.cur[i] = ch; break; }
+  }
+  $("msg").textContent = "";
+  $("msg").className = "msg";
+  render();
+}
+
+function sterge(){
+  if(state.over) return;
+  for(var i=state.answer.length-1;i>=0;i--){
+    if(state.locked[i]) continue;
+    if(state.cur[i] !== null){ state.cur[i] = null; break; }
+  }
+  render();
+}
+
+function incearca(){
+  if(state.over) return;
+  var d = t();
+  var ghicit = combinatie();
+  /* atentie: "text".indexOf("") intoarce 0, deci nu se poate testa asa daca randul e plin */
+  var plin = true, i;
+  for(i=0;i<state.answer.length;i++){
+    if(state.locked[i] === null && state.cur[i] === null){ plin = false; break; }
+  }
+  if(!plin || ghicit.length !== state.answer.length){
+    $("msg").textContent = d.short;
+    $("msg").className = "msg bad";
+    $("board").classList.add("shake");
+    setTimeout(function(){ $("board").classList.remove("shake"); }, 650);
+    return;
+  }
+  state.rows.push({word:ghicit, score:score(ghicit, state.answer)});
+  state.cur = new Array(state.answer.length).fill(null);
+  state.locked = new Array(state.answer.length).fill(null);
+
+  if(ghicit === state.answer){
+    state.over = true; state.won = true;
+    finalizeaza(true);
+    $("msg").textContent = state.rows.length === 1 ? d.winOne : (d.win + state.rows.length + d.winTries);
+    $("msg").className = "msg win";
+  } else if(state.rows.length + state.penalty >= MAX_TRIES){
+    state.over = true; state.won = false;
+    finalizeaza(false);
+    $("msg").textContent = d.lose + state.answer;
+    $("msg").className = "msg bad";
+  }
+  render();
+}
+
+function finalizeaza(castigat){
+  var s = state.stats[state.lang];
+  s.p++;
+  if(castigat){
+    s.w++;
+    s.s++;
+    if(s.s > s.b) s.b = s.s;
+  } else {
+    s.s = 0;
+  }
+  if(state.mode === "day"){
+    state.days[state.lang] = {
+      zi: ziUtc(),
+      won: castigat,
+      penalty: state.penalty,
+      rows: state.rows.map(function(r){ return r.word; })
+    };
+    state.dayDone = true;
+  }
+  save();
+}
+
+function indiciu(){
+  if(state.over) return;
+  var d = t();
+  var liber = state.locked.indexOf(null);
+  if(liber === -1){ $("msg").textContent = d.hintNone; return; }
+  state.locked[liber] = state.answer[liber];
+  if(state.cur[liber]) state.cur[liber] = null;
+  state.penalty++;
+  $("msg").textContent = d.penalty;
+  $("msg").className = "msg";
+  if(state.rows.length + state.penalty >= MAX_TRIES){
+    state.over = true; state.won = false;
+    finalizeaza(false);
+    $("msg").textContent = d.lose + state.answer;
+    $("msg").className = "msg bad";
+  }
+  render();
+}
+
+function altCuvant(){
+  var d = t();
+  if(state.mode === "day" && !state.over){
+    /* cuvantul zilei nu se schimba: trecem pe joc liber */
+    porneste("free");
+    return;
+  }
+  if(state.mode === "day" && state.over){
+    porneste("free");
+    return;
+  }
+  porneste("free", liber(state.lang, state.answer));
+}
+
+function copiaza(){
+  var d = t();
+  var emoji = {good:"🟩", near:"🟨", off:"⬛"};
+  var linii = [d.modeDay + " #" + numarZi() + " · " + state.rows.length + "/" + MAX_TRIES];
+  for(var r=0;r<state.rows.length;r++){
+    var linie = "";
+    for(var i=0;i<state.rows[r].score.length;i++) linie += emoji[state.rows[r].score[i]];
+    linii.push(linie);
+  }
+  linii.push("https://games.freehtml.dev/cuvantul-zilei/");
+  var text = linii.join("\n");
+  function gata(){
+    $("msg").textContent = d.copied;
+    $("msg").className = "msg win";
+    setTimeout(function(){
+      if($("msg").textContent === d.copied){ $("msg").textContent = ""; $("msg").className = "msg"; }
+    }, 2200);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(gata, function(){ rezerva(text); gata(); });
+  } else {
+    rezerva(text); gata();
+  }
+}
+function rezerva(text){
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ---------- limba ---------- */
+function setLang(l){
+  if(!L[l]) return;
+  state.lang = l;
+  applyTexts();
+  if(!incarcaZiua()) porneste("day");
+  save();
+}
+
+/* ---------- start ---------- */
+load();
+applyTexts();
+initTheme();
+if(!incarcaZiua()) porneste("day");
+
+$("againBtn").addEventListener("click", altCuvant);
+$("hintBtn").addEventListener("click", indiciu);
+$("shareBtn").addEventListener("click", copiaza);
+
+var langBtns = document.querySelectorAll(".langs button");
+for(var i=0;i<langBtns.length;i++){
+  langBtns[i].addEventListener("click", (function(b){
+    return function(){ setLang(b.getAttribute("data-lang")); };
+  })(langBtns[i]));
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(e.key === "Enter"){ e.preventDefault(); incearca(); return; }
+  if(e.key === "Backspace"){ e.preventDefault(); sterge(); return; }
+  if(e.key.length !== 1) return;
+  var ch = e.key.toUpperCase();
+  var abc = ABC[state.lang];
+  if(abc.indexOf(ch) === -1){
+    /* fara diacritice: A -> Ă etc. daca litera simpla nu exista in alfabet */
+    var perechi = {"A":["Ă","Â"],"I":["Î"],"S":["Ș"],"T":["Ț"],
+                   "C":["Č","Ć"],"D":["Đ"],"Z":["Ž"]};
+    var alt = perechi[ch];
+    if(alt){
+      for(var i2=0;i2<alt.length;i2++){
+        if(abc.indexOf(alt[i2]) !== -1){ ch = alt[i2]; break; }
+      }
+    }
+  }
+  if(abc.indexOf(ch) === -1) return;
+  e.preventDefault();
+  apasa(ch);
+});
+})();
+</script>
+</body>
+</html>

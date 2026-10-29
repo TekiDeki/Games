@@ -139,6 +139,12 @@ def main():
               "hub-ul listeaza jocul")
         link = pg.eval_on_selector('a.card[href]', "e=>e.getAttribute('href')")
         check(link == "ghiceste-cuvantul/", "link relativ corect: " + link)
+        carduri = pg.eval_on_selector_all("a.card[href]", "as=>as.map(a=>a.getAttribute('href'))")
+        check(carduri == ["ghiceste-cuvantul/", "perechi-cuvinte/", "amesteca-literele/", "cuvantul-zilei/"],
+              "hub-ul listeaza toate cele 4 jocuri: " + ", ".join(carduri))
+        for cale in carduri:
+            check(os.path.exists(os.path.join(RADACINA, cale, "index.html")),
+                  "fisierul din card exista: " + cale)
         browser.close()
 
     print("\n" + str(ok) + " verificari trecute, " + str(rau) + " esuate")
