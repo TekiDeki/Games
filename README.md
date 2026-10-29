@@ -16,6 +16,7 @@ Shortcut: **https://freehtml.dev/games** (302)
 | Word scramble | `/amesteca-literele/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
 | Word of the day | `/cuvantul-zilei/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
 | Odd one out | `/gaseste-intrusul/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
+| Word search | `/cautare-de-cuvinte/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 96 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
 
 ## House rules
 
@@ -40,6 +41,8 @@ cuvantul-zilei/
   index.html               the game (single file)
 gaseste-intrusul/
   index.html               the game (single file)
+cautare-de-cuvinte/
+  index.html               the game (single file)
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap
 tests/test_ui.py           Playwright: 4 languages, win, lose, hint, theme switch
@@ -47,6 +50,7 @@ tests/test_perechi.py      Playwright: 4 languages, board sizes, pairs, peek, wi
 tests/test_amesteca.py     Playwright: 4 languages, place/remove/clear, hint, keyboard, win
 tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, share, free play
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
+tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
 ```
 
 ## Development
@@ -65,6 +69,7 @@ python tests/test_perechi.py
 python tests/test_amesteca.py
 python tests/test_zilei.py
 python tests/test_intrus.py
+python tests/test_cautare.py
 ```
 
 ## Deploy
