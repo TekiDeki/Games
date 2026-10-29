@@ -53,6 +53,7 @@ tests/test_amesteca.py     Playwright: 4 languages, place/remove/clear, hint, ke
 tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, share, free play
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
 tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
+tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
 ```
 
 ## Development
@@ -72,6 +73,7 @@ python tests/test_amesteca.py
 python tests/test_zilei.py
 python tests/test_intrus.py
 python tests/test_cautare.py
+python tests/test_tastatura.py
 ```
 
 ## Deploy
