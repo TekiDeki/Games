@@ -1,6 +1,6 @@
 # Games
 
-Small browser games, one HTML file each. No account, no ads, no analytics script, no cookies.
+Small browser games, one HTML file each. No account, no ads, no analytics script, no cookies, nothing loaded from another server.
 
 **Live:** https://games.freehtml.dev (Cloudflare Pages, canonical)
 **Mirror:** https://tekideki.github.io/Games/ (GitHub Pages, same files, canonical points here)
