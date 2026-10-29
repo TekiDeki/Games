@@ -47,6 +47,7 @@ word-search/
   index.html               the game (single file)
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap
+_headers                   security headers (CSP with connect-src 'none', HSTS, nosniff, frame DENY)
 tests/test_ui.py           Playwright: 4 languages, win, lose, hint, theme switch
 tests/test_perechi.py      Playwright: 4 languages, board sizes, pairs, peek, win
 tests/test_amesteca.py     Playwright: 4 languages, place/remove/clear, hint, keyboard, win
@@ -54,6 +55,7 @@ tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, s
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
 tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
+tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests
 ```
 
 ## Development
@@ -74,6 +76,7 @@ python tests/test_zilei.py
 python tests/test_intrus.py
 python tests/test_cautare.py
 python tests/test_tastatura.py
+python tests/test_antete.py
 ```
 
 ## Deploy
