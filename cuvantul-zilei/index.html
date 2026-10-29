@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cuvântul zilei - joc de deducție cu litere, gratuit</title>
-<meta name="description" content="Șase încercări să ghicești cuvântul zilei: după fiecare încercare vezi ce litere sunt la locul lor. Alt cuvânt în fiecare zi, fără cont, fără reclame, în patru limbi.">
+<title>Word of the Day - a free letter deduction game</title>
+<meta name="description" content="Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0f172a">
-<meta property="og:title" content="Cuvântul zilei - joc de deducție cu litere">
-<meta property="og:description" content="Șase încercări, un cuvânt pe zi, la fel pentru toată lumea. Gratuit, fără cont, în patru limbi.">
+<meta property="og:title" content="Word of the Day">
+<meta property="og:description" content="Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://games.freehtml.dev/cuvantul-zilei/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EC%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Cuvântul zilei","url":"https://games.freehtml.dev/cuvantul-zilei/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de deducție: un cuvânt pe zi, șase încercări, feedback pe litere. Gratuit, fără cont, în patru limbi (română, engleză, sârbă latină și chirilică)."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word of the day","url":"https://games.freehtml.dev/cuvantul-zilei/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Six tries to guess the word of the day: after every guess you see which letters are in the right place. A new word every day, no account, no ads, in four language versions."}
 </script>
 <style>
 :root{
@@ -178,16 +178,16 @@ footer .sep{opacity:.5; margin:0 4px}
 <div class="wrap">
 
 <header>
-  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Games</span></a>
   <div class="brand"><span class="dot" aria-hidden="true">
     <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="4.5" width="18" height="15" rx="3"></rect>
       <path d="M7.5 9.5h2M11 9.5h2M14.5 9.5h2M7.5 14.5h9"></path>
-    </svg></span><span id="brandName">Cuvântul zilei</span></div>
+    </svg></span><span id="brandName">Word of the day</span></div>
   <div class="spacer"></div>
   <div class="langs" role="group" aria-label="Language">
-    <button data-lang="ro" aria-pressed="true">RO</button>
-    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="ro" aria-pressed="false">RO</button>
     <button data-lang="sr" aria-pressed="false">SR</button>
     <button data-lang="src" aria-pressed="false">СР</button>
   </div>
@@ -397,7 +397,7 @@ var HOME_TTL = {ro:"Inapoi la toate jocurile", en:"Back to all games",
 var $ = function(id){ return document.getElementById(id); };
 
 var state = {
-  lang:"ro",
+  lang:"en",
   mode:"day",          /* "day" sau "free" */
   answer:"",
   theme:"",

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ghicește cuvântul - joc de cuvinte online, gratuit</title>
-<meta name="description" content="Ghicește cuvântul ascuns literă cu literă. Joc gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru limbi: română, engleză, sârbă latină, sârbă chirilică.">
+<title>Guess the Word - free online word game</title>
+<meta name="description" content="Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0f172a">
-<meta property="og:title" content="Ghicește cuvântul - joc de cuvinte online">
-<meta property="og:description" content="Ghicește cuvântul ascuns literă cu literă. Gratuit, fără cont, în patru limbi.">
+<meta property="og:title" content="Guess the Word">
+<meta property="og:description" content="Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://games.freehtml.dev/ghiceste-cuvantul/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='58' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Ghicește cuvântul","url":"https://games.freehtml.dev/ghiceste-cuvantul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de ghicit cuvinte literă cu literă, gratuit, fără cont, în patru limbi."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Guess the word","url":"https://games.freehtml.dev/ghiceste-cuvantul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Guess the hidden word one letter at a time. Free game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic."}
 </script>
 <style>
 :root{
@@ -153,12 +153,12 @@ footer .sep{opacity:.5; margin:0 4px}
 <div class="wrap">
 
 <header>
-  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
-  <div class="brand"><span class="dot">A</span><span id="brandName">Ghiceste cuvantul</span></div>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Games</span></a>
+  <div class="brand"><span class="dot">A</span><span id="brandName">Guess the word</span></div>
   <div class="spacer"></div>
   <div class="langs" role="group" aria-label="Language">
-    <button data-lang="ro" aria-pressed="true">RO</button>
-    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="ro" aria-pressed="false">RO</button>
     <button data-lang="sr" aria-pressed="false">SR</button>
     <button data-lang="src" aria-pressed="false">СР</button>
   </div>
@@ -348,7 +348,7 @@ var KEY = "ghiceste-cuvantul-v1";
 var $ = function(id){ return document.getElementById(id); };
 
 var state = {
-  lang:"ro",
+  lang:"en",
   theme:"animale",
   word:"",
   guessed:{},     /* litera -> true */

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Găsește intrusul - joc de cuvinte online, gratuit</title>
-<meta name="description" content="Trei cuvinte sunt din aceeași temă, unul nu: găsește intrusul în douăsprezece secunde. Joc gratuit, fără cont, fără reclame, în patru limbi.">
+<title>Odd One Out - free word game online</title>
+<meta name="description" content="Three words belong to the same theme and one does not: find the odd one out in twelve seconds. Free game, no account, no ads, in four language versions.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0f172a">
-<meta property="og:title" content="Găsește intrusul - joc de cuvinte online">
-<meta property="og:description" content="Trei cuvinte dintr-o temă, unul nu. Zece runde, douăsprezece secunde pe rundă. Gratuit, fără cont.">
+<meta property="og:title" content="Odd One Out">
+<meta property="og:description" content="Three words belong to the same theme and one does not: find the odd one out in twelve seconds. Free game, no account, no ads, in four language versions.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://games.freehtml.dev/gaseste-intrusul/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EI%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Găsește intrusul","url":"https://games.freehtml.dev/gaseste-intrusul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de cuvinte: patru cuvinte, trei din aceeași temă și unul din alta. Găsește intrusul în douăsprezece secunde. Gratuit, fără cont, în patru limbi."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Odd one out","url":"https://games.freehtml.dev/gaseste-intrusul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Three words belong to the same theme and one does not: find the odd one out in twelve seconds. Free game, no account, no ads, in four language versions."}
 </script>
 <style>
 :root{
@@ -182,15 +182,15 @@ footer .sep{margin:0 6px}
 <div class="wrap">
 
 <header>
-  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Games</span></a>
   <div class="brand"><span class="dot" aria-hidden="true">
     <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="9" cy="9" r="5"></circle><circle cx="16" cy="16" r="3"></circle>
-    </svg></span><span id="brandName">Găsește intrusul</span></div>
+    </svg></span><span id="brandName">Odd one out</span></div>
   <div class="spacer"></div>
   <div class="langs" role="group" aria-label="Language">
-    <button data-lang="ro" aria-pressed="true">RO</button>
-    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="ro" aria-pressed="false">RO</button>
     <button data-lang="sr" aria-pressed="false">SR</button>
     <button data-lang="src" aria-pressed="false">СР</button>
   </div>
@@ -386,7 +386,7 @@ var HOME_TTL = {ro:"Inapoi la toate jocurile", en:"Back to all games",
 var $ = function(id){ return document.getElementById(id); };
 
 var state = {
-  lang:"ro",
+  lang:"en",
   runda:0,             /* runda curenta, de la 1 */
   scor:0,
   corecte:0,

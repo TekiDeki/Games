@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perechi de cuvinte - joc de memorie online, gratuit</title>
-<meta name="description" content="Găsește perechile de cuvinte într-un tabel de cărți întoarse. Joc de memorie gratuit, fără cont, fără reclame, merge pe telefon și pe calculator. Patru limbi: română, engleză, sârbă latină, sârbă chirilică.">
+<title>Word Pairs - free memory game online</title>
+<meta name="description" content="Find the matching word pairs on a board of face down cards. Free memory game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#0f172a">
-<meta property="og:title" content="Perechi de cuvinte - joc de memorie online">
-<meta property="og:description" content="Găsește perechile de cuvinte într-un tabel de cărți întoarse. Gratuit, fără cont, în patru limbi.">
+<meta property="og:title" content="Word Pairs">
+<meta property="og:description" content="Find the matching word pairs on a board of face down cards. Free memory game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://games.freehtml.dev/perechi-cuvinte/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='54' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3E%E2%97%A7%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Perechi de cuvinte","url":"https://games.freehtml.dev/perechi-cuvinte/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de memorie cu perechi de cuvinte, gratuit, fără cont, în patru limbi (română, engleză, sârbă latină și chirilică)."}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word pairs","url":"https://games.freehtml.dev/perechi-cuvinte/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ro","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Find the matching word pairs on a board of face down cards. Free memory game, no account, no ads, works on phone and desktop. Four languages: Romanian, English, Serbian Latin, Serbian Cyrillic."}
 </script>
 <style>
 :root{
@@ -168,12 +168,12 @@ footer .sep{opacity:.5; margin:0 4px}
 <div class="wrap">
 
 <header>
-  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
-  <div class="brand"><span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.2" y="3.2" width="9" height="9" rx="2"></rect><rect x="11.8" y="11.8" width="9" height="9" rx="2"></rect></svg></span><span id="brandName">Perechi de cuvinte</span></div>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Games</span></a>
+  <div class="brand"><span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.2" y="3.2" width="9" height="9" rx="2"></rect><rect x="11.8" y="11.8" width="9" height="9" rx="2"></rect></svg></span><span id="brandName">Word pairs</span></div>
   <div class="spacer"></div>
   <div class="langs" role="group" aria-label="Language">
-    <button data-lang="ro" aria-pressed="true">RO</button>
-    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="ro" aria-pressed="false">RO</button>
     <button data-lang="sr" aria-pressed="false">SR</button>
     <button data-lang="src" aria-pressed="false">СР</button>
   </div>
@@ -347,7 +347,7 @@ var KEY = "perechi-cuvinte-v1";
 var $ = function(id){ return document.getElementById(id); };
 
 var state = {
-  lang:"ro",
+  lang:"en",
   theme:"animale",
   pairs:6,
   deck:[],          /* [{w, pair}] */
