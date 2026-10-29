@@ -149,6 +149,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 
 footer{color:var(--muted); font-size:14px; text-align:center; line-height:1.9}
 footer a{color:var(--accent); text-decoration:none}
+footer a{display:inline-block; padding:5px 2px; min-height:24px; min-width:24px}
 footer a:hover{text-decoration:underline}
 footer .sep{margin:0 6px}
 
@@ -165,6 +166,14 @@ footer .sep{margin:0 6px}
   .btn{padding:11px 14px; font-size:14px}
   .actions .btn{flex:1 1 auto}
   .word{font-size:12px; padding:5px 9px}
+}
+/* sub 360 px: 12 coloane de minim 24 px incap doar daca stranjem marginile
+   (12x24 + 11x1 = 299 px, iar latimea utila devine 320 - 8 - 12 = 300 px) */
+@media (max-width:360px){
+  .wrap{padding:4px 4px 40px}
+  .card{padding:6px; border-radius:12px}
+  #grid{gap:1px; width:100%}
+  .cell{border-radius:4px; min-height:24px; min-width:24px}
 }
 </style>
 </head>
@@ -199,7 +208,7 @@ footer .sep{margin:0 6px}
 
   <p class="prompt" id="prompt">—</p>
 
-  <div class="gridwrap"><div id="grid" role="grid" aria-label="Grid"></div></div>
+  <div class="gridwrap"><div id="grid" role="group" aria-label="Grid"></div></div>
 
   <div class="words" id="words"></div>
 
@@ -273,16 +282,17 @@ var L = {
     cats:{animale:"animale", mancare:"mâncare", locuri:"locuri"},
     themeLbl:"Tema", foundLbl:"Găsite", timeLbl:"Timp",
     prompt:"Găsește cele opt cuvinte în grilă, pe orizontală, verticală sau diagonală.",
-    good:"Cuvânt găsit: ", already:"Cuvântul acesta e deja găsit.",
+    good:"Cuvânt găsit: ", already:"Cuvântul acesta e deja găsit.", picking:"Selectezi: ",
     done:"Gata! Toate cele opt cuvinte găsite în ",
     again:"Joc nou", share:"Copiază rezultatul",
     copied:"Rezultatul e copiat. Lipește-l oriunde.",
-    ready:"Trage cu degetul sau cu mouse-ul de la prima literă până la ultima.",
+    ready:"Trage cu degetul sau cu mouse-ul de la prima literă până la ultima. La tastatură: săgețile mută, Enter marchează începutul și sfârșitul, Shift plus săgeți întinde selecția.",
+    noLine:"Selecția merge doar pe linie dreaptă: orizontal, vertical sau pe diagonală.",
     played:"Jucate", words:"Cuvinte", best:"Record timp", record:"Table terminate",
     h1:"Caută cuvintele - opt cuvinte ascunse într-o grilă",
     p1:"Pe ecran apare o grilă de litere, iar dedesubt cele opt cuvinte ale temei. Le găsești trăgând cu degetul sau cu mouse-ul de la prima literă până la ultima: pe orizontală, pe verticală sau pe diagonală, în ambele sensuri. Cuvântul găsit se colorează și se taie de pe listă.",
-    h2:"Fără tastatură, fără timp pierdut",
-    p2:"Nu trebuie să scrii nimic și nu există cronometru care să te oprească: timpul se măsoară doar ca să vezi cât de repede termini tabla. Alege tema, animale, mâncare sau locuri, și începe alt joc oricând. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
+    h2:"Fără tastat, fără timp pierdut",
+    p2:"Se joacă și cu mouse-ul sau cu degetul, și de la tastatură. Nu trebuie să scrii nimic și nu există cronometru care să te oprească: timpul se măsoară doar ca să vezi cât de repede termini tabla. Alege tema, animale, mâncare sau locuri, și începe alt joc oricând. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
     p3:"Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
     foot:"Joc fără cont, fără reclame, fără script de analitică, fără cookie-uri, nimic încărcat de pe alt server. Merge și fără internet după prima încărcare.",
     supportText:"Jocul e gratuit și rămâne gratuit.", supportLink:"Susține munca",
@@ -295,16 +305,17 @@ var L = {
     cats:{animale:"animals", mancare:"food", locuri:"places"},
     themeLbl:"Theme", foundLbl:"Found", timeLbl:"Time",
     prompt:"Find the eight words in the grid: across, down or diagonally.",
-    good:"Found: ", already:"That word is already found.",
+    good:"Found: ", already:"That word is already found.", picking:"Selecting: ",
     done:"Done! All eight words found in ",
     again:"New game", share:"Copy result",
     copied:"Result copied. Paste it anywhere.",
-    ready:"Drag with your finger or the mouse from the first letter to the last.",
+    ready:"Drag with your finger or the mouse from the first letter to the last. On a keyboard: arrows move, Enter marks the start and the end, Shift with arrows extends the selection.",
+    noLine:"A selection has to stay on one line: across, down or diagonally.",
     played:"Played", words:"Words", best:"Best time", record:"Boards finished",
     h1:"Word Search - eight words hidden in a grid",
     p1:"A grid of letters appears, and the eight words of the theme are listed below it. Find them by dragging from the first letter to the last: across, down or diagonally, in either direction. A found word changes colour and is crossed off the list.",
-    h2:"No keyboard, no clock",
-    p2:"There is nothing to type and no timer that stops you: time is only measured so you can see how fast you finish the board. Pick a theme, animals, food or places, and start a new game whenever you like. The four languages are English, Romanian, Serbian Latin and Serbian Cyrillic.",
+    h2:"No typing, no clock",
+    p2:"You can play with the mouse, with a finger or from the keyboard. There is nothing to type and no timer that stops you: time is only measured so you can see how fast you finish the board. Pick a theme, animals, food or places, and start a new game whenever you like. The four languages are English, Romanian, Serbian Latin and Serbian Cyrillic.",
     p3:"The game only stores your local stats in the browser. Nothing is sent to a server.",
     foot:"No account, no ads, no analytics script, no cookies, nothing loaded from another server. Works offline after the first load.",
     supportText:"The game is free and stays free.", supportLink:"Support the work",
@@ -317,16 +328,17 @@ var L = {
     cats:{animale:"životinje", mancare:"hrana", locuri:"mesta"},
     themeLbl:"Tema", foundLbl:"Nađeno", timeLbl:"Vreme",
     prompt:"Nađi osam reči u mreži: vodoravno, uspravno ili dijagonalno.",
-    good:"Nađena reč: ", already:"Ta reč je već nađena.",
+    good:"Nađena reč: ", already:"Ta reč je već nađena.", picking:"Biraš: ",
     done:"Gotovo! Svih osam reči nađeno za ",
     again:"Nova igra", share:"Kopiraj rezultat",
     copied:"Rezultat je kopiran. Nalepi ga gde želiš.",
-    ready:"Prevuci prstom ili mišem od prvog slova do poslednjeg.",
+    ready:"Prevuci prstom ili mišem od prvog slova do poslednjeg. Na tastaturi: strelice pomeraju, Enter označava početak i kraj, Shift sa strelicama širi izbor.",
+    noLine:"Izbor mora da ostane u jednoj liniji: vodoravno, uspravno ili dijagonalno.",
     played:"Odigrano", words:"Reči", best:"Rekord vremena", record:"Završene table",
     h1:"Pronađi reči - osam reči skrivenih u mreži",
     p1:"Na ekranu se pojavi mreža slova, a ispod nje osam reči izabrane teme. Nalaziš ih prevlačenjem prsta ili miša od prvog slova do poslednjeg: vodoravno, uspravno ili dijagonalno, u oba smera. Nađena reč dobije boju i bude precrtana na spisku.",
-    h2:"Bez tastature, bez tajmera",
-    p2:"Ništa ne treba kucati i nema tajmera koji te zaustavlja: vreme se meri samo da vidiš koliko brzo završiš tablu. Izaberi temu, životinje, hranu ili mesta, i pokreni novu igru kad želiš. Četiri jezika su engleski, rumunski, srpski latinicom i srpski ćirilicom.",
+    h2:"Bez kucanja, bez tajmera",
+    p2:"Igra se mišem, prstom ili tastaturom. Ništa ne treba kucati i nema tajmera koji te zaustavlja: vreme se meri samo da vidiš koliko brzo završiš tablu. Izaberi temu, životinje, hranu ili mesta, i pokreni novu igru kad želiš. Četiri jezika su engleski, rumunski, srpski latinicom i srpski ćirilicom.",
     p3:"Igra pamti samo tvoju lokalnu statistiku, u pregledaču. Ništa se ne šalje na server.",
     foot:"Bez naloga, bez reklama. Radi i bez interneta posle prvog učitavanja.",
     supportText:"Igra je besplatna i ostaje besplatna.", supportLink:"Podrži rad",
@@ -339,16 +351,17 @@ var L = {
     cats:{animale:"животиње", mancare:"храна", locuri:"места"},
     themeLbl:"Тема", foundLbl:"Нађено", timeLbl:"Време",
     prompt:"Нађи осам речи у мрежи: водоравно, усправно или дијагонално.",
-    good:"Нађена реч: ", already:"Та реч је већ нађена.",
+    good:"Нађена реч: ", already:"Та реч је већ нађена.", picking:"Бираш: ",
     done:"Готово! Свих осам речи нађено за ",
     again:"Нова игра", share:"Копирај резултат",
     copied:"Резултат је копиран. Налепи га где желиш.",
-    ready:"Prevuci прстом или мишем од првог слова до последњег.",
+    ready:"Prevuci прстом или мишем од првог слова до последњег. На тастатури: стрелице померају, Ентер означава почетак и крај, Shift са стрелицама шири избор.",
+    noLine:"Избор мора да остане у једној линији: водоравно, усправно или дијагонално.",
     played:"Одиграно", words:"Речи", best:"Рекорд времена", record:"Завршене табле",
     h1:"Пронађи речи - осам речи скривених у мрежи",
     p1:"На екрану се појави мрежа слова, а испод ње осам речи изабране теме. Налазиш их превлачењем прста или миша од првог слова до последњег: водоравно, усправно или дијагонално, у оба смера. Нађена реч добије боју и буде прецртана на списку.",
-    h2:"Без тастатуре, без тајмера",
-    p2:"Ништа не треба куцати и нема тајмера који те зауставља: време се мери само да видиш колико брзо завршиш таблу. Изабери тему, животиње, храну или места, и покрени нову игру кад желиш. Четири језика су енглески, румунски, српски латиницом и српски ћирилицом.",
+    h2:"Без куцања, без тајмера",
+    p2:"Игра се мишем, прстом или тастатуром. Ништа не треба куцати и нема тајмера који те зауставља: време се мери само да видиш колико брзо завршиш таблу. Изабери тему, животиње, храну или места, и покрени нову игру кад желиш. Четири језика су енглески, румунски, српски латиницом и српски ћирилицом.",
     p3:"Игра памти само твоју локалну статистику, у прегледачу. Ништа се не шаље на сервер.",
     foot:"Без налога, без реклама. Ради и без интернета после првог учитавања.",
     supportText:"Игра је бесплатна и остаје бесплатна.", supportLink:"Подржи рад",
@@ -362,7 +375,7 @@ var TEMA_KEYS = ["animale","mancare","locuri"];
 
 var state = {
   lang:"en", tema:"animale", grid:[], litere:[], gasite:[], cuvinte:[],
-  sel:[], anchor:null, start:0, timer:null, gata:false, asteapta:null,
+  sel:[], anchor:null, cur:[0,0], start:0, timer:null, gata:false, asteapta:null,
   stats:{ro:{p:0,w:0,b:0,r:0}, en:{p:0,w:0,b:0,r:0}, sr:{p:0,w:0,b:0,r:0}, src:{p:0,w:0,b:0,r:0}}
 };
 
@@ -471,8 +484,12 @@ function deseneazaGrid(){
     el.setAttribute("data-x", String(i));
     el.setAttribute("data-y", String(j));
     el.setAttribute("aria-label", state.grid[j][i] + ", " + (j+1) + " " + (i+1));
+    el.tabIndex = -1;                       /* un singur punct de intrare in grila, ca la un grid adevarat */
     g.appendChild(el);
   }
+  state.cur = [0, 0];
+  var prim = celula(0, 0);
+  if(prim) prim.tabIndex = 0;
   coloreaza();
 }
 function celula(x,y){
@@ -491,6 +508,8 @@ function coloreaza(){
     x = +el.getAttribute("data-x"); y = +el.getAttribute("data-y");
     cheie = x + "," + y;
     el.className = "cell" + (gas[cheie] ? " found" : "") + (sel[cheie] ? " sel" : "");
+    if(sel[cheie]) el.setAttribute("aria-pressed", "true");
+    else el.removeAttribute("aria-pressed");
   }
 }
 function deseneazaCuvinte(){
@@ -536,6 +555,7 @@ function tabelNou(){
   state.gasite = [];
   state.sel = [];
   state.anchor = null;
+  state.cur = [0, 0];
   state.gata = false;
   deseneazaGrid();
   deseneazaCuvinte();
@@ -737,6 +757,72 @@ function terminaSelectia(ev){
 $("grid").addEventListener("pointerup", terminaSelectia);
 $("grid").addEventListener("pointercancel", terminaSelectia);
 window.addEventListener("blur", function(){ trs = false; });
+
+/* ---------- tastatura: sageti pentru deplasare, Shift pentru intindere, Enter pentru capete ---------- */
+function focusCelula(x, y){
+  var el = celula(x, y);
+  if(!el) return false;
+  state.cur = [x, y];
+  el.focus();
+  return true;
+}
+$("grid").addEventListener("focusin", function(ev){
+  var el = ev.target, toate = $("grid").children, i;
+  if(!el.classList || !el.classList.contains("cell")) return;
+  state.cur = coord(el);
+  for(i=0;i<toate.length;i++) toate[i].tabIndex = -1;
+  el.tabIndex = 0;
+});
+$("grid").addEventListener("keydown", function(ev){
+  var el = ev.target;
+  if(!el.classList || !el.classList.contains("cell")) return;
+  var c = coord(el), nx = c[0], ny = c[1], k = ev.key, i;
+
+  if(k === "Enter" || k === " " || k === "Spacebar"){
+    ev.preventDefault();
+    if(state.gata) return;
+    if(state.anchor && state.anchor[0] === c[0] && state.anchor[1] === c[1]){
+      state.anchor = null; state.sel = [];          /* al doilea Enter pe acelasi loc: anuleaza */
+      coloreaza(); mesaj(t().ready, "neutral"); return;
+    }
+    if(state.anchor){
+      state.sel = linie(state.anchor[0], state.anchor[1], c[0], c[1]);
+      coloreaza();
+      verifica();                                    /* verifica() curata selectia si ancora */
+      return;
+    }
+    state.anchor = c; state.sel = [c];               /* primul Enter: marcheaza inceputul */
+    coloreaza(); mesaj(t().ready, "neutral");
+    return;
+  }
+  if(k === "Escape"){
+    ev.preventDefault();
+    state.anchor = null; state.sel = []; coloreaza(); return;
+  }
+
+  if(k === "ArrowLeft") nx--;
+  else if(k === "ArrowRight") nx++;
+  else if(k === "ArrowUp") ny--;
+  else if(k === "ArrowDown") ny++;
+  else if(k === "Home"){ nx = 0; }
+  else if(k === "End"){ nx = N - 1; }
+  else return;
+
+  ev.preventDefault();
+  if(nx < 0 || ny < 0 || nx >= N || ny >= N) return;   /* marginea grilei: nu iesim din ea */
+  focusCelula(nx, ny);
+
+  if(ev.shiftKey && state.anchor){
+    if(aliniate(state.anchor[0], state.anchor[1], nx, ny)){
+      state.sel = linie(state.anchor[0], state.anchor[1], nx, ny);
+      coloreaza();
+      mesaj(t().picking + state.sel.map(function(p){
+        return state.grid[p[1]][p[0]]; }).join(""), "neutral");
+    } else {
+      mesaj(t().noLine, "neutral");
+    }
+  }
+});
 
 $("againBtn").addEventListener("click", tabelNou);
 $("shareBtn").addEventListener("click", copiaza);

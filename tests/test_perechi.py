@@ -118,12 +118,13 @@ def main():
 
             # o nepotrivire se întoarce la loc
             ramase = [i for i, w in carti if w != w0]
-            a, b = ramase[0], ramase[1]
-            if carti[a][1] != carti[b][1]:
-                deschide(pg, a); pg.wait_for_timeout(120)
-                deschide(pg, b); pg.wait_for_timeout(950)
-                cls2 = pg.eval_on_selector_all(".tile", "(ts,i)=>ts[i].className", a)
-                check("open" not in cls2, "nepotrivirea se intoarce cu spatele")
+            a = ramase[0]
+            # a doua carte trebuie sa fie SIGUR alt cuvant, altfel verificarea ar fi sarita aleator
+            b = next(i for i in ramase[1:] if carti[i][1] != carti[a][1])
+            deschide(pg, a); pg.wait_for_timeout(120)
+            deschide(pg, b); pg.wait_for_timeout(950)
+            cls2 = pg.eval_on_selector_all(".tile", "(ts,i)=>ts[i].className", a)
+            check("open" not in cls2, "nepotrivirea se intoarce cu spatele")
 
             # arata tot
             mutari_inainte = int(text(pg, "#movesChip").split(": ")[1])
