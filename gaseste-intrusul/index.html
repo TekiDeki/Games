@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Găsește intrusul - joc de cuvinte online, gratuit</title>
+<meta name="description" content="Trei cuvinte sunt din aceeași temă, unul nu: găsește intrusul în douăsprezece secunde. Joc gratuit, fără cont, fără reclame, în patru variante de limbă.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0f172a">
+<meta property="og:title" content="Găsește intrusul - joc de cuvinte online">
+<meta property="og:description" content="Trei cuvinte dintr-o temă, unul nu. Zece runde, douăsprezece secunde pe rundă. Gratuit, fără cont.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://games.freehtml.dev/gaseste-intrusul/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-size='52' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EI%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Gaseste intrusul","url":"https://games.freehtml.dev/gaseste-intrusul/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["ro","en","sr-Latn","sr-Cyrl"],"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Joc de cuvinte: patru cuvinte, trei din aceeasi tema si unul din alta. Gaseste intrusul in douasprezece secunde. Gratuit, fara cont, in patru variante de limba."}
+</script>
+<style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --good-soft:#dcf3e3; --bad-soft:#fbe0dd;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+    --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+    --good-soft:#14321f; --bad-soft:#3a1a17;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+html[data-theme="light"]{
+  --bg:#f6f7fb; --panel:#ffffff; --panel2:#eef1f8; --text:#111827; --muted:#5b6472;
+  --line:#d8dee9; --accent:#2563eb; --accent-soft:#dbe6ff; --good:#157f3c; --bad:#b3261e;
+  --good-soft:#dcf3e3; --bad-soft:#fbe0dd;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+}
+html[data-theme="dark"]{
+  --bg:#0b1220; --panel:#111a2b; --panel2:#182338; --text:#e8edf6; --muted:#9aa7bd;
+  --line:#26334b; --accent:#6b9dff; --accent-soft:#1b2c4d; --good:#4ade80; --bad:#ff7a70;
+  --good-soft:#14321f; --bad-soft:#3a1a17;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:960px; margin:0 auto; padding:18px 16px 48px}
+header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-.01em}
+.dot{width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.dot svg{display:block}
+.spacer{flex:1}
+.iconbtn{
+  border:1px solid var(--line); background:var(--panel); color:var(--text);
+  border-radius:10px; padding:8px 10px; cursor:pointer; font-size:15px; line-height:1;
+}
+.iconbtn:hover{border-color:var(--accent)}
+/* link de intoarcere la hub-ul de jocuri */
+.homebtn{
+  display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+  color:var(--text); background:var(--panel); border:1px solid var(--line);
+  border-radius:10px; padding:7px 11px; font-size:14px; font-weight:600; line-height:1;
+}
+.homebtn:hover{border-color:var(--accent); color:var(--accent)}
+.homebtn .arw{font-size:15px; line-height:1}
+.homebtn:focus-visible, .iconbtn:focus-visible, .btn:focus-visible, .tile:focus-visible{
+  outline:3px solid var(--accent); outline-offset:2px
+}
+.langs{display:flex; gap:4px; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:3px}
+.langs button{
+  border:0; background:transparent; color:var(--muted); font:600 13px/1 inherit;
+  padding:7px 9px; border-radius:8px; cursor:pointer;
+}
+.langs button[aria-pressed="true"]{background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
+
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  padding:18px; box-shadow:var(--shadow); margin-bottom:18px;
+}
+.topline{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+.chip{
+  display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600;
+  background:var(--panel2); border:1px solid var(--line); color:var(--muted);
+  border-radius:999px; padding:5px 11px; white-space:nowrap;
+}
+.chip.strong{background:var(--accent-soft); color:var(--accent); border-color:transparent}
+
+/* bara de timp */
+.barwrap{height:8px; background:var(--panel2); border-radius:999px; overflow:hidden; margin-bottom:16px}
+.bar{height:100%; width:100%; background:var(--accent); border-radius:999px; transition:width .1s linear, background .2s}
+.bar.low{background:var(--bad)}
+
+.prompt{font-size:17px; font-weight:600; margin:0 0 14px; text-align:center; text-wrap:balance}
+
+/* cele patru variante */
+.opt{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px}
+.tile{
+  position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  min-height:104px; padding:14px 10px;
+  background:var(--panel2); color:var(--text);
+  border:1px solid var(--line); border-bottom:4px solid var(--line);
+  border-radius:14px; cursor:pointer; font:inherit;
+  transition:border-color .15s, transform .08s, background .15s;
+}
+.tile:hover:not(:disabled){border-color:var(--accent); border-bottom-color:var(--accent)}
+.tile:active:not(:disabled){transform:translateY(1px)}
+.tile:disabled{cursor:default}
+.tile .w{
+  font-weight:800; letter-spacing:.02em; line-height:1.1; text-align:center;
+  font-size:clamp(19px,4.4vw,30px); word-break:break-word; hyphens:auto;
+}
+.tile .num{
+  position:absolute; top:7px; left:9px; font-size:11px; font-weight:700; color:var(--muted); opacity:.75;
+}
+.tile .tag{
+  font-size:12px; font-weight:700; letter-spacing:.02em; text-transform:none;
+  padding:2px 9px; border-radius:999px; background:var(--panel); border:1px solid var(--line);
+  color:var(--muted); visibility:hidden;
+}
+.tile.revealed .tag{visibility:visible}
+.tile.good{background:var(--good-soft); border-color:var(--good); border-bottom-color:var(--good)}
+.tile.good .w{color:var(--good)}
+.tile.bad{background:var(--bad-soft); border-color:var(--bad); border-bottom-color:var(--bad)}
+.tile.bad .w{color:var(--bad)}
+.tile.off{opacity:.55}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-5px)} 40%{transform:translateX(5px)}
+  60%{transform:translateX(-3px)} 80%{transform:translateX(3px)}
+}
+.tile.shake{animation:shake .34s ease}
+
+.msg{min-height:26px; text-align:center; font-weight:600; margin:0 0 12px}
+.msg.good{color:var(--good)}
+.msg.bad{color:var(--bad)}
+.msg.neutral{color:var(--muted)}
+
+.actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:16px}
+.btn{
+  border:1px solid transparent; background:var(--accent); color:#fff;
+  border-radius:11px; padding:11px 18px; font:600 15px/1 inherit; cursor:pointer;
+}
+.btn.ghost{background:var(--panel); color:var(--text); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; text-align:center}
+.stats b{display:block; font-size:20px; line-height:1.2}
+.stats span{font-size:12px; color:var(--muted)}
+.stats .hot{color:var(--accent)}
+
+#about h1{font-size:22px; margin:0 0 10px; letter-spacing:-.01em}
+#about h2{font-size:17px; margin:20px 0 8px}
+#about p{margin:0 0 12px; color:var(--text)}
+#about .note{color:var(--muted); font-size:14px}
+
+footer{color:var(--muted); font-size:14px; text-align:center; line-height:1.9}
+footer a{color:var(--accent); text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .sep{margin:0 6px}
+
+@media (max-width:600px){
+  .wrap{padding:12px 12px 40px}
+  header{gap:8px}
+  .langs{order:10; width:100%; justify-content:space-between}
+  .langs button{flex:1; padding:7px 5px; font-size:12px}
+  .brand{font-size:16px}
+  .card{padding:14px; border-radius:14px}
+  .opt{gap:9px}
+  .tile{min-height:88px; padding:11px 7px}
+  .stats{grid-template-columns:repeat(2,1fr); gap:12px}
+  .btn{padding:11px 14px; font-size:14px}
+  .actions .btn{flex:1 1 auto}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="homebtn" id="homeBtn" href="../"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
+  <div class="brand"><span class="dot" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="9" r="5"></circle><circle cx="16" cy="16" r="3"></circle>
+    </svg></span><span id="brandName">Găsește intrusul</span></div>
+  <div class="spacer"></div>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="ro" aria-pressed="true">RO</button>
+    <button data-lang="en" aria-pressed="false">EN</button>
+    <button data-lang="sr" aria-pressed="false">SR</button>
+    <button data-lang="src" aria-pressed="false">СР</button>
+  </div>
+  <button class="iconbtn" id="themeBtn" aria-label="Theme">◑</button>
+</header>
+
+<main>
+<div class="card">
+  <div class="topline">
+    <span class="chip strong" id="roundChip">—</span>
+    <span class="chip" id="timeChip">—</span>
+    <span class="spacer"></span>
+    <span class="chip" id="scoreChip">—</span>
+  </div>
+
+  <div class="barwrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
+
+  <p class="prompt" id="prompt">—</p>
+  <div class="opt" id="opt"></div>
+
+  <div class="msg neutral" id="msg" aria-live="assertive"></div>
+
+  <div class="actions">
+    <button class="btn" id="againBtn">—</button>
+    <button class="btn ghost" id="shareBtn">—</button>
+  </div>
+
+  <div class="stats">
+    <div><b id="stPlayed">0</b><span id="stPlayedL">—</span></div>
+    <div><b id="stHits" class="hot">0</b><span id="stHitsL">—</span></div>
+    <div><b id="stStreak">0</b><span id="stStreakL">—</span></div>
+    <div><b id="stBest">0</b><span id="stBestL">—</span></div>
+  </div>
+</div>
+
+<section class="card" id="about">
+  <h1 id="h1">—</h1>
+  <p id="p1">—</p>
+  <h2 id="h2">—</h2>
+  <p id="p2">—</p>
+  <p class="note" id="p3">—</p>
+</section>
+</main>
+
+<footer>
+  <span id="foot">—</span><br>
+  <span id="supportText">—</span>
+  <a id="supportLink" href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>—</span></a>
+  <span class="sep">·</span>
+  <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">—</a>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- cuvintele: aceleasi 24 pe limba (96 in total), ca in celelalte jocuri ---------- */
+var W = {
+  ro:{
+    animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","PÂRȘ"],
+    mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI"],
+    locuri:["MUNTE","CASTEL","ORAȘ","BISERICĂ","POD","PORT","PALAT","TURN"]
+  },
+  en:{
+    animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK"],
+    mancare:["PANCAKE","NOODLES","CHEESE","PUMPKIN","SAUSAGE","OMELETTE","BISCUIT","YOGURT"],
+    locuri:["CASTLE","HARBOUR","LIBRARY","STADIUM","MUSEUM","BRIDGE","VILLAGE","LIGHTHOUSE"]
+  },
+  sr:{
+    animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN"],
+    mancare:["PALAČINKE","KAJMAK","PROJA","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA"],
+    locuri:["TVRĐAVA","MOST","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO"]
+  },
+  src:{
+    animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН"],
+    mancare:["ПАЛАЧИНКЕ","КАЈМАК","ПРОЈА","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА"],
+    locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО"]
+  }
+};
+
+/* ---------- texte pe limbi ---------- */
+var L = {
+  ro:{ name:"Găsește intrusul",
+    htmlLang:"ro",
+    title:"Găsește intrusul - joc de cuvinte online, gratuit",
+    desc:"Trei cuvinte sunt din aceeași temă, unul nu: găsește intrusul în douăsprezece secunde. Joc gratuit, fără cont, fără reclame, în patru variante de limbă.",
+    cats:{animale:"animale", mancare:"mâncare", locuri:"locuri"},
+    roundLbl:"Runda", scoreLbl:"Puncte", scoreWord:"puncte", seconds:"s",
+    prompt:"Care cuvânt nu se potrivește cu celelalte?",
+    correct:"Corect! Intrusul era ", wrong:"Nu chiar. Intrusul era ",
+    timeup:"Timpul a expirat. Intrusul era ",
+    again:"Joc nou", share:"Copiază rezultatul",
+    copied:"Rezultatul e copiat. Lipește-l oriunde.",
+    ready:"Apasă cuvântul care nu se potrivește. Merge și cu tastele 1-4.",
+    finA:"Gata: ", finB:" din ", finC:" · ",
+    played:"Jucate", hits:"Găsite", streak:"Serie", best:"Record",
+    h1:"Găsește intrusul - trei cuvinte dintr-o temă, unul nu",
+    p1:"Pe ecran apar patru cuvinte. Trei sunt din aceeași temă, animale, mâncare sau locuri, iar al patrulea e din altă temă. Îl atingi pe cel care nu se potrivește, în douăsprezece secunde. Un joc are zece runde.",
+    h2:"Nu trebuie să scrii nimic",
+    p2:"Spre deosebire de celelalte jocuri de aici, aici nu contează ortografia, ci să vezi ce au comun celelalte trei cuvinte. După fiecare răspuns apare tema fiecărui cuvânt, deci înveți ceva și când greșești. Merge și cu tastatura: tastele 1-4 aleg, N începe un joc nou.",
+    p3:"Punctajul crește cu fiecare intrus găsit și cu timpul rămas, iar o serie de răspunsuri bune aduce mai mult. Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
+    foot:"Joc fără cont, fără reclame, fără urmărire. Merge și fără internet după prima încărcare.",
+    supportText:"Jocul e gratuit și rămâne gratuit.", supportLink:"Susține munca",
+    report:"Ai văzut o greșeală? Spune-mi." },
+
+  en:{ name:"Odd one out",
+    htmlLang:"en",
+    title:"Odd One Out - free word game online",
+    desc:"Three words belong to the same theme and one does not: find the odd one out in twelve seconds. Free game, no account, no ads, in four language versions.",
+    cats:{animale:"animals", mancare:"food", locuri:"places"},
+    roundLbl:"Round", scoreLbl:"Score", scoreWord:"points", seconds:"s",
+    prompt:"Which word does not belong with the others?",
+    correct:"Correct! The odd one out was ", wrong:"Not quite. The odd one out was ",
+    timeup:"Time is up. The odd one out was ",
+    again:"New game", share:"Copy result",
+    copied:"Result copied. Paste it anywhere.",
+    ready:"Tap the word that does not belong. Keys 1-4 work too.",
+    finA:"Done: ", finB:" of ", finC:" · ",
+    played:"Played", hits:"Found", streak:"Streak", best:"Best",
+    h1:"Odd One Out - three words share a theme, one does not",
+    p1:"Four words appear on the screen. Three belong to the same theme, animals, food or places, and the fourth comes from another theme. Tap the one that does not fit, within twelve seconds. One game is ten rounds.",
+    h2:"Nothing to spell",
+    p2:"Unlike the other games on this site, spelling does not matter here: you have to spot what the other three words have in common. After every answer the theme of each word appears, so you learn something even when you miss. The keyboard works too: keys 1-4 choose, N starts a new game.",
+    p3:"The score grows with every odd one found and with the time left, and a run of good answers is worth more. The game only stores your local stats in the browser. Nothing is sent to a server.",
+    foot:"No account, no ads, no tracking. Works offline after the first load.",
+    supportText:"The game is free and stays free.", supportLink:"Support the work",
+    report:"Spotted a mistake? Tell me." },
+
+  sr:{ name:"Pronađi uljeza",
+    htmlLang:"sr-Latn",
+    title:"Pronađi uljeza - besplatna igra rečima",
+    desc:"Tri reči pripadaju istoj temi, a jedna ne: pronađi uljeza za dvanaest sekundi. Besplatna igra, bez naloga, bez reklama, u četiri jezičke varijante.",
+    cats:{animale:"životinje", mancare:"hrana", locuri:"mesta"},
+    roundLbl:"Runda", scoreLbl:"Poeni", scoreWord:"poena", seconds:"s",
+    prompt:"Koja reč ne pripada ostalima?",
+    correct:"Tačno! Uljez je bio ", wrong:"Nije. Uljez je bio ",
+    timeup:"Vreme je isteklo. Uljez je bio ",
+    again:"Nova igra", share:"Kopiraj rezultat",
+    copied:"Rezultat je kopiran. Nalepi ga gde želiš.",
+    ready:"Klikni reč koja ne pripada. Radi i sa tasterima 1-4.",
+    finA:"Gotovo: ", finB:" od ", finC:" · ",
+    played:"Odigrano", hits:"Pogođeno", streak:"Niz", best:"Rekord",
+    h1:"Pronađi uljeza - tri reči iz iste teme, jedna ne",
+    p1:"Na ekranu su četiri reči. Tri su iz iste teme, životinje, hrana ili mesta, a četvrta je iz druge teme. Klikni onu koja ne pripada, u roku od dvanaest sekundi. Jedna igra ima deset rundi.",
+    h2:"Ništa ne treba pisati",
+    p2:"Za razliku od ostalih igara na sajtu, ovde nije važno pisanje, nego da vidiš šta je zajedničko ostalim trima rečima. Posle svakog odgovora pojavi se tema svake reči, pa naučiš nešto i kad promašiš. Radi i tastatura: tasteri 1-4 biraju, N počinje novu igru.",
+    p3:"Poeni rastu sa svakim pronađenim uljezom i sa preostalim vremenom, a niz dobrih odgovora vredi više. Igra pamti samo tvoju lokalnu statistiku u pregledaču. Ništa se ne šalje na server.",
+    foot:"Bez naloga, bez reklama, bez praćenja. Radi i bez interneta posle prvog učitavanja.",
+    supportText:"Igra je besplatna i ostaje besplatna.", supportLink:"Podrži rad",
+    report:"Vidiš grešku? Reci mi." },
+
+  src:{ name:"Пронађи уљеза",
+    htmlLang:"sr-Cyrl",
+    title:"Пронађи уљеза - бесплатна игра речима",
+    desc:"Три речи припадају истој теми, а једна не: пронађи уљеза за дванаест секунди. Бесплатна игра, без налога, без реклама, у четири језичке варијанте.",
+    cats:{animale:"животиње", mancare:"храна", locuri:"места"},
+    roundLbl:"Рунда", scoreLbl:"Поени", scoreWord:"поена", seconds:"с",
+    prompt:"Која реч не припада осталима?",
+    correct:"Тачно! Уљез је био ", wrong:"Није. Уљез је био ",
+    timeup:"Време је истекло. Уљез је био ",
+    again:"Нова игра", share:"Копирај резултат",
+    copied:"Резултат је копиран. Налепи га где желиш.",
+    ready:"Кликни реч која не припада. Ради и са тастерима 1-4.",
+    finA:"Готово: ", finB:" од ", finC:" · ",
+    played:"Одиграно", hits:"Погођено", streak:"Низ", best:"Рекорд",
+    h1:"Пронађи уљеза - три речи из исте теме, једна не",
+    p1:"На екрану су четири речи. Три су из исте теме, животиње, храна или места, а четврта је из друге теме. Кликни ону која не припада, у року од дванаест секунди. Једна игра има десет рунди.",
+    h2:"Ништа не треба писати",
+    p2:"За разлику од осталих игара на сајту, овде није важно писање, него да видиш шта је заједничко осталим трима речима. После сваког одговора појави се тема сваке речи, па научиш нешто и кад промашиш. Ради и тастатура: тастери 1-4 бирају, Н почиње нову игру.",
+    p3:"Поени расту са сваким пронађеним уљезом и са преосталим временом, а низ добрих одговора вреди више. Игра памти само твоју локалну статистику у прегледачу. Ништа се не шаље на сервер.",
+    foot:"Без налога, без реклама, без праћења. Ради и без интернета после првог учитавања.",
+    supportText:"Игра је бесплатна и остаје бесплатна.", supportLink:"Подржи рад",
+    report:"Видиш грешку? Реци ми." }
+};
+
+var KEY = "gaseste-intrusul-v1";
+var RUNDE = 10;          /* cate runde are un joc */
+var SECUNDE = 12;        /* cat timp ai pe o runda */
+var TEMA_KEYS = ["animale","mancare","locuri"];
+
+/* ?pauza=NNN fixeaza pauza dintre runde, in milisecunde (pentru teste automate) */
+var PAUZA = 1500;
+(function(){
+  var m = /[?&]pauza=(\d+)/.exec(location.search);
+  if(m){ PAUZA = Math.max(0, Math.min(20000, +m[1])); }
+})();
+
+var HOME_LBL = {ro:"Jocuri", en:"Games", sr:"Igre", src:"Игре"};
+var HOME_TTL = {ro:"Inapoi la toate jocurile", en:"Back to all games",
+                sr:"Nazad na sve igre", src:"Назад на све игре"};
+
+var $ = function(id){ return document.getElementById(id); };
+
+var state = {
+  lang:"ro",
+  runda:0,             /* runda curenta, de la 1 */
+  scor:0,
+  corecte:0,
+  istoric:[],          /* true = gasit, false = ratat sau timp expirat */
+  cuvinte:[],          /* [{w, t, intrus}] cele 4 variante ale rundei */
+  gata:false,          /* jocul s-a terminat */
+  aratat:false,        /* raspunsul rundei e deja afisat */
+  cronometru:null,
+  urmat:null,          /* timeout-ul care porneste runda urmatoare */
+  sfarsit:0,           /* timestamp-ul la care expira runda */
+  serieCurenta:0,
+  stats:{ro:{p:0,h:0,s:0,b:0}, en:{p:0,h:0,s:0,b:0},
+         sr:{p:0,h:0,s:0,b:0}, src:{p:0,h:0,s:0,b:0}}
+};
+
+/* ---------- persistenta ---------- */
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    var d = JSON.parse(raw);
+    if(d && d.stats){
+      for(var k in state.stats){
+        if(d.stats[k]) state.stats[k] = {
+          p:+d.stats[k].p||0, h:+d.stats[k].h||0, s:+d.stats[k].s||0, b:+d.stats[k].b||0
+        };
+      }
+    }
+    if(d && d.lang && L[d.lang]) state.lang = d.lang;
+  }catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({stats:state.stats, lang:state.lang})); }catch(e){}
+}
+
+/* ---------- tema light/dark ---------- */
+function applyTheme(t){
+  if(t){ document.documentElement.setAttribute("data-theme", t); }
+  else { document.documentElement.removeAttribute("data-theme"); }
+}
+function initTheme(){
+  var salvat = null;
+  try{ salvat = localStorage.getItem(KEY + "-theme"); }catch(e){}
+  applyTheme(salvat);
+  $("themeBtn").addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    var dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    applyTheme(next);
+    try{ localStorage.setItem(KEY + "-theme", next); }catch(e){}
+  });
+}
+
+/* ---------- texte ---------- */
+function t(){ return L[state.lang]; }
+
+function applyHome(){
+  var a = $("homeBtn"), l = $("homeLbl");
+  if(!a || !l) return;
+  l.textContent = HOME_LBL[state.lang] || "Games";
+  a.setAttribute("aria-label", HOME_TTL[state.lang] || "Back to all games");
+  a.setAttribute("title", HOME_TTL[state.lang] || "Back to all games");
+}
+
+function applyTexts(){
+  var d = t();
+  applyHome();
+  document.documentElement.lang = d.htmlLang;
+  document.title = d.title;
+  var m = document.querySelector('meta[name="description"]');
+  if(m) m.setAttribute("content", d.desc);
+  $("brandName").textContent = d.name;
+  $("prompt").textContent = d.prompt;
+  $("againBtn").textContent = d.again;
+  $("shareBtn").textContent = d.share;
+  $("stPlayedL").textContent = d.played;
+  $("stHitsL").textContent = d.hits;
+  $("stStreakL").textContent = d.streak;
+  $("stBestL").textContent = d.best;
+  $("h1").textContent = d.h1;
+  $("p1").textContent = d.p1;
+  $("h2").textContent = d.h2;
+  $("p2").textContent = d.p2;
+  $("p3").textContent = d.p3;
+  $("foot").textContent = d.foot;
+  $("supportText").textContent = d.supportText;
+  $("supportLink").querySelector("span").textContent = d.supportLink;
+  $("report").textContent = d.report;
+  var lb = document.querySelectorAll(".langs button");
+  for(var i=0;i<lb.length;i++){
+    lb[i].setAttribute("aria-pressed", lb[i].getAttribute("data-lang") === state.lang ? "true" : "false");
+  }
+}
+
+/* ---------- mersul jocului ---------- */
+function intre(min, max){          /* numar intreg in [min, max] */
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+function amesteca(a){
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random() * (i+1)), tmp = a[i];
+    a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+/* o runda = 3 cuvinte dintr-o tema + 1 din alta tema */
+function rundaNoua(){
+  var d = W[state.lang];
+  var baza = TEMA_KEYS[intre(0, TEMA_KEYS.length-1)];
+  var alte = [], i;
+  for(i=0;i<TEMA_KEYS.length;i++) if(TEMA_KEYS[i] !== baza) alte.push(TEMA_KEYS[i]);
+  var temuIntrus = alte[intre(0, alte.length-1)];
+
+  var dinBaza = amesteca(d[baza].slice()).slice(0,3);
+  var dinIntrus = amesteca(d[temuIntrus].slice()).slice(0,1);
+
+  var lista = [];
+  for(i=0;i<3;i++) lista.push({w:dinBaza[i], t:baza, intrus:false});
+  lista.push({w:dinIntrus[0], t:temuIntrus, intrus:true});
+  state.cuvinte = amesteca(lista);
+  state.aratat = false;
+  state.cronometru = null;
+}
+
+function alege(i){
+  if(state.gata || state.aratat) return;
+  var ales = state.cuvinte[i];
+  if(!ales) return;
+  opresteCronometrul();
+  var ramas = Math.max(0, Math.ceil((state.sfarsit - Date.now()) / 1000));
+  var d = t(), bun = ales.intrus, castig = 0;
+
+  state.aratat = true;
+  state.istoric.push(bun);
+
+  if(bun){
+    /* 10 puncte pentru raspuns + timpul ramas + bonus de serie (max 5) */
+    castig = 10 + ramas + Math.min(5, state.serieCurenta);
+    state.scor += castig;
+    state.corecte++;
+    state.serieCurenta++;
+    arataMesaj(d.correct + ales.w + ".", "good");
+  }else{
+    state.serieCurenta = 0;
+    arataMesaj(d.wrong + gasesteIntrusul().w + ".", "bad");
+  }
+  deseneaza({aleas:i, castig:castig, bun:bun});
+  $("scoreChip").textContent = d.scoreLbl + ": " + state.scor;
+  programeazaUrmatoarea();
+}
+
+function expira(){
+  if(state.gata || state.aratat) return;
+  opresteCronometrul();
+  state.aratat = true;
+  state.istoric.push(false);
+  state.serieCurenta = 0;
+  arataMesaj(t().timeup + gasesteIntrusul().w + ".", "bad");
+  deseneaza({aleas:-1, castig:0, bun:false});
+  programeazaUrmatoarea();
+}
+
+function gasesteIntrusul(){
+  for(var i=0;i<state.cuvinte.length;i++) if(state.cuvinte[i].intrus) return state.cuvinte[i];
+  return state.cuvinte[0];
+}
+
+function arataMesaj(text, fel){
+  var m = $("msg");
+  m.textContent = text;
+  m.className = "msg " + (fel || "neutral");
+}
+
+/* ---------- desenare ---------- */
+function deseneaza(rez){
+  var d = t(), i, el;
+  var opt = $("opt");
+  opt.innerHTML = "";
+  for(i=0;i<state.cuvinte.length;i++){
+    var c = state.cuvinte[i];
+    el = document.createElement("button");
+    el.type = "button";
+    el.className = "tile";
+    el.setAttribute("data-tema", c.t);
+    el.setAttribute("data-intrus", c.intrus ? "1" : "0");
+    el.setAttribute("data-i", String(i));
+    el.innerHTML = '<span class="num" aria-hidden="true">' + (i+1) + '</span>' +
+                   '<span class="w"></span><span class="tag"></span>';
+    el.querySelector(".w").textContent = c.w;      /* textContent: cuvintele pot avea diacritice */
+    el.querySelector(".tag").textContent = d.cats[c.t];
+    el.setAttribute("aria-label", (i+1) + ": " + c.w);
+    if(rez){
+      el.disabled = true;
+      el.className += " revealed";
+      if(c.intrus) el.className += " good";
+      if(rez.aleas === i && !c.intrus){
+        el.className += " bad shake";
+      }
+      if(!c.intrus && rez.aleas !== i) el.className += " off";
+      if(c.intrus && rez.aleas === i && rez.bun) el.className += " win";
+    }
+    opt.appendChild(el);
+  }
+  $("roundChip").textContent = d.roundLbl + " " + state.runda + "/" + RUNDE;
+}
+
+/* ---------- cronometru ---------- */
+function pornesteRunda(){
+  var d = t();
+  rundaNoua();
+  deseneaza(null);
+  arataMesaj(d.ready, "neutral");
+  $("roundChip").textContent = d.roundLbl + " " + state.runda + "/" + RUNDE;
+  $("scoreChip").textContent = d.scoreLbl + ": " + state.scor;
+  $("bar").className = "bar";
+  $("bar").style.width = "100%";
+  $("timeChip").textContent = SECUNDE + d.seconds;
+  state.sfarsit = Date.now() + SECUNDE * 1000;
+  opresteCronometrul();
+  state.cronometru = window.setInterval(tic, 100);
+}
+
+function tic(){
+  var ramas = Math.max(0, state.sfarsit - Date.now());
+  var proc = ramas / (SECUNDE * 1000);
+  $("bar").style.width = (proc * 100).toFixed(1) + "%";
+  $("bar").className = proc < 0.3 ? "bar low" : "bar";
+  $("timeChip").textContent = Math.ceil(ramas / 1000) + t().seconds;
+  if(ramas <= 0){ expira(); }
+}
+
+function opresteCronometrul(){
+  if(state.cronometru){ window.clearInterval(state.cronometru); state.cronometru = null; }
+}
+/* un singur timeout de "runda urmatoare" o data: altfel unul vechi reporneste o runda
+   peste un joc nou si sare runde. Se opreste la joc nou si la fiecare raspuns. */
+function opresteUrmatorul(){
+  if(state.urmat){ window.clearTimeout(state.urmat); state.urmat = null; }
+}
+function programeazaUrmatoarea(){
+  opresteUrmatorul();
+  state.urmat = window.setTimeout(function(){
+    state.urmat = null;
+    if(state.runda >= RUNDE){ finalizeaza(); }
+    else { state.runda++; pornesteRunda(); }
+  }, PAUZA);
+}
+
+/* ---------- sfarsitul jocului ---------- */
+function finalizeaza(){
+  var d = t(), st = state.stats[state.lang];
+  state.gata = true;
+  opresteCronometrul();
+  opresteUrmatorul();
+  $("bar").style.width = "0%";
+  $("timeChip").textContent = "0" + d.seconds;
+
+  st.p = (st.p||0) + 1;
+  st.h = (st.h||0) + state.corecte;
+  st.s = Math.max(st.s||0, state.corecte);
+  st.b = Math.max(st.b||0, state.scor);
+  save();
+
+  arataMesaj(d.finA + state.corecte + d.finB + RUNDE + d.finC + state.scor + " " + d.scoreWord + ".", 
+             state.corecte >= 7 ? "good" : (state.corecte <= 3 ? "bad" : "neutral"));
+  $("againBtn").textContent = d.again;
+  afiseazaStatistici();
+}
+
+function afiseazaStatistici(){
+  var st = state.stats[state.lang];
+  $("stPlayed").textContent = st.p||0;
+  $("stHits").textContent = st.h||0;
+  $("stStreak").textContent = st.s||0;
+  $("stBest").textContent = st.b||0;
+}
+
+/* ---------- joc nou ---------- */
+function jocNou(){
+  opresteCronometrul();
+  opresteUrmatorul();
+  state.runda = 1;
+  state.scor = 0;
+  state.corecte = 0;
+  state.istoric = [];
+  state.serieCurenta = 0;
+  state.gata = false;
+  $("againBtn").textContent = t().again;
+  pornesteRunda();
+  afiseazaStatistici();
+}
+
+/* ---------- copierea rezultatului ---------- */
+function liniiRezultat(){
+  var d = t(), linie = "", i;
+  for(i=0;i<state.istoric.length;i++) linie += state.istoric[i] ? "🟩" : "🟥";
+  return [ d.name + " · " + state.corecte + "/" + RUNDE,
+           linie,
+           state.scor + " " + d.scoreWord,
+           "https://games.freehtml.dev/gaseste-intrusul/" ];
+}
+
+function copiaza(){
+  var text = liniiRezultat().join("\n");
+  var gata = function(){
+    arataMesaj(t().copied, "good");
+    window.setTimeout(function(){
+      if(!state.gata) arataMesaj(t().ready, "neutral");
+    }, 2200);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(gata, rezerva);
+  }else{ rezerva(); }
+
+  function rezerva(){
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+    gata();
+  }
+}
+
+/* ---------- evenimente ---------- */
+$("opt").addEventListener("click", function(e){
+  var b = e.target.closest ? e.target.closest(".tile") : null;
+  if(!b) return;
+  alege(+b.getAttribute("data-i"));
+});
+
+$("againBtn").addEventListener("click", jocNou);
+$("shareBtn").addEventListener("click", copiaza);
+
+document.addEventListener("keydown", function(e){
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  var k = e.key;
+  if(k >= "1" && k <= "4"){ alege(+k - 1); return; }
+  if(k === "n" || k === "N"){ jocNou(); }
+});
+
+var langBtns = document.querySelectorAll(".langs button");
+for(var i=0;i<langBtns.length;i++){
+  langBtns[i].addEventListener("click", function(){
+    var l = this.getAttribute("data-lang");
+    if(!L[l] || l === state.lang) return;
+    state.lang = l;
+    save();
+    applyTexts();
+    jocNou();          /* limba noua = cuvinte noi, deci joc nou */
+  });
+}
+
+/* ---------- pornire ---------- */
+load();
+initTheme();
+applyTexts();
+afiseazaStatistici();
+jocNou();
+
+})();
+</script>
+</body>
+</html>
