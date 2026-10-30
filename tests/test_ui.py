@@ -141,8 +141,9 @@ def main():
         check(link == "guess-the-word/", "link relativ corect: " + link)
         carduri = pg.eval_on_selector_all("a.card[href]", "as=>as.map(a=>a.getAttribute('href'))")
         check(carduri == ["guess-the-word/", "word-pairs/", "word-scramble/",
-                          "word-of-the-day/", "odd-one-out/", "word-search/", "typing-test/"],
-              "hub-ul listeaza toate cele 7 jocuri: " + ", ".join(carduri))
+                          "word-of-the-day/", "odd-one-out/", "word-search/",
+                          "word-from-definition/", "typing-test/"],
+              "hub-ul listeaza toate cele 8 jocuri: " + ", ".join(carduri))
         for cale in carduri:
             check(os.path.exists(os.path.join(RADACINA, cale, "index.html")),
                   "fisierul din card exista: " + cale)

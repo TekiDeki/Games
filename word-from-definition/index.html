@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guess the word from its definition - free word game</title>
+<meta name="joc-date" content="definitii">
+<meta name="description" content="Guess the word from its definition. Real definitions from Wikipedia and Wiktionary, four answers to choose from, four languages. No account, no ads, no cookies.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0f172a">
+<link rel="canonical" href="https://games.freehtml.dev/word-from-definition/">
+<meta property="og:title" content="Guess the word from its definition">
+<meta property="og:description" content="Guess the word from its definition. Real definitions from Wikipedia and Wiktionary, four answers to choose from, four languages. No account, no ads, no cookies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://games.freehtml.dev/word-from-definition/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Word from definition",
+"url":"https://games.freehtml.dev/word-from-definition/","applicationCategory":"GameApplication","operatingSystem":"Any",
+"inLanguage":["en","ro","sr-Latn","sr-Cyrl"],
+"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
+"description":"Guess the word from its definition. Real definitions from Wikipedia and Wiktionary, four answers to choose from, four languages. No account, no ads, no cookies."}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232563eb'/%3E%3Ctext x='50' y='72' font-size='56' font-family='system-ui,sans-serif' font-weight='700' text-anchor='middle' fill='white'%3E%3F%3C/text%3E%3C/svg%3E">
+<style>
+  /* Aceleași reguli ca pe paginile de pe site: întâi preferința sistemului, apoi alegerea
+     jucătorului (butonul), care se ține minte în browser. Variabilele se repetă în trei locuri
+     pentru că așa se poate schimba tema fără să rescrii nicio regulă de aspect. */
+  :root { --bg:#f6f7fb; --card:#ffffff; --linie:#d8dee9; --text:#111827; --slab:#5b6472;
+          --bun:#157f3c; --rau:#b3261e; --acc:#2563eb; --camp:#f2f4f9; --ales:#dbe6ff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1115; --card:#171a21; --linie:#2a2f3a; --text:#e8eaed; --slab:#9aa3af;
+            --bun:#3ddc84; --rau:#ff6b6b; --acc:#7aa2ff; --camp:var(--camp); --ales:var(--ales); }
+  }
+  html[data-theme="light"] { --bg:#f6f7fb; --card:#ffffff; --linie:#d8dee9; --text:#111827;
+          --slab:#5b6472; --bun:#157f3c; --rau:#b3261e; --acc:#2563eb; --camp:#f2f4f9; --ales:#dbe6ff; }
+  html[data-theme="dark"] { --bg:#0f1115; --card:#171a21; --linie:#2a2f3a; --text:#e8eaed;
+          --slab:#9aa3af; --bun:#3ddc84; --rau:#ff6b6b; --acc:#7aa2ff; --camp:var(--camp); --ales:var(--ales); }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--bg); color:var(--text);
+         font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+         display:flex; align-items:center; justify-content:center; padding:24px; }
+  .bara { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; }
+  .bara a, .bara button { display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+          cursor:pointer; font:inherit; font-size:13px; font-weight:600; line-height:1;
+          border:1px solid var(--linie); background:var(--camp); color:var(--text);
+          border-radius:10px; padding:8px 12px; }
+  .bara a:hover, .bara button:hover { border-color:var(--acc); color:var(--acc); }
+  .bara a:focus-visible, .bara button:focus-visible { outline:3px solid var(--acc); outline-offset:2px; }
+  .bara .arw { font-size:15px; }
+  .bara .grup { display:flex; gap:8px; }
+  .bara .rotund { padding:8px 11px; font-size:15px; }
+  .card { width:100%; max-width:560px; background:var(--card); border:1px solid var(--linie);
+          border-radius:16px; padding:24px; }
+  h1 { font-size:19px; margin:0 0 4px; font-weight:600; }
+  .sub { color:var(--slab); font-size:13px; margin-bottom:18px; }
+  .limbi { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .limbi button { flex:1 1 0; min-width:64px; padding:8px 6px; border-radius:10px; cursor:pointer;
+          background:var(--camp); color:var(--slab); border:1px solid var(--linie); font-size:13px; }
+  .limbi button[aria-pressed="true"] { background:var(--ales); color:var(--text); border-color:var(--acc); }
+  .def { font-size:19px; line-height:1.45; min-height:96px; padding:16px; border-radius:12px;
+         background:var(--camp); border:1px solid var(--linie); }
+  .def .et { display:block; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+             color:var(--slab); margin-bottom:8px; }
+  .variante { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .variante button { padding:12px; border-radius:10px; cursor:pointer; font-size:15px;
+          background:var(--camp); color:var(--text); border:1px solid var(--linie); }
+  .variante button:hover:not(:disabled) { border-color:var(--acc); }
+  .variante button.bun { border-color:var(--bun); color:var(--bun); }
+  .variante button.rau { border-color:var(--rau); color:var(--rau); }
+  .variante button:disabled { cursor:default; }
+  .jos { display:flex; justify-content:space-between; align-items:center; margin-top:16px;
+         font-size:13px; color:var(--slab); gap:12px; }
+  .jos button { background:none; border:1px solid var(--linie); color:var(--text);
+         padding:8px 14px; border-radius:10px; cursor:pointer; font-size:13px; }
+  .nota { margin-top:16px; padding-top:12px; border-top:1px solid var(--linie);
+          font-size:11px; color:var(--slab); }
+  .nota a { color:var(--slab); }
+  /* subsolul standard de pe site: cine susține jocul și unde se raportează o greșeală */
+  footer { color:var(--slab); font-size:12px; text-align:center; margin-top:14px; line-height:1.9; }
+  footer a { color:var(--acc); text-decoration:none; font-weight:600;
+             display:inline-block; padding:5px 2px; min-height:24px; min-width:24px; }
+  footer a:hover { text-decoration:underline; }
+  footer .sep { opacity:.5; margin:0 4px; }
+  .scurt { font-size:11px; color:var(--slab); }
+  @media (max-width:480px) { .variante { grid-template-columns:1fr; } .def { font-size:17px; } }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="bara">
+    <a id="homeBtn" href="../" aria-label="Înapoi la toate jocurile"
+       title="Înapoi la toate jocurile"><span class="arw" aria-hidden="true">&larr;</span><span id="homeLbl">Jocuri</span></a>
+    <div class="grup">
+      <button id="themeBtn" class="iconbtn rotund" type="button" aria-label="Comută zi/noapte"
+              aria-pressed="false" title="Comută zi/noapte">☾</button>
+      <button id="reset" type="button" aria-label="Șterge scorul și începe din nou"
+              title="Șterge scorul și începe din nou">De la început</button>
+    </div>
+  </div>
+  <h1 id="titlu">Ghicește cuvântul după definiție</h1>
+  <div class="sub" id="sub">Date adunate la construcție - pagina nu face nicio cerere către alt server.
+    Taste 1-4 pentru răspuns, Enter pentru următorul.</div>
+
+  <div class="langs limbi" id="limbi"></div>
+
+  <div class="def"><span class="et" id="et"></span><span id="text"></span></div>
+  <div class="variante" id="variante"></div>
+
+  <div class="jos">
+    <span id="scor">0 din 0</span>
+    <button id="urmator">Următorul →</button>
+  </div>
+
+  <div class="nota" id="nota">Definiții preluate din Wikipedia și Wiktionary (ro, sr și en), licență CC BY-SA 4.0. Textul definițiilor rămâne sub CC BY-SA 4.0; fiecare definiție își numește sursa exactă și limba în câmpurile 'sursa' și 'limba_definitiei'.</div>
+
+  <footer>
+    <span id="foot">Joc fără cont, fără reclame, fără script de analitică, fără cookie-uri.</span><br>
+    <span id="supportText">Jocul e gratuit și rămâne gratuit. </span>
+    <a id="supportLink" href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>Susține munca</span></a>
+    <span class="sep">·</span>
+    <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">Ai văzut o greșeală? Spune-mi.</a>
+  </footer>
+</div>
+
+<script>
+// Cuvintele jocului, în ordinea din tests/corpus.json. Jocul folosește doar cuvintele pentru
+// care are definiție, deci e un subset - nu o listă inventată. Testul din repo verifică exact asta.
+var W = {
+  en:{animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK","RABBIT","TORTOISE","GIRAFFE","BEAVER","FALCON"],mancare:["PANCAKE","NOODLES","OMELETTE","BISCUIT","YOGURT","PORRIDGE","DUMPLING","SALAD","CUSTARD","PUDDING"],locuri:["CASTLE","STADIUM","BRIDGE","LIGHTHOUSE","FACTORY"]},
+  ro:{animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","BIZON","PÂRȘ","LUP","VULPE","IEPURE","ARICI","FLUTURE","STRUT","ȚESTOASĂ","RÂS"],mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI","SARMALE","PIURE","BORȘ","FRIPTURĂ","SALATĂ","MIERE"],locuri:["MUNTE","ORAȘ","BISERICĂ","POD","PALAT","TURN","GRĂDINĂ","PĂDURE","MUZEU","BIBLIOTECĂ","GARĂ","PIAȚĂ","FAR"]},
+  sr:{animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN","ZEC","LISICA","JELEN","SOVA","PAPAGAJ","MRAV","KONJ","OVCA"],mancare:["KAJMAK","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA","PITA","SIR","MED","SUPA","KROFNA","AJVAR","PECIVO"],locuri:["TVRĐAVA","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO","BAŠTA","PIJACA","CRKVA","TUNEL","FABRIKA","ŠKOLA","BOLNICA"]},
+  src:{animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН","ЗЕЦ","ЛИСИЦА","ЈЕЛЕН","СОВА","ПАПАГАЈ","МРАВ","КОЊ","ОВЦА"],mancare:["КАЈМАК","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА","ПИТА","СИР","МЕД","САЛАТА","СУПА","КРОФНА","АЈВАР","ПЕЦИВО"],locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО","БАШТА","ПИЈАЦА","ЦРКВА","ТУНЕЛ","ФАБРИКА","ШКОЛА","БОЛНИЦА"]}
+};
+
+const DATE = {"en":{"BEAVER":{"categorie":"animale","def":"large semiaquatic rodents of the Northern Hemisphere","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/BEAVER"},"BISCUIT":{"categorie":"mancare","def":"a flour-based baked food item","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/BISCUIT"},"BRIDGE":{"categorie":"locuri","def":"a structure designed to span an obstacle, such as a river or railway, allowing vehicles, pedestrians, and other loads to pass across","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/BRIDGE"},"BUTTERFLY":{"categorie":"animale","def":"winged insects from the lepidopteran superfamily Papilionoidea, characterised by large, often brightly coloured wings that often fold together when at rest…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/BUTTERFLY"},"CASTLE":{"categorie":"locuri","def":"a type of fortified structure built during the Middle Ages predominantly by the nobility or royalty and by military orders","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/CASTLE"},"CROCODILE":{"categorie":"animale","def":"a large, semiaquatic reptile that lives throughout the tropics in Africa, Asia, the Americas and Australia","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/CROCODILE"},"CUSTARD":{"categorie":"mancare","def":"a variety of culinary preparations based on sweetened milk, cheese, or cream cooked with egg or egg yolk to thicken it, and sometimes also flour, corn starch…","evita":["CHEESE"],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/CUSTARD"},"DOLPHIN":{"categorie":"animale","def":"any one of the 40 extant species of aquatic mammal from the cetacean families Delphinidae, Platanistidae, Iniidae, Pontoporiidae, and the possibly extinct…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/DOLPHIN"},"DUMPLING":{"categorie":"mancare","def":"a broad class of dishes that consist of pieces of cooked dough, often wrapped around a filling","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/DUMPLING"},"ELEPHANT":{"categorie":"animale","def":"the largest living land animals","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/ELEPHANT"},"FACTORY":{"categorie":"locuri","def":"an industrial facility, often a complex consisting of several buildings filled with machinery, where workers manufacture items or operate machines which…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/FACTORY"},"FALCON":{"categorie":"animale","def":"birds of prey in the genus Falco, which includes about 40 species","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/FALCON"},"GIRAFFE":{"categorie":"animale","def":"large African hoofed mammals","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/GIRAFFE"},"HEDGEHOG":{"categorie":"animale","def":"a spiny mammal of the subfamily Erinaceinae, in the eulipotyphlan family Erinaceidae","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/HEDGEHOG"},"LIGHTHOUSE":{"categorie":"locuri","def":"a tower, building, or other type of physical structure designed to emit light from a system of lamps and lenses and to serve as a beacon for navigational aid…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/LIGHTHOUSE"},"NOODLES":{"categorie":"mancare","def":"a type of food typically made from unleavened dough which is rolled flat and cut, stretched, or extruded into long strips or strings","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/NOODLES"},"OMELETTE":{"categorie":"mancare","def":"a dish made from eggs, fried with butter or oil in a frying pan","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/OMELETTE"},"PANCAKE":{"categorie":"mancare","def":"a flat type of batter bread like cake, often thin and round, prepared from a starch-based batter that may contain eggs, milk, and butter, and then cooked on a…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/PANCAKE"},"PEACOCK":{"categorie":"animale","def":"Peafowl is a common name for two bird species of the genus Pavo and one species of the closely related genus Afropavo within the tribe Pavonini of the family…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/PEACOCK"},"PENGUIN":{"categorie":"animale","def":"a group of flightless semi-aquatic sea birds which live almost exclusively in the Southern Hemisphere","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/PENGUIN"},"PORRIDGE":{"categorie":"mancare","def":"a type of semi-solid food made by soaking, poaching or boiling, in milk or water, ground, crushed or chopped starchy plants, typically grain","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/PORRIDGE"},"PUDDING":{"categorie":"mancare","def":"a food which can either be a dessert or a savoury dish","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/PUDDING"},"RABBIT":{"categorie":"animale","def":"familiar throughout the world as a small herbivore, a prey animal, a domesticated form of livestock, and a pet, having a widespread effect on ecologies and…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/RABBIT"},"SALAD":{"categorie":"mancare","def":"a dish consisting of mixed ingredients, frequently vegetables","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/SALAD"},"SQUIRREL":{"categorie":"animale","def":"members of the family Sciuridae, a family that includes small or medium-sized rodents","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/SQUIRREL"},"STADIUM":{"categorie":"locuri","def":"a place or venue for outdoor sports, concerts, or other events and consists of a field or stage completely or partially surrounded by a tiered structure…","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/STADIUM"},"TORTOISE":{"categorie":"animale","def":"reptiles of the family Testudinidae of the order Testudines","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/TORTOISE"},"YOGURT":{"categorie":"mancare","def":"a food produced by bacterial fermentation of milk","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":null,"sursa":"en.wikipedia.org","url":"https://en.wikipedia.org/wiki/YOGURT"}},"ro":{"ARICI":{"categorie":"animale","def":"un mamifer mic, nocturn, omnivor","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/ARICI"},"BIBLIOTECĂ":{"categorie":"locuri","def":"library","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/bibliotec%C4%83"},"BISERICĂ":{"categorie":"locuri","def":"church","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/biseric%C4%83"},"BIZON":{"categorie":"animale","def":"un gen de animale erbivore masive din categoria rumegătoarelor, aparținând familiei Bovidae, care a fost în trecut foarte răspândit ca animal sălbatic în…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/BIZON"},"BORȘ":{"categorie":"mancare","def":"o zeamă acră preparată din tărâțe de grâu sau de secară","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/BOR%C8%98"},"BROASCĂ":{"categorie":"animale","def":"un ordin de animale amfibii tetrapode, fără coadă când sunt adulte, cu picioarele dinapoi mai lungi, adaptate pentru sărit, cu gura largă și cu ochii bulbucați","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/BROASC%C4%82"},"BRÂNZĂ":{"categorie":"mancare","def":"type of cheese","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/br%C3%A2nz%C4%83"},"BUFNIȚĂ":{"categorie":"animale","def":"owl (any bird of the order Strigiformes)","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/bufni%C8%9B%C4%83"},"CARACATIȚĂ":{"categorie":"animale","def":"octopus (mollusc)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/caracati%C8%9B%C4%83"},"CIORBĂ":{"categorie":"mancare","def":"ă în bucătăria tradițională românească unul dintre felurile principale de mâncare care se servește la dejun la începutul mesei, după gustare","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/CIORB%C4%82"},"CÂRNAȚI":{"categorie":"mancare","def":"un aliment preparat de obicei din carne tocată, slănină, sare și condimente, iar uneori cu plante aromatice, pasta rezultată fiind introdusă într-un înveliș…","evita":["SLĂNINĂ"],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/C%C3%82RNA%C8%9AI"},"CĂMILĂ":{"categorie":"animale","def":"un mamifer erbivor rumegător din Africa de Nord și din Asia, de talie mare, cu o cocoașă de grăsime pe spate sau cu două cocoașe, folosit la transport în…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/C%C4%82MIL%C4%82"},"FAR":{"categorie":"locuri","def":"lighthouse","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/far"},"FLUTURE":{"categorie":"animale","def":"o insectă din ordinul Lepidoptera","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/FLUTURE"},"FRIPTURĂ":{"categorie":"mancare","def":"o denumire frecvent utilizată pentru o bucată de carne prăjită sau la grătar, în general tăiată ca o felie","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/FRIPTUR%C4%82"},"GARĂ":{"categorie":"locuri","def":"un ansamblu de construcții, instalații și amenajări amplasat pe o linie de calea ferată, destinat opririi trenurilor pentru urcarea și coborârea călătorilor…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/GAR%C4%82"},"GRĂDINĂ":{"categorie":"locuri","def":"un spațiu deschis, de obicei amenajat în aer liber, creat pentru a fi cultivat cu plante și al cărui scop este mai ales estetic și recreativ","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/GR%C4%82DIN%C4%82"},"IEPURE":{"categorie":"animale","def":"rabbit","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/iepure"},"LUP":{"categorie":"animale","def":"wolf","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/lup"},"MIERE":{"categorie":"mancare","def":"un produs apicol obținut prin transformarea și prelucrarea nectarului de către albine și depozitat în celulele fagurilor pentru a constitui hrana populației…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/MIERE"},"MUNTE":{"categorie":"locuri","def":"mountain","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/munte"},"MUZEU":{"categorie":"locuri","def":"o instituție permanentă, aflată în serviciul societății, deschisă publicului, care se ocupă cu strângerea, păstrarea, identificarea, catalogarea, analizarea…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/MUZEU"},"MĂMĂLIGĂ":{"categorie":"mancare","def":"numele în limba română a unui fel de mâncare preparat din făină de porumb","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/M%C4%82M%C4%82LIG%C4%82"},"ORAȘ":{"categorie":"locuri","def":"ș este o așezare mai mare, centralizată și delimitată, situată la intersecția unor căi de comunicație importante, care dispune de o structură proprie de…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/ORA%C8%98"},"PALAT":{"categorie":"locuri","def":"un edificiu impunător care desemnează","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/PALAT"},"PAPANAȘI":{"categorie":"mancare","def":"un fel de desert realizat din brânză dulce de vaci, ouă, făină, griș, pesmet și zahăr","evita":["BRÂNZĂ"],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/PAPANA%C8%98I"},"PIAȚĂ":{"categorie":"locuri","def":"în general orice varietate de sisteme, proceduri, instituții, relații sociale sau infrastructuri unde are loc comerțul, se schimbă bunuri și servicii, ceea ce…","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/PIA%C8%9A%C4%82"},"PIURE":{"categorie":"mancare","def":"un fel de mâncare gătit cremos preparat din cartofi fierți sau aburiți, de obicei cu adaos de lapte, unt, sare și piper","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/PIURE"},"PLĂCINTĂ":{"categorie":"mancare","def":"un preparat de patiserie făcut din foi de aluat, între care se pune o umplutură de brânză, carne, cartofi, varză, dovleac, fructe sau ciocolată, și copt în…","evita":["BRÂNZĂ"],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/PL%C4%82CINT%C4%82"},"POD":{"categorie":"locuri","def":"o construcție, din categoria lucrări de artă, realizată de ingineri constructori, destinată să treacă un obstacol trecând deasupra acestora","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/POD"},"PÂRȘ":{"categorie":"animale","def":"o familie de animale rozătoare, ce se găsesc de obicei în Europa, dar apar uneori și în Africa sau Asia","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/P%C3%82R%C8%98"},"PĂDURE":{"categorie":"locuri","def":"forest","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/p%C4%83dure"},"RÂS":{"categorie":"animale","def":"laughter, laugh","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/r%C3%A2s"},"SALATĂ":{"categorie":"mancare","def":"o plantă legumicolă anuală din familia Asteraceae","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/SALAT%C4%82"},"SARMALE":{"categorie":"mancare","def":"un preparat culinar din carne tocată, amestecată cu orez și cu alte ingrediente, învelită în foi de varză, de viță sau de ștevie etc., în formă de rulou","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/SARMALE"},"SLĂNINĂ":{"categorie":"mancare","def":"unul dintre preparatele culinare tradiționale obținute în bucătăria românească prin prepararea grăsimii de porc provenită de pe burta și spatele acestui animal","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/SL%C4%82NIN%C4%82"},"STRUT":{"categorie":"animale","def":"o pasăre care trăiește în Africa, aparținând de grupa păsărilor alergătoare, fiind cea mai mare pasăre care trăiește în prezent pe Pământ","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/STRUT"},"TURN":{"categorie":"locuri","def":"o clădire mai înaltă decât întinsă pe orizontală, a cărei bază se află la sol","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/TURN"},"VEVERIȚĂ":{"categorie":"animale","def":"squirrel (rodent)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/veveri%C8%9B%C4%83"},"VULPE":{"categorie":"animale","def":"un mamifer omnivor, de dimensiune mică spre medie, încadrat sistematic în familia Canidae, alături de lup, câine, șacal, enot ș.a","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/VULPE"},"ZACUSCĂ":{"categorie":"mancare","def":"o mâncare de legume proaspete, coapte sau prăjite în ulei, găsită în mai multe țări din Balcani","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/ZACUSC%C4%82"},"ȚESTOASĂ":{"categorie":"animale","def":"o reptilă din ordinul Testudines","evita":[],"glos":false,"limba_definitiei":"ro","parte_vorbire":null,"sursa":"ro.wikipedia.org","url":"https://ro.wikipedia.org/wiki/%C8%9AESTOAS%C4%82"}},"sr":{"AJVAR":{"categorie":"mancare","def":"specijalna vrsta salate, specijalitet balkanske kuhinje, napravljena od crvene paprike","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/AJVAR"},"BAŠTA":{"categorie":"locuri","def":"isplanirani prostor, obično u eksterijeru, koji se koristi za prezentaciju, gajenje i uživanje u biljkama i ostalim oblicima prirode","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/BA%C5%A0TA"},"BIBLIOTEKA":{"categorie":"locuri","def":"knjižnica je sređena zbirka knjiga, po autorskom ili predmetnom katalogu, koja pripada privatnim licima ili državnim institucijama, ili ustanovama u kojima se…","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/BIBLIOTEKA"},"BOLNICA":{"categorie":"locuri","def":"ustanova zdravstvene nege, koja često obezbeđuje duži boravak pacijenata na lečenju, institucija za dijagnostiku i lečenje, pregled pacijenata i obavljanje…","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/BOLNICA"},"CRKVA":{"categorie":"locuri","def":"church (both the building and organization)","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/crkva"},"DELFIN":{"categorie":"animale","def":"dolphin (mammal)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/delfin"},"DŽAMIJA":{"categorie":"locuri","def":"mosque","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/d%C5%BEamija"},"FABRIKA":{"categorie":"locuri","def":"tvornica ili manufakturna proizvodna jedinica, je industrijski objekat u kom radnici proizvode dobra ili nadgledaju mašine u procesu proizvodnje, prerade i…","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/FABRIKA"},"GIBANICA":{"categorie":"mancare","def":"vrsta srpske slojevite pite, obično nadevene belim kravljim sirom sa uljem i jajima, ili ređe, umesto sira, sa mesom, krompirom ili spanaćem","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/GIBANICA"},"JELEN":{"categorie":"animale","def":"porodica životinja iz reda papkara","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/JELEN"},"KAJMAK":{"categorie":"mancare","def":"skorup je mlečni proizvod kremaste strukture, prijatnog kiselkastog ukusa i svojstvenog mirisa","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/KAJMAK"},"KOLAČ":{"categorie":"mancare","def":"manji slatki komad peciva punjen različitim filovima","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/KOLA%C4%8C"},"KONJ":{"categorie":"animale","def":"horse","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/konj"},"KORNJAČA":{"categorie":"animale","def":"turtle","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/kornja%C4%8Da"},"KROFNA":{"categorie":"mancare","def":"vrsta kolača pečenog u tiganju, na ulju","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/KROFNA"},"LEPTIR":{"categorie":"animale","def":"butterfly (swimming style)","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/leptir"},"LISICA":{"categorie":"animale","def":"sisari manje ili osrednje veličine i pripadaju nekolikim rodovima porodice pasa","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/LISICA"},"MED":{"categorie":"mancare","def":"honey","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/med"},"MEDVED":{"categorie":"animale","def":"bear (mammal)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/medved"},"MRAV":{"categorie":"animale","def":"ant","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/mrav"},"MUZEJ":{"categorie":"locuri","def":"naziv za ustanovu i zgradu, u kojoj se čuvaju, proučavaju i izlažu - hronološki ili tematski - zbirke starina i umetnina, te prirodnjačkih, tehničkih i sl","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/MUZEJ"},"OSTRVO":{"categorie":"locuri","def":"island","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/ostrvo"},"OVCA":{"categorie":"animale","def":"sheep (mammal), ewe","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/ovca"},"PAPAGAJ":{"categorie":"animale","def":"red ptica kome pripadaju 372 vrste u 86 rodova","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/PAPAGAJ"},"PECIVO":{"categorie":"mancare","def":"bun, pastry","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/pecivo"},"PIJACA":{"categorie":"locuri","def":"posebno izdvojeni i uređeni prostor u kome se prodaju roba i usluge","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/PIJACA"},"PINGVIN":{"categorie":"animale","def":"monotipični red vodenih, neletećih ptica, koje žive uglavnom na južnoj hemisferi","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/PINGVIN"},"PITA":{"categorie":"mancare","def":"slatko ili slano jelo koje se pravi od tanko razvijenog testa i raznog drugog prehrambenog materijala - nadeva","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/PITA"},"PLANINA":{"categorie":"locuri","def":"mountain","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/planina"},"PLJESKAVICA":{"categorie":"mancare","def":"jelo od mlevenog mesa pečeno na roštilju","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/PLJESKAVICA"},"SIR":{"categorie":"mancare","def":"cheese","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/sir"},"SOVA":{"categorie":"animale","def":"predstavljaju red uglavnom usamljenih ptica grabljivica u koji se danas ubraja oko 250 vrsta","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/SOVA"},"SUPA":{"categorie":"mancare","def":"juha je tečno jelo, koje se spravlja prokuvavanjem sastojaka","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/SUPA"},"TUNEL":{"categorie":"locuri","def":"tunnel","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/tunel"},"TVRĐAVA":{"categorie":"locuri","def":"oblik vojne građevine sa stalnom vojnom postavom, sa prevashodno odbrambenim i zaštitnim zadatkom, koju karakteriše sistem kula i jakih bedema","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/TVR%C4%90AVA"},"VEVERICA":{"categorie":"animale","def":"squirrel","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/veverica"},"ZEC":{"categorie":"animale","def":"rod sitnih sisara iz istoimene porodice, u okviru reda paglodara","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/ZEC"},"ĆURAN":{"categorie":"animale","def":"a male turkey","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%C4%87uran"},"ČORBA":{"categorie":"mancare","def":"chowder","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%C4%8Dorba"},"ŠKOLA":{"categorie":"locuri","def":"obrazovno-vaspitna ustanova u kojoj učitelji, nastavnici i profesori, po unapred utvrđenom planu i programu, prenose znanja mlađoj generaciji","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%C5%A0KOLA"},"ŠTRUDLA":{"categorie":"mancare","def":"ili savijača je vrsta jednostavnog, narodnog kolača","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%C5%A0TRUDLA"},"ŠUMA":{"categorie":"locuri","def":"forest, woods","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%C5%A1uma"},"ŽIRAFA":{"categorie":"animale","def":"afrički sisar iz reda papkara, najviši od svih kopnenih životinja","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%C5%BDIRAFA"}},"src":{"ЈЕЛЕН":{"categorie":"animale","def":"породица животиња из реда папкара","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%88%D0%95%D0%9B%D0%95%D0%9D"},"ЋУРАН":{"categorie":"animale","def":"a male turkey","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%9B%D1%83%D1%80%D0%B0%D0%BD"},"ЏАМИЈА":{"categorie":"locuri","def":"mosque","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%9F%D0%B0%D0%BC%D0%B8%D1%98%D0%B0"},"АЈВАР":{"categorie":"mancare","def":"специјална врста салате, специјалитет балканске кухиње, направљена од црвене паприке","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%90%D0%88%D0%92%D0%90%D0%A0"},"БАШТА":{"categorie":"locuri","def":"испланирани простор, обично у екстеријеру, који се користи за презентацију, гајење и уживање у биљкама и осталим облицима природе","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%91%D0%90%D0%A8%D0%A2%D0%90"},"БИБЛИОТЕКА":{"categorie":"locuri","def":"сређена збирка књига, по ауторском или предметном каталогу, која припада приватним лицима или државним институцијама, или установама у којима се чувају збирке…","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%91%D0%98%D0%91%D0%9B%D0%98%D0%9E%D0%A2%D0%95%D0%9A%D0%90"},"БОЛНИЦА":{"categorie":"locuri","def":"установа здравствене неге, која често обезбеђује дужи боравак пацијената на лечењу, институција за дијагностику и лечење, преглед пацијената и обављање порођаја","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%91%D0%9E%D0%9B%D0%9D%D0%98%D0%A6%D0%90"},"ВЕВЕРИЦА":{"categorie":"animale","def":"squirrel","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%B2%D0%B5%D0%B2%D0%B5%D1%80%D0%B8%D1%86%D0%B0"},"ГИБАНИЦА":{"categorie":"mancare","def":"врста српске слојевите пите, обично надевене белим крављим сиром са уљем и јајима, или ређе, уместо сира, са месом, кромпиром или спанаћем","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%93%D0%98%D0%91%D0%90%D0%9D%D0%98%D0%A6%D0%90"},"ДЕЛФИН":{"categorie":"animale","def":"dolphin (mammal)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%B4%D0%B5%D0%BB%D1%84%D0%B8%D0%BD"},"ЖИРАФА":{"categorie":"animale","def":"афрички сисар из реда папкара, највиши од свих копнених животиња","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%96%D0%98%D0%A0%D0%90%D0%A4%D0%90"},"ЗЕЦ":{"categorie":"animale","def":"род ситних сисара из истоимене породице, у оквиру реда паглодара","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%97%D0%95%D0%A6"},"КАЈМАК":{"categorie":"mancare","def":"млечни производ кремасте структуре, пријатног киселкастог укуса и својственог мириса","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9A%D0%90%D0%88%D0%9C%D0%90%D0%9A"},"КОЊ":{"categorie":"animale","def":"dumbass, idiot, moron","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BA%D0%BE%D1%9A"},"КОЛАЧ":{"categorie":"mancare","def":"мањи слатки комад пецива пуњен различитим филовима","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9A%D0%9E%D0%9B%D0%90%D0%A7"},"КОРЊАЧА":{"categorie":"animale","def":"turtle","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BA%D0%BE%D1%80%D1%9A%D0%B0%D1%87%D0%B0"},"КРОФНА":{"categorie":"mancare","def":"врста колача печеног у тигању, на уљу","evita":["КОЛАЧ","ШКОЛА"],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9A%D0%A0%D0%9E%D0%A4%D0%9D%D0%90"},"ЛЕПТИР":{"categorie":"animale","def":"butterfly (swimming style)","evita":[],"glos":false,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BB%D0%B5%D0%BF%D1%82%D0%B8%D1%80"},"ЛИСИЦА":{"categorie":"animale","def":"сисари мање или осредње величине и припадају неколиким родовима породице паса","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9B%D0%98%D0%A1%D0%98%D0%A6%D0%90"},"МЕД":{"categorie":"mancare","def":"honey","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BC%D0%B5%D0%B4"},"МЕДВЕД":{"categorie":"animale","def":"bear (mammal)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BC%D0%B5%D0%B4%D0%B2%D0%B5%D0%B4"},"МОСТ":{"categorie":"locuri","def":"грађевина направљена ради премошћавања природних или вештачких препрека, као што су водена маса, долина, или пут","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9C%D0%9E%D0%A1%D0%A2"},"МРАВ":{"categorie":"animale","def":"породица инсеката која живи у великим задружним заједницама","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9C%D0%A0%D0%90%D0%92"},"МУЗЕЈ":{"categorie":"locuri","def":"назив за установу и зграду, у којој се чувају, проучавају и излажу - хронолошки или тематски - збирке старина и уметнина, те природњачких, техничких и сл","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9C%D0%A3%D0%97%D0%95%D0%88"},"ОВЦА":{"categorie":"animale","def":"sheep (mammal)","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BE%D0%B2%D1%86%D0%B0"},"ОСТРВО":{"categorie":"locuri","def":"island","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BE%D1%81%D1%82%D1%80%D0%B2%D0%BE"},"ПЉЕСКАВИЦА":{"categorie":"mancare","def":"јело од млевеног меса печено на роштиљу","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9F%D0%89%D0%95%D0%A1%D0%9A%D0%90%D0%92%D0%98%D0%A6%D0%90"},"ПАПАГАЈ":{"categorie":"animale","def":"ред птица коме припадају 372 врсте у 86 родова","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9F%D0%90%D0%9F%D0%90%D0%93%D0%90%D0%88"},"ПЕЦИВО":{"categorie":"mancare","def":"bun, pastry","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BF%D0%B5%D1%86%D0%B8%D0%B2%D0%BE"},"ПИЈАЦА":{"categorie":"locuri","def":"посебно издвојени и уређени простор у коме се продају роба и услуге","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9F%D0%98%D0%88%D0%90%D0%A6%D0%90"},"ПИНГВИН":{"categorie":"animale","def":"монотипични ред водених, нелетећих птица, које живе углавном на јужној хемисфери","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9F%D0%98%D0%9D%D0%93%D0%92%D0%98%D0%9D"},"ПИТА":{"categorie":"mancare","def":"слатко или слано јело које се прави од танко развијеног теста и разног другог прехрамбеног материјала - надева","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%9F%D0%98%D0%A2%D0%90"},"ПЛАНИНА":{"categorie":"locuri","def":"mountain","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D0%BD%D0%B0"},"САЛАТА":{"categorie":"mancare","def":"врста хране, која се обично једе као прилог уз главно јело, а ређе самостално","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A1%D0%90%D0%9B%D0%90%D0%A2%D0%90"},"СИР":{"categorie":"mancare","def":"cheese","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%81%D0%B8%D1%80"},"СОВА":{"categorie":"animale","def":"owl","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B2%D0%B0"},"СУПА":{"categorie":"mancare","def":"течно јело, које се справља прокувавањем састојака","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A1%D0%A3%D0%9F%D0%90"},"ТВРЂАВА":{"categorie":"locuri","def":"облик војне грађевине са сталном војном поставом, са превасходно одбрамбеним и заштитним задатком, коју карактерише систем кула и јаких бедема","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A2%D0%92%D0%A0%D0%82%D0%90%D0%92%D0%90"},"ТУНЕЛ":{"categorie":"locuri","def":"tunnel","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%82%D1%83%D0%BD%D0%B5%D0%BB"},"ФАБРИКА":{"categorie":"locuri","def":"индустријски објекат у ком радници производе добра или надгледају машине у процесу производње, прераде и дораде","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A4%D0%90%D0%91%D0%A0%D0%98%D0%9A%D0%90"},"ЦРКВА":{"categorie":"locuri","def":"church","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%86%D1%80%D0%BA%D0%B2%D0%B0"},"ЧОРБА":{"categorie":"mancare","def":"врста густе супе карактеристична за Балкан али пре свега за Турску као и земље као што су Русија, Казахстан","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A7%D0%9E%D0%A0%D0%91%D0%90"},"ШКОЛА":{"categorie":"locuri","def":"образовно-васпитна установа у којој учитељи, наставници и професори, по унапред утврђеном плану и програму, преносе знања млађој генерацији","evita":[],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A8%D0%9A%D0%9E%D0%9B%D0%90"},"ШТРУДЛА":{"categorie":"mancare","def":"или савијача је врста једноставног, народног колача","evita":["КОЛАЧ","ШКОЛА"],"glos":false,"limba_definitiei":"sr","parte_vorbire":null,"sursa":"sr.wikipedia.org","url":"https://sr.wikipedia.org/wiki/%D0%A8%D0%A2%D0%A0%D0%A3%D0%94%D0%9B%D0%90"},"ШУМА":{"categorie":"locuri","def":"forest","evita":[],"glos":true,"limba_definitiei":"en","parte_vorbire":"Noun","sursa":"en.wiktionary.org","url":"https://en.wiktionary.org/wiki/%D1%88%D1%83%D0%BC%D0%B0"}}};
+const NUME = { ro: "Română", en: "English", sr: "Srpski", src: "Српски" };
+const NUME_SCURT = { ro: "RO", en: "EN", sr: "SR", src: "СР" };
+
+// Tot ce se vede pe ecran se traduce odată cu limba aleasă, nu doar definiția:
+// un jucător sârb nu trebuie să citească instrucțiuni în română.
+const T = {
+  ro: { titlu: "Ghicește cuvântul după definiție", joc: "joc",
+        sub: "Date adunate la construcție - pagina nu face nicio cerere către alt server. " +
+             "Taste 1-4 pentru răspuns, Enter pentru următorul.",
+        urmator: "Următorul", din: "din",
+        categorii: { animale: "Animale", mancare: "Mâncare", locuri: "Locuri" },
+        defIn: "definiție în %s", limbi: { ro: "română", en: "engleză", sr: "sârbă" },
+        nota: "Definiții din Wikipedia și Wiktionary (ro, sr, en), licență CC BY-SA 4.0. " +
+              "Fiecare definiție își numește sursa.",
+        foot: "Joc fără cont, fără reclame, fără script de analitică, fără cookie-uri, nimic încărcat " +
+              "de pe alt server. Merge și fără internet după prima încărcare.",
+        supportText: "Jocul e gratuit și rămâne gratuit.", supportLink: "Susține munca",
+        report: "Ai văzut o greșeală? Spune-mi.",
+        desc: "Ghicește cuvântul după definiție. Definiții reale din Wikipedia și Wiktionary, " +
+              "patru variante de răspuns, patru limbi. Fără cont, fără reclame, fără cookie-uri." },
+  en: { titlu: "Guess the word from its definition", joc: "game",
+        sub: "Definitions collected at build time - the page makes no request to any other server. " +
+             "Press 1-4 to answer, Enter for the next one.",
+        urmator: "Next", din: "of",
+        categorii: { animale: "Animals", mancare: "Food", locuri: "Places" },
+        defIn: "definition in %s", limbi: { ro: "Romanian", en: "English", sr: "Serbian" },
+        nota: "Definitions from Wikipedia and Wiktionary (ro, sr, en), licensed CC BY-SA 4.0. " +
+              "Each definition names its source.",
+        foot: "No account, no ads, no analytics script, no cookies, nothing loaded from another " +
+              "server. Works offline after the first load.",
+        supportText: "The game is free and stays free.", supportLink: "Support the work",
+        report: "Spotted a mistake? Tell me.",
+        desc: "Guess the word from its definition. Real definitions from Wikipedia and Wiktionary, " +
+              "four answers to choose from, four languages. No account, no ads, no cookies." },
+  sr: { titlu: "Pogodi reč po definiciji", joc: "igra",
+        sub: "Definicije su prikupljene pri izradi - stranica ne šalje nijedan zahtev drugom serveru. " +
+             "Pritisni 1-4 za odgovor, Enter za sledeće.",
+        urmator: "Sledeće", din: "od",
+        categorii: { animale: "Životinje", mancare: "Hrana", locuri: "Mesta" },
+        defIn: "definicija na %s", limbi: { ro: "rumunskom", en: "engleskom", sr: "srpskom" },
+        nota: "Definicije sa Vikipedije i Vikionara (ro, sr, en), licenca CC BY-SA 4.0. " +
+              "Svaka definicija navodi svoj izvor.",
+        foot: "Bez naloga, bez reklama, bez praćenja. Radi i bez interneta posle prvog učitavanja.",
+        supportText: "Igra je besplatna i ostaje besplatna.", supportLink: "Podrži rad",
+        report: "Vidiš grešku? Reci mi.",
+        desc: "Pogodi reč po definiciji. Prave definicije sa Vikipedije i Vikionara, četiri " +
+              "ponuđena odgovora, četiri jezika. Bez naloga, bez reklama, bez kolačića." },
+  src: { titlu: "Погоди реч по дефиницији", joc: "игра",
+        sub: "Дефиниције су прикупљене при изради - страница не шаље ниједан захтев другом серверу. " +
+             "Притисни 1-4 за одговор, Ентер за следеће.",
+        urmator: "Следеће", din: "од",
+        categorii: { animale: "Животиње", mancare: "Храна", locuri: "Места" },
+        defIn: "дефиниција на %s", limbi: { ro: "румунском", en: "енглеском", sr: "српском" },
+        nota: "Дефиниције са Википедије и Викиречника (ro, sr, en), лиценца CC BY-SA 4.0. " +
+              "Свака дефиниција наводи свој извор.",
+        foot: "Без налога, без реклама, без праћења. Ради и без интернета после првог учитавања.",
+        supportText: "Игра је бесплатна и остаје бесплатна.", supportLink: "Подржи рад",
+        report: "Видиш грешку? Реци ми.",
+        desc: "Погоди реч по дефиницији. Праве дефиниције са Википедије и Викиречника, четири " +
+              "понуђена одговора, четири језика. Без налога, без реклама, без колачића." }
+};
+const HTML_LANG = { ro: "ro", en: "en", sr: "sr-Latn", src: "sr-Cyrl" };
+
+function textele() { return T[limba] || T.ro; }
+// aceleași etichete ca pe paginile de pe site (linkul spre hub se traduce o dată cu limba)
+const ACASA_LBL = { ro: "Jocuri", en: "Games", sr: "Igre", src: "Игре" };
+const ACASA_TTL = { ro: "Înapoi la toate jocurile", en: "Back to all games",
+                    sr: "Nazad na sve igre", src: "Назад на све игре" };
+const RESET_LBL = { ro: "De la început", en: "Restart", sr: "Ispočetka", src: "Испочетка" };
+const RESET_TTL = { ro: "Șterge scorul și începe din nou", en: "Clear the score and start again",
+                    sr: "Obriši rezultat i počni ponovo", src: "Обриши резултат и почни поново" };
+const TEMA_TTL = { ro: "Comută zi/noapte", en: "Toggle light/dark",
+                   sr: "Pređi na svetlo ili tamno", src: "Пређи на светло или тамно" };
+// cheia de stocare diferă între demo și pagină, ca să nu se amestece alegerile
+const CHEIE = "word-from-definition";
+function citeșteStocare(sufix) { try { return localStorage.getItem(CHEIE + sufix); } catch (e) { return null; } }
+function scrieStocare(sufix, valoare) { try { localStorage.setItem(CHEIE + sufix, valoare); } catch (e) {} }
+
+// limba aleasă ultima dată are ultimul cuvânt; altfel, limba implicită a paginii
+let limba = (function () {
+  const salvată = citeșteStocare("-lang");
+  return T[salvată] ? salvată : "en";
+})(), cuvant = null, anterior = null, scor = 0, jucate = 0, blocat = false;
+
+// amestecare deterministă, cu seed din cuvânt (nu din lungimea lui - altfel toate
+// cuvintele de aceeași lungime se amestecă la fel)
+function amesteca(lista, seed) {
+  const a = lista.slice();
+  let s = seed >>> 0;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    const j = s % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function seedDin(text) {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+
+// ---------- tema zi/noapte ----------
+// tema: aceeași cheie + "-theme", ca pe celelalte pagini de pe site
+
+function temaCurentă() {
+  const aleasă = document.documentElement.getAttribute("data-theme");
+  if (aleasă) return aleasă;
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function deseneazaButonTema() {
+  const b = document.getElementById("themeBtn"), întunecat = temaCurentă() === "dark";
+  b.textContent = întunecat ? "☀" : "☾";        // arată ce se întâmplă dacă apeși
+  b.setAttribute("aria-pressed", întunecat ? "true" : "false");
+  const t = TEMA_TTL[limba] || TEMA_TTL.ro;
+  b.setAttribute("aria-label", t);
+  b.setAttribute("title", t);
+}
+
+function aplicăTema(aleasă) {
+  if (aleasă) document.documentElement.setAttribute("data-theme", aleasă);
+  else document.documentElement.removeAttribute("data-theme");
+  deseneazaButonTema();
+}
+
+function initTema() {
+  const salvată = citeșteStocare("-theme");
+  aplicăTema(salvată);
+  document.getElementById("themeBtn").onclick = () => {
+    const următoarea = temaCurentă() === "dark" ? "light" : "dark";
+    aplicăTema(următoarea);
+    scrieStocare("-theme", următoarea);
+  };
+}
+
+function texte() {
+  const t = textele();
+  document.documentElement.lang = HTML_LANG[limba] || "ro";
+  document.title = t.titlu + " - " + t.joc;
+  document.getElementById("titlu").textContent = t.titlu;
+  document.getElementById("sub").textContent = t.sub;
+  document.getElementById("urmator").textContent = t.urmator + " →";
+  const md = document.querySelector('meta[name="description"]');
+  if (md && t.desc) md.setAttribute("content", t.desc);
+  document.getElementById("nota").textContent = t.nota;
+  document.getElementById("foot").textContent = t.foot;
+  document.getElementById("supportText").textContent = t.supportText + " ";
+  document.querySelector("#supportLink span").textContent = t.supportLink;
+  document.getElementById("report").textContent = t.report;
+  actualizeazaScor();
+  etichete();
+}
+
+function etichete() {
+  const a = document.getElementById("homeBtn"), r = document.getElementById("reset");
+  document.getElementById("homeLbl").textContent = ACASA_LBL[limba] || ACASA_LBL.ro;
+  const t = ACASA_TTL[limba] || ACASA_TTL.ro;
+  a.setAttribute("aria-label", t);
+  a.setAttribute("title", t);
+  deseneazaButonTema();
+  r.textContent = RESET_LBL[limba] || RESET_LBL.ro;
+  const rt = RESET_TTL[limba] || RESET_TTL.ro;
+  r.setAttribute("aria-label", rt);
+  r.setAttribute("title", rt);
+}
+
+// „de la început": scorul pleacă de la zero, iar `deseneaza` păstrează cuvântul curent ca
+// „anterior", deci nu se repetă aceeași întrebare imediat
+function actualizeazaScor() {
+  document.getElementById("scor").textContent = scor + " " + textele().din + " " + jucate;
+}
+
+function reia() {
+  scor = 0; jucate = 0;
+  actualizeazaScor();
+  deseneaza();
+}
+
+function scorDeLaZero() {
+  scor = 0; jucate = 0; anterior = null;
+  actualizeazaScor();
+}
+
+function alegeCuvant() {
+  const chei = Object.keys(DATE[limba]);
+  if (chei.length === 1) return chei[0];
+  let ales;
+  do { ales = chei[Math.floor(Math.random() * chei.length)]; } while (ales === anterior && chei.length > 1);
+  return ales;
+}
+
+// variantele: aceeași categorie întâi, fără cuvintele pe care definiția le pomenește
+function variante() {
+  const toate = DATE[limba];
+  const curent = toate[cuvant];
+  const interzise = new Set([cuvant].concat(curent.evita || []));
+  const aceeași = Object.keys(toate).filter(k => toate[k].categorie === curent.categorie && !interzise.has(k));
+  const restul = Object.keys(toate).filter(k => toate[k].categorie !== curent.categorie && !interzise.has(k));
+  const alese = amesteca(aceeași, seedDin(cuvant)).slice(0, 3);
+  const completare = amesteca(restul, seedDin(cuvant + "x"));
+  while (alese.length < 3 && completare.length) alese.push(completare.shift());
+  return amesteca([cuvant].concat(alese), seedDin(cuvant + "!" ));
+}
+
+function deseneaza() {
+  blocat = false;
+  anterior = cuvant;
+  cuvant = alegeCuvant();
+  const d = DATE[limba][cuvant];
+  const et = document.getElementById("et");
+  const înAltăLimbă = d.limba_definitiei && d.limba_definitiei !== (limba === "src" ? "sr" : limba);
+  const t = textele();
+  et.textContent = (NUME_SCURT[limba] || limba.toUpperCase()) + " · " + (t.categorii[d.categorie] || d.categorie)
+    + (d.parte_vorbire ? " · " + d.parte_vorbire : "")
+    + (înAltăLimbă ? " · " + t.defIn.replace("%s", t.limbi[d.limba_definitiei] || d.limba_definitiei) : "");
+  const text = document.getElementById("text");
+  text.textContent = d.def;
+  text.setAttribute("lang", d.limba_definitiei || limba);      // ca cititorul de ecran să pronunțe corect
+
+  const box = document.getElementById("variante");
+  box.innerHTML = "";
+  box.setAttribute("lang", limba === "src" ? "sr" : limba);
+  for (const v of variante()) {
+    const b = document.createElement("button");
+    b.textContent = v;
+    b.onclick = () => raspunde(b, v);
+    box.appendChild(b);
+  }
+}
+
+function raspunde(buton, valoare) {
+  if (blocat) return;
+  blocat = true;
+  jucate++;
+  if (valoare === cuvant) { scor++; buton.classList.add("bun"); }
+  else {
+    buton.classList.add("rau");
+    for (const b of document.querySelectorAll("#variante button")) {
+      if (b.textContent === cuvant) b.classList.add("bun");
+    }
+  }
+  for (const b of document.querySelectorAll("#variante button")) b.disabled = true;
+  actualizeazaScor();
+}
+
+document.getElementById("limbi").innerHTML = Object.keys(DATE).map(c =>
+  '<button data-lang="' + c + '" data-l="' + c + '" aria-pressed="' + (c === limba) + '">' + NUME[c] + "</button>").join("");
+document.getElementById("limbi").onclick = e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  limba = b.dataset.lang || b.dataset.l;
+  scrieStocare("-lang", limba);
+  for (const x of document.querySelectorAll("#limbi button")) x.setAttribute("aria-pressed", (x.dataset.lang || x.dataset.l) === limba);
+  scorDeLaZero();
+  texte();
+  deseneaza();
+};
+document.getElementById("urmator").onclick = deseneaza;
+document.getElementById("reset").onclick = reia;
+document.addEventListener("keydown", e => {
+  if (e.key >= "1" && e.key <= "4") {
+    const b = document.querySelectorAll("#variante button")[Number(e.key) - 1];
+    if (b) b.click();
+  } else if (e.key === "Enter" && blocat) deseneaza();
+  else if (e.key === "r" || e.key === "R") reia();
+});
+initTema();
+texte();
+deseneaza();
+</script>
+</body>
+</html>

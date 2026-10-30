@@ -85,6 +85,7 @@ def main():
     check(len(fisiere) >= 6, f"am gasit {len(fisiere)} jocuri")
     for f in fisiere:
         text = f.read_text(encoding="utf-8")
+        partial = 'name="joc-date" content="definitii"' in text
         start = text.find("var W = {")
         check(start >= 0, f"{f.parent.name}: are blocul var W")
         if start < 0:
@@ -110,8 +111,17 @@ def main():
                 if not m:
                     continue
                 in_fisier = json.loads("[" + m.group(1) + "]")
-                check(in_fisier == corpus[lim][tema],
-                      f"{f.parent.name}/{lim}/{tema}: lista difera de corpus.json")
+                # Jocurile clasice au toate cele 48 de cuvinte. Un joc care declară
+                # <meta name="joc-date" content="definitii"> are definiții doar pentru o parte
+                # dintre ele, deci are voie la un SUBSET - dar cu aceleași cuvinte, în aceeași
+                # ordine și scrise la fel. Așa se prinde și la el un cuvânt inventat.
+                if partial:
+                    așteptat = [w for w in corpus[lim][tema] if w in set(in_fisier)]
+                    check(in_fisier == așteptat,
+                          f"{f.parent.name}/{lim}/{tema}: subsetul nu urmează corpus.json")
+                else:
+                    check(in_fisier == corpus[lim][tema],
+                          f"{f.parent.name}/{lim}/{tema}: lista difera de corpus.json")
     print(f"\n{ok} verificari trecute, {rau} esuate")
     return 0 if rau == 0 else 1
 

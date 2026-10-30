@@ -14,7 +14,8 @@ import os
 from playwright.sync_api import sync_playwright
 
 RADACINA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JOCURI = ["guess-the-word", "word-pairs", "word-scramble", "word-of-the-day", "odd-one-out", "word-search"]
+JOCURI = ["guess-the-word", "word-pairs", "word-scramble", "word-of-the-day", "odd-one-out", "word-search",
+          "word-from-definition"]
 # limbi de browser pe care legea veche le-ar fi lasat sa treaca: ro si sarba (latin + chirilic)
 LOCALE = ["ro-RO", "sr-RS", "sr-Cyrl-RS", "de-DE", "en-US"]
 

@@ -17,6 +17,7 @@ Shortcut: **https://freehtml.dev/games** (302)
 | Word of the day | `/word-of-the-day/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
 | Odd one out | `/odd-one-out/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
 | Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 192 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
+| Word from definition | `/word-from-definition/` | EN, RO, SR Latin, SR Cyrillic | Vocabulary. One definition from Wikipedia or Wiktionary, four words to choose from, three themes, local score. Text of the definitions is CC BY-SA 4.0. |
 | Type fast | `/typing-test/` | EN, RO, SR Latin, SR Cyrillic | Typing test. Words come one after another; a wrong letter never goes through. Words per minute and accuracy, best kept locally. |
 
 ## House rules
