@@ -249,7 +249,8 @@ var CHEIE = "scrie-repede-v1";
 var state = {
   lang:"ro", durata:30, seed:0, lista:[], idx:0, poz:0,
   bune:0, total:0, gresite:0, cuvinteGata:0,
-  start:0, timer:null, rulare:false, gata:false, sursa:""
+  start:0, timer:null, rulare:false, gata:false, sursa:"",
+  rezWpm:null, rezPrec:null, rezSec:0
 };
 
 function $(id){ return document.getElementById(id); }
@@ -309,6 +310,9 @@ function pregateste(){
   state.cuvinteGata = 0;
   state.gata = false;
   state.rulare = false;
+  state.rezWpm = null;
+  state.rezPrec = null;
+  state.rezSec = 0;
   if(state.timer){ window.clearInterval(state.timer); state.timer = null; }
   $("rezultat").className = "rezultat";
   deseneaza();
@@ -347,6 +351,7 @@ function mesaj(text, fel){
 }
 
 function wpm(){
+  if(state.rezWpm !== null && !state.rulare) return state.rezWpm;   // runda s-a terminat: cifra inghetata
   if(!state.start) return 0;
   var minute = (Date.now() - state.start) / 60000;
   if(minute <= 0) return 0;
@@ -354,6 +359,7 @@ function wpm(){
 }
 
 function precizie(){
+  if(state.rezPrec !== null && !state.rulare) return state.rezPrec;
   if(state.total === 0) return 100;
   return Math.round(100 * state.bune / state.total);
 }
@@ -396,8 +402,11 @@ function termina(motiv){
   state.rulare = false;
   state.gata = true;
   if(state.timer){ window.clearInterval(state.timer); state.timer = null; }
-  actualizeazaChips();
   var w = wpm(), p = precizie();
+  state.rezWpm = w;                    // de aici incolo cifrele nu se mai schimba
+  state.rezPrec = p;
+  state.rezSec = Math.max(1, Math.round((Date.now() - state.start) / 1000));
+  actualizeazaChips();
   $("rezWpm").textContent = w;
   $("rezPrec").textContent = p;
   $("rezCuv").textContent = state.cuvinteGata;
@@ -518,7 +527,7 @@ function init(){
   $("dinouBtn").addEventListener("click", pregateste);
   $("copiazaBtn").addEventListener("click", function(){
     var text = t().nume + ": " + wpm() + " " + t().cuvLbl + ", " + precizie() + "% " + t().precLbl +
-               ", " + state.durata + "s\nhttps://games.freehtml.dev/typing-test/";
+               ", " + (state.rezSec || state.durata) + "s\nhttps://games.freehtml.dev/typing-test/";
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){
         mesaj(t().copiat, "bine");

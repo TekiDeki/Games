@@ -291,6 +291,36 @@ def main():
         check(not j10["err"], f"butonul de copiere nu arunca erori {j10['err'][:1]}")
         ctx10.close()
 
+        # ---------- 14. cifrele ingheata si ce se copiaza e ce se vede ----------
+        print("\n== rezultatul inghetat si textul copiat")
+        ctx11 = browser.new_context(viewport={"width": 1100, "height": 900},
+                                    permissions=["clipboard-read", "clipboard-write"])
+        pg11 = ctx11.new_page()
+        pg11.goto(f"{baza}{BAZA_URL}?seed=1&s=60000&n=8", wait_until="load")
+        pg11.keyboard.press("Enter")
+        pg11.wait_for_timeout(100)
+        for _ in range(2):
+            c = cuvant_curent(pg11)
+            pg11.keyboard.type(c.lower())
+            pg11.wait_for_timeout(80)
+        pg11.wait_for_timeout(400)
+        pg11.keyboard.press("Escape")
+        pg11.wait_for_timeout(200)
+        w1 = pg11.inner_text("#rezWpm")
+        pg11.wait_for_timeout(2500)          # timpul trece, cifra nu are voie sa scada
+        w2 = pg11.inner_text("#rezWpm")
+        check(w1 == w2, f"viteza din panou nu se schimba dupa oprire ({w1} apoi {w2})")
+        check(pg11.evaluate("() => wpm()") == int(w1), "wpm() intoarce tot cifra afisata")
+        pg11.click("#copiazaBtn")
+        pg11.wait_for_timeout(300)
+        text = pg11.evaluate("() => navigator.clipboard.readText()")
+        check((": " + w1 + " ") in text, f"textul copiat are aceeasi viteza ca panoul ({text.splitlines()[0]})")
+        prima = text.splitlines()[0].split(", ")
+        check(int(prima[2].rstrip("s")) < 60,
+              f"in text scrie secundele jucate, nu durata aleasa ({prima[2]})")
+        check("https://games.freehtml.dev/typing-test/" in text, "textul copiat are linkul paginii")
+        ctx11.close()
+
         browser.close()
 
     httpd.shutdown()
