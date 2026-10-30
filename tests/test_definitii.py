@@ -39,6 +39,25 @@ def norm(text):
     return "".join(c for c in text if unicodedata.category(c) != "Mn")
 
 
+def nu_isi_spune_raspunsul(cuvant, definitie):
+    """Definitia nu are voie sa contina raspunsul ca vorbă intreaga, nici ca tulpina.
+
+    Comparatia pe litere lipite ar da fals pozitiv: „med” apare in „medonosnih”, iar
+    „коњ” in „коњима”, fara ca jucatorul sa vada raspunsul. Se compara deci cuvant cu
+    cuvant, iar pentru cuvintele lungi si primele patru litere („овце” fata de „овца”).
+    """
+    w = [x for x in re.split(r"[^0-9a-zа-яђћџшčćžšđ]+", norm(cuvant)) if x]
+    d = [x for x in re.split(r"[^0-9a-zа-яђћџшčćžšđ]+", norm(definitie)) if x]
+    if not w or not d:
+        return True
+    if w[0] in d:
+        return False
+    prag = max(5, len(w[0]) - 2)          # „cârnați” nu e spus de „carne”, nici „мед” de „медоносних”
+    if len(w[0]) >= 5 and any(len(x) >= prag and x.startswith(w[0][:prag]) for x in d):
+        return False
+    return True
+
+
 def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage"])
@@ -78,7 +97,7 @@ def main():
                 check(len(s["variante"]) == 4, "%s r%d: patru variante" % (limba, runda))
                 check(s["variante"].count(s["cuvant"]) == 1, "%s r%d: raspunsul apare o data" % (limba, runda))
                 check(len(set(s["variante"])) == 4, "%s r%d: variantele sunt distincte" % (limba, runda))
-                check(norm(s["cuvant"]) not in norm(s["def"]),
+                check(nu_isi_spune_raspunsul(s["cuvant"], s["def"]),
                       "%s r%d: definitia nu isi spune raspunsul" % (limba, runda))
                 pomenite = [w for w in s["evita"] if w in s["variante"]]
                 check(not pomenite, "%s r%d: nicio varianta pomenita in definitie" % (limba, runda))
