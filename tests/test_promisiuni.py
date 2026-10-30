@@ -20,6 +20,10 @@ rau = 0
 # formulari de promisiune offline, in cele patru limbi ale site-ului
 MODEL = re.compile(r"offline|f[ăa]r[ăa] internet|bez interneta|без интернета", re.IGNORECASE)
 
+# promisiuni despre viitor: nu se pot verifica azi, deci nu se fac
+VIITOR = re.compile(r"r[ăa]m[âa]ne gratuit|stays free|ostaje besplatna|остаје бесплатна"
+                    r"|will stay free|va r[ăa]m[âa]ne", re.IGNORECASE)
+
 
 def check(cond, mesaj):
     global ok, rau
@@ -58,13 +62,15 @@ def main():
         h = hub.read_text(encoding="utf-8")
         check(">offline<" not in h, "hubul nu mai are eticheta „offline” pe carduri")
 
-    # ce a ramas in subsol e o descriere verificabila, nu o promisiune despre viitor
+    # in subsol a ramas o descriere verificabila, nu o promisiune despre viitor
     for p in toate:
         nume = p.relative_to(ROOT)
         text = p.read_text(encoding="utf-8")
-        if "foot" in text:
-            check("rămâne gratuit" not in text or "supportText" in text,
-                  f"{nume}: textul de sustinere e in continuare legat de linkul PayPal")
+        gasite = sorted(set(m.group(0).lower() for m in VIITOR.finditer(text)))
+        check(not gasite, f"{nume}: fara promisiune despre viitor {gasite or ''}")
+        if "<footer" in text or "foot" in text:
+            check("PayPal.me" in text and "github.com/TekiDeki" in text,
+                  f"{nume}: linkul de sustinere si cel de raportare au ramas in subsol")
 
     print(f"\n{ok} verificari trecute, {rau} esuate")
     return 0 if rau == 0 else 1
