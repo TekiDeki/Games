@@ -271,7 +271,7 @@ var L = {
     already:"Cuvantul zilei e jucat. Apasa pe „Joaca liber”.",
     played:"Jucate", won:"Câștigate", streak:"Serie", best:"Record",
     h1:"Cuvântul zilei - șase încercări, deducție pură",
-    p1:"Un cuvânt se alege o dată pe zi, la fel pentru toată lumea, din cele 24 de cuvinte ale jocurilor de pe site, în fiecare limbă. Ai șase încercări, iar după fiecare vezi ce litere ai nimerit. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
+    p1:"Un cuvânt se alege o dată pe zi, la fel pentru toată lumea, din cele 48 de cuvinte ale jocurilor de pe site, în fiecare limbă. Ai șase încercări, iar după fiecare vezi ce litere ai nimerit. Cele patru limbi sunt română, engleză, sârbă latină și sârbă chirilică.",
     h2:"Cum se citește rezultatul",
     p2:"Verde înseamnă că litera e la locul ei. Galben, că litera e în cuvânt, dar în alt loc. Gri, că litera nu apare deloc. Literele de pe tastatură se colorează la fel, ca să nu încerci de două ori ceva ce știi deja.",
     p3:"Tema cuvântului e afișată ca indiciu, iar „Arată o literă” costă o încercare. Jocul ține minte doar statisticile tale locale, în browser. Nu se trimite nimic pe server.",
@@ -298,7 +298,7 @@ var L = {
     already:"Today's word is done. Tap Play free.",
     played:"Played", won:"Won", streak:"Streak", best:"Best",
     h1:"Word of the Day - six tries, pure deduction",
-    p1:"One word is picked per day, the same for everyone, from the 24 words the games on this site use, in each language. You get six tries, and after each one you see which letters you got right.",
+    p1:"One word is picked per day, the same for everyone, from the 48 words the games on this site use, in each language. You get six tries, and after each one you see which letters you got right.",
     h2:"How to read the colours",
     p2:"Green means the letter is in the right place. Yellow means the letter is in the word but somewhere else. Grey means the letter is not in the word at all. The keyboard colours the same way, so you do not try the same letter twice.",
     p3:"The theme of the word is shown as a clue, and Reveal a letter costs one try. The game only stores your local stats in the browser. Nothing is sent to a server.",
@@ -325,7 +325,7 @@ var L = {
     already:"Reč dana je odigrana. Klikni na „Igraj slobodno”.",
     played:"Odigrano", won:"Pobede", streak:"Niz", best:"Rekord",
     h1:"Reč dana - šest pokušaja, čisto pogađanje",
-    p1:"Jedna reč se bira po danu, ista za sve, iz 24 reči igara na sajtu, u svakom jeziku. Imaš šest pokušaja, a posle svakog vidiš koja si slova pogodio.",
+    p1:"Jedna reč se bira po danu, ista za sve, iz 48 reči igara na sajtu, u svakom jeziku. Imaš šest pokušaja, a posle svakog vidiš koja si slova pogodio.",
     h2:"Kako se čitaju boje",
     p2:"Zeleno znači da je slovo na pravom mestu. Žuto, da je slovo u reči ali na drugom mestu. Sivo, da slovo nije u reči. Slova na tastaturi se boje isto, da ne probaš dvaput ono što već znaš.",
     p3:"Tema reči je prikazana kao indicija, a „Otkrij slovo” košta jedan pokušaj. Igra pamti samo tvoju lokalnu statistiku u pregledaču. Ništa se ne šalje na server.",
@@ -352,7 +352,7 @@ var L = {
     already:"Реч дана је одиграна. Кликни на „Играј слободно”.",
     played:"Одиграно", won:"Победе", streak:"Низ", best:"Рекорд",
     h1:"Реч дана - шест покушаја, чисто погађање",
-    p1:"Једна реч се бира по дану, иста за све, из 24 речи игара на сајту, у сваком језику. Имаш шест покушаја, а после сваког видиш која си слова погодио.",
+    p1:"Једна реч се бира по дану, иста за све, из 48 речи игара на сајту, у сваком језику. Имаш шест покушаја, а после сваког видиш која си слова погодио.",
     h2:"Како се читају боје",
     p2:"Зелено значи да је слово на правом месту. Жуто, да је слово у речи али на другом месту. Сиво, да слово није у речи. Слова на тастатури се боје исто, да не пробаш двапут оно што већ знаш.",
     p3:"Тема речи је приказана као индиција, а „Откриј слово” кошта један покушај. Игра памти само твоју локалну статистику у прегледачу. Ништа се не шаље на сервер.",
@@ -372,24 +372,24 @@ var ABC = {
 /* ---------- cuvinte: aceleasi 24 pe limba (96 in total), ca la celelalte jocuri ---------- */
 var W = {
   ro:{
-    animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","PÂRȘ"],
-    mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI"],
-    locuri:["MUNTE","CASTEL","ORAȘ","BISERICĂ","POD","PORT","PALAT","TURN"]
+    animale:["BROASCĂ","VEVERIȚĂ","CARACATIȚĂ","BUFNIȚĂ","CĂMILĂ","PELICAN","BIZON","PÂRȘ","LUP","VULPE","IEPURE","ARICI","FLUTURE","STRUT","ȚESTOASĂ","RÂS"],
+    mancare:["MĂMĂLIGĂ","CIORBĂ","PAPANAȘI","SLĂNINĂ","BRÂNZĂ","ZACUSCĂ","PLĂCINTĂ","CÂRNAȚI","SARMALE","PIURE","OMELETĂ","BORȘ","FRIPTURĂ","SALATĂ","GOGOAȘI","MIERE"],
+    locuri:["MUNTE","CASTEL","ORAȘ","BISERICĂ","POD","PORT","PALAT","TURN","GRĂDINĂ","PĂDURE","MUZEU","BIBLIOTECĂ","GARĂ","PIAȚĂ","FARMĂ","FAR"]
   },
   en:{
-    animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK"],
-    mancare:["PANCAKE","NOODLES","CHEESE","PUMPKIN","SAUSAGE","OMELETTE","BISCUIT","YOGURT"],
-    locuri:["CASTLE","HARBOUR","LIBRARY","STADIUM","MUSEUM","BRIDGE","VILLAGE","LIGHTHOUSE"]
+    animale:["ELEPHANT","PENGUIN","DOLPHIN","SQUIRREL","BUTTERFLY","CROCODILE","HEDGEHOG","PEACOCK","RABBIT","TORTOISE","SPARROW","OCTOPUS","KANGAROO","GIRAFFE","BEAVER","FALCON"],
+    mancare:["PANCAKE","NOODLES","CHEESE","PUMPKIN","SAUSAGE","OMELETTE","BISCUIT","YOGURT","PORRIDGE","DUMPLING","HONEY","SALAD","CUSTARD","PRETZEL","AVOCADO","PUDDING"],
+    locuri:["CASTLE","HARBOUR","LIBRARY","STADIUM","MUSEUM","BRIDGE","VILLAGE","LIGHTHOUSE","GARDEN","FOREST","STATION","MARKET","FACTORY","CHURCH","TUNNEL","ORCHARD"]
   },
   sr:{
-    animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN"],
-    mancare:["PALAČINKE","KAJMAK","PROJA","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA"],
-    locuri:["TVRĐAVA","MOST","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO"]
+    animale:["VEVERICA","KORNJAČA","LEPTIR","DELFIN","PINGVIN","ŽIRAFA","MEDVED","ĆURAN","ZEC","LISICA","JELEN","SOVA","PAPAGAJ","MRAV","KONJ","OVCA"],
+    mancare:["PALAČINKE","KAJMAK","PROJA","GIBANICA","KOLAČ","ČORBA","ŠTRUDLA","PLJESKAVICA","PITA","SIR","MED","SALATA","SUPA","KROFNA","AJVAR","PECIVO"],
+    locuri:["TVRĐAVA","MOST","MUZEJ","BIBLIOTEKA","ŠUMA","DŽAMIJA","PLANINA","OSTRVO","BAŠTA","GARA","PIJACA","CRKVA","TUNEL","FABRIKA","ŠKOLA","BOLNICA"]
   },
   src:{
-    animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН"],
-    mancare:["ПАЛАЧИНКЕ","КАЈМАК","ПРОЈА","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА"],
-    locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО"]
+    animale:["ВЕВЕРИЦА","КОРЊАЧА","ЛЕПТИР","ДЕЛФИН","ПИНГВИН","ЖИРАФА","МЕДВЕД","ЋУРАН","ЗЕЦ","ЛИСИЦА","ЈЕЛЕН","СОВА","ПАПАГАЈ","МРАВ","КОЊ","ОВЦА"],
+    mancare:["ПАЛАЧИНКЕ","КАЈМАК","ПРОЈА","ГИБАНИЦА","КОЛАЧ","ЧОРБА","ШТРУДЛА","ПЉЕСКАВИЦА","ПИТА","СИР","МЕД","САЛАТА","СУПА","КРОФНА","АЈВАР","ПЕЦИВО"],
+    locuri:["ТВРЂАВА","МОСТ","МУЗЕЈ","БИБЛИОТЕКА","ШУМА","ЏАМИЈА","ПЛАНИНА","ОСТРВО","БАШТА","ГАРА","ПИЈАЦА","ЦРКВА","ТУНЕЛ","ФАБРИКА","ШКОЛА","БОЛНИЦА"]
   }
 };
 

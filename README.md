@@ -11,12 +11,13 @@ Shortcut: **https://freehtml.dev/games** (302)
 
 | Game | Path | Languages | What it is |
 |---|---|---|---|
-| Guess the word | `/guess-the-word/` | EN, RO, SR Latin, SR Cyrillic | Hangman on themes. 96 words, 6 lives, one letter hint, local stats. |
-| Word pairs | `/word-pairs/` | EN, RO, SR Latin, SR Cyrillic | Memory game. Same 96 words, board of 4, 6 or 8 pairs, moves and time, local stats. |
-| Word scramble | `/word-scramble/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 96 words, tap letters into place, one letter hint, physical keyboard, local stats. |
+| Guess the word | `/guess-the-word/` | EN, RO, SR Latin, SR Cyrillic | Hangman on themes. 192 words, 6 lives, one letter hint, local stats. |
+| Word pairs | `/word-pairs/` | EN, RO, SR Latin, SR Cyrillic | Memory game. Same 192 words, board of 4, 6 or 8 pairs, moves and time, local stats. |
+| Word scramble | `/word-scramble/` | EN, RO, SR Latin, SR Cyrillic | Anagrams. Same 192 words, tap letters into place, one letter hint, physical keyboard, local stats. |
 | Word of the day | `/word-of-the-day/` | EN, RO, SR Latin, SR Cyrillic | Deduction. One word per day, same for everyone, six tries, green/yellow/grey per letter, shareable emoji grid, free play mode. |
 | Odd one out | `/odd-one-out/` | EN, RO, SR Latin, SR Cyrillic | Categories. Four words, three from one theme, pick the intruder. Ten rounds, twelve seconds each, streak bonus. |
-| Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 96 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
+| Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 192 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
+| Type fast | `/typing-test/` | EN, RO, SR Latin, SR Cyrillic | Typing test. Words come one after another; a wrong letter never goes through. Words per minute and accuracy, best kept locally. |
 
 ## House rules
 
@@ -45,6 +46,10 @@ odd-one-out/
   index.html               the game (single file)
 word-search/
   index.html               the game (single file)
+typing-test/
+  index.html               the game (single file)
+tools/genereaza-corp.py    writes the word block into every game, from tests/corpus.json
+tests/corpus.json          the one source of truth for words: 48 per language, 16 per theme
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap
 _headers                   security headers (CSP with connect-src 'none', HSTS, nosniff, frame DENY)
@@ -55,6 +60,8 @@ tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, s
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
 tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
+tests/test_corp.py         one source of truth for the words: 48 per language, 16 per theme, Serbian Latin <-> Cyrillic
+tests/test_tastare.py      Playwright: the typing game played for real, WPM maths, diacritics, timer, mobile
 tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests. The page list is discovered with rglob, so a new game is covered the day it is added
 ```
 
