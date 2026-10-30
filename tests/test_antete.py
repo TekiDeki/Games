@@ -3,7 +3,8 @@
 
 Ce face:
   1. citeste `_headers` si verifica sa fie acolo tot ce trebuie (CSP, HSTS, nosniff, frame, referrer,
-     permissions) si ca CSP-ul chiar interzice iesirea in retea (`connect-src 'none'`);
+     permissions) si ca CSP-ul nu lasa nicio iesire in afara domeniului (`connect-src 'self'` -
+     'none' ar bloca si instalarea service workerului, care isi ia shell-ul din acelasi domeniu);
   2. serveste paginile local si **aplica antetele din `_headers`** (ca Cloudflare), apoi verifica:
        - zero violari de CSP in consola,
        - zero cereri catre alt domeniu,
@@ -103,8 +104,8 @@ def verifica_fisier():
         check(nume in h, f"antetul {nume} e definit")
     csp = h.get("Content-Security-Policy", "")
     check("default-src 'self'" in csp, "CSP porneste de la default-src 'self'")
-    check("connect-src 'none'" in csp,
-          "CSP are connect-src 'none' - nicio cerere de retea nu poate iesi din pagina")
+    check("connect-src 'self'" in csp,
+          "CSP are connect-src 'self' - nicio cerere nu poate iesi din domeniu")
     check("frame-ancestors 'none'" in csp, "CSP refuza sa fie pus in frame (clickjacking)")
     check("object-src 'none'" in csp, "CSP refuza plugin-uri (object/embed)")
     check("form-action 'none'" in csp, "CSP refuza trimiterea de formulare")
@@ -197,8 +198,8 @@ def main():
             check("content-security-policy" in h_live,
                   "live: CSP e servit de Cloudflare (nu doar in fisier)")
             if "content-security-policy" in h_live:
-                check("connect-src 'none'" in h_live["content-security-policy"],
-                      "live: CSP-ul servit are connect-src 'none'")
+                check("connect-src 'self'" in h_live["content-security-policy"],
+                      "live: CSP-ul servit are connect-src 'self'")
             check("x-frame-options" in h_live, "live: X-Frame-Options e servit")
             check("strict-transport-security" in h_live, "live: HSTS e servit")
         except Exception as e:
