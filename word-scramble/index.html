@@ -453,9 +453,11 @@ function shuffle(a){
 function buildRack(word){
   var litere = word.split("");
   var amestec = shuffle(litere.slice());
-  /* daca din întâmplare iese exact cuvântul, mai amestecăm o dată */
+  /* daca din întâmplare iese exact cuvântul - sau iese în ordine alfabetică, adică un
+     „amestec" care nu arată amestecat - mai amestecăm o dată */
+  var ordineAlfabetica = litere.slice().sort().join("");
   var incercari = 0;
-  while(amestec.join("") === word && incercari < 12){
+  while((amestec.join("") === word || amestec.join("") === ordineAlfabetica) && incercari < 20){
     amestec = shuffle(litere.slice());
     incercari++;
   }
