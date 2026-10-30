@@ -184,7 +184,12 @@ footer .sep{margin:0 6px}
   @media (pointer: coarse), (max-width: 700px) {
     .wrap { padding: 8px 6px 30px; }
     .card { padding: 8px; }
-    #grid { gap: 2px; width: 100%; }
+    #grid { width: 100%; }
+  }
+  /* sub 360px ramane spatiul de 1px (12 x 24px + 11 x 1px = 299px incap in 320px);
+     peste 360px se poate respira putin */
+  @media (min-width: 361px) and (max-width: 700px) {
+    #grid { gap: 2px; }
   }
   @media (pointer: coarse), (max-width: 700px) {
     #homeBtn { min-height: 34px; display: inline-flex; align-items: center; }
