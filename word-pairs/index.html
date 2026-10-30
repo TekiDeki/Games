@@ -167,6 +167,13 @@ footer .sep{opacity:.5; margin:0 4px}
 @media (prefers-reduced-motion: reduce){
   .face{transition:none}
 }
+
+  /* regula casei: tinte de atingere pe mobil */
+  @media (pointer: coarse), (max-width: 700px) {
+    #homeBtn { min-height: 34px; display: inline-flex; align-items: center; }
+    button { min-height: 34px; display: inline-flex; align-items: center; }
+    #themeBtn { min-height: 34px; display: inline-flex; align-items: center; }
+  }
 </style>
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
