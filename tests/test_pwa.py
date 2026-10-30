@@ -79,8 +79,15 @@ def main():
             if f.endswith("/"):
                 check((ROOT / f[2:] / "index.html").exists(), "SHELL: %s are index.html" % f)
                 continue
-            check(cale.exists(), "SHELL: %s exista pe disc" % f)
+            if cale.exists():
+                check(True, "SHELL: %s exista pe disc" % f)
+            else:
+                # adresa curata (fara .html) - gazda o serveste din fisierul .html
+                check((ROOT / (f[2:] + ".html")).exists(),
+                      "SHELL: %s exista pe disc (sau ca %s.html)" % (f, f))
     check(re.search(r"var VERSION = '[a-z]+-v\d+'", sw) is not None, "sw.js are VERSION versionat")
+    check("redirected" in sw, "sw.js rescrie raspunsurile venite prin redirect (altfel navigarea offline pica)")
+    check("catch(function () { return null; })" in sw, "sw.js nu rupe instalarea daca o adresa din SHELL lipseste")
 
     print("\n== CSP din _headers")
     h = (ROOT / "_headers").read_text(encoding="utf-8")

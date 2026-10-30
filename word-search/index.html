@@ -177,8 +177,15 @@ footer .sep{margin:0 6px}
 }
 
   /* regula casei: tinte de atingere pe mobil */
-  /* tabla de litere isi ia marimea din grila si trebuie sa incapa pe ecran;
-     aici nu se pune min-height, altfel apar 15 coloane de 34px si scroll orizontal */
+  /* Tabla are 12 coloane fixe: 12 x 34px + 11 spatii = 442px, deci pe un ecran de 390px
+     nu incap celule de 34px fara scroll orizontal (care ar rupe jocul). Ce se poate face,
+     se face: marginile se strang si celulele ajung la ~30px, iar selectia se face prin
+     tragere peste tabla, nu prin atingerea unei singure litere. */
+  @media (pointer: coarse), (max-width: 700px) {
+    .wrap { padding: 8px 6px 30px; }
+    .card { padding: 8px; }
+    #grid { gap: 2px; width: 100%; }
+  }
   @media (pointer: coarse), (max-width: 700px) {
     #homeBtn { min-height: 34px; display: inline-flex; align-items: center; }
     button:not(.cell) { min-height: 34px; display: inline-flex; align-items: center; }
