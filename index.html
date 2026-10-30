@@ -51,6 +51,8 @@ footer a:hover{text-decoration:underline}
 .soon{border-style:dashed; opacity:.65}
 .soon:hover{transform:none; border-color:var(--line)}
 </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
 <div class="wrap">
@@ -121,5 +123,13 @@ footer a:hover{text-decoration:underline}
   <a href="https://freehtml.dev/">More free tools on freehtml.dev</a>
 </footer>
 </div>
+<script>
+/* Regula casei: PWA pe mobil. Codul service workerului sta in sw.js, nu aici. */
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+</script>
 </body>
 </html>

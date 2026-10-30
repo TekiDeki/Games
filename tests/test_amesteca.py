@@ -159,6 +159,16 @@ def main():
                   "trei indicii asaza trei litere")
 
             # tastatura: Backspace scoate ultima litera
+            # (daca indiciile au completat singure cuvantul, runda s-a inchis si Backspace e ignorat
+            #  pe buna dreptate - atunci luam un cuvant nou si punem literele de mana)
+            if "win" in pg.eval_on_selector("#msg", "e=>e.className"):
+                pg.click("#againBtn")
+                pg.wait_for_timeout(150)
+                click_tile(pg, 0)
+                pg.wait_for_timeout(80)
+                if len(litere_pe_rack(pg)) > 1:
+                    click_tile(pg, 1)
+                    pg.wait_for_timeout(80)
             inainte = [x for x in sloturi(pg) if x != ""]
             pg.keyboard.press("Backspace")
             pg.wait_for_timeout(120)

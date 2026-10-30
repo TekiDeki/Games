@@ -176,6 +176,8 @@ footer .sep{margin:0 6px}
   .cell{border-radius:4px; min-height:24px; min-width:24px}
 }
 </style>
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 </head>
 <body>
 <div class="wrap">
@@ -866,6 +868,14 @@ aplicaTextele();
 tabelNou();
 
 })();
+</script>
+<script>
+/* Regula casei: PWA pe mobil. Codul service workerului sta in sw.js, nu aici. */
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("../sw.js").catch(function () {});
+  });
+}
 </script>
 </body>
 </html>

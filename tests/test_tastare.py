@@ -73,8 +73,9 @@ def main():
         print("\n== pagina si datele")
         ctx, pg, jurnal, resp = nou()
         check(resp.status == 200, "pagina raspunde 200")
-        check("Scrie repede" in pg.title(), f"titlul e al jocului ({pg.title()[:40]})")
-        check(pg.get_attribute("html", "lang") == "ro", "html lang=ro la pornire")
+        # jocul porneste in engleza (limba principala a publicului), nu in romana
+        check("Type Fast" in pg.title(), f"titlul e al jocului ({pg.title()[:40]})")
+        check(pg.get_attribute("html", "lang") == "en", "html lang=en la pornire")
 
         nr = pg.evaluate("""() => {
             const out = {};
@@ -209,20 +210,24 @@ def main():
         # ---------- 9. limbi ----------
         print("\n== limbi")
         ctx6, pg6, _, _ = nou()
+        titlu_en = pg6.text_content("#titlu")
         pg6.click("#limbaBtn")
         pg6.wait_for_timeout(120)
-        check(pg6.get_attribute("html", "lang") == "en", "a doua limba e engleza (html lang=en)")
-        check("Type Fast" in pg6.title(), f"titlul se schimba ({pg6.title()[:30]})")
-        check(pg6.text_content("#startBtn") in ("Start", "Again"), "butonul isi schimba textul")
+        # ordinea butonului: en -> sr -> src -> ro -> en
+        check(pg6.get_attribute("html", "lang") == "sr", "a doua limba e sarba (html lang=sr)")
+        check("Kucaj brzo" in pg6.title(), f"titlul se schimba ({pg6.title()[:30]})")
+        check(pg6.text_content("#titlu") != titlu_en, "titlul din pagina se schimba")
         pg6.click("#limbaBtn")
         pg6.wait_for_timeout(120)
-        check(pg6.get_attribute("html", "lang") == "sr", "a treia limba e sarba")
+        check(pg6.get_attribute("html", "lang") == "sr-Cyrl", "a treia limba e sarba chirilica (lang=sr-Cyrl)")
+        check("Куцај" in pg6.text_content("#titlu"), "titlul e scris in chirilica")
         pg6.click("#limbaBtn")
         pg6.wait_for_timeout(120)
-        check("Куцај" in pg6.text_content("#titlu"), "a patra limba e sarba chirilica")
+        check(pg6.get_attribute("html", "lang") == "ro", "a patra limba e romana")
+        check("Scrie repede" in pg6.title(), f"titlul in romana ({pg6.title()[:30]})")
         pg6.click("#limbaBtn")
         pg6.wait_for_timeout(120)
-        check(pg6.get_attribute("html", "lang") == "ro", "a cincea apasare revine la romana")
+        check(pg6.get_attribute("html", "lang") == "en", "a cincea apasare revine la engleza")
 
         # ---------- 10. tema ----------
         print("\n== tema si animatii")

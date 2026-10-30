@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Type Fast - free typing test online</title>
 <meta name="description" content="Typing test in four languages: words per minute, accuracy and mistakes, measured in the page. No account, no ads, no analytics.">
 <meta name="theme-color" content="#0f172a">
@@ -93,6 +93,8 @@ kbd{background:var(--bg); border:1px solid var(--line); border-bottom-width:2px;
   .card{padding:14px}
 }
 </style>
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 </head>
 <body>
 <header>
@@ -226,7 +228,7 @@ var L = {
     foot:"Bez naloga, bez reklama.",
     supportText:"Igra je besplatna.", supportLink:"Podrži rad",
     report:"Vidiš grešku? Reci mi." },
-  src:{ nume:"Куцај брзо", htmlLang:"sr", btnLimba:"СР",
+  src:{ nume:"Куцај брзо", htmlLang:"sr-Cyrl", btnLimba:"СР",
     titlu:"Куцај брзо - бесплатни тест куцања",
     cuvLbl:"речи/мин", precLbl:"тачност", cuvinteLbl:"речи",
     start:"Почни", dinou:"Поново", copiaza:"Копирај резултат", copiat:"Копирано.",
@@ -573,6 +575,14 @@ function init(){
 }
 
 init();
+</script>
+<script>
+/* Regula casei: PWA pe mobil. Codul service workerului sta in sw.js, nu aici. */
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("../sw.js").catch(function () {});
+  });
+}
 </script>
 </body>
 </html>

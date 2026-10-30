@@ -84,6 +84,8 @@
   .scurt { font-size:11px; color:var(--slab); }
   @media (max-width:480px) { .variante { grid-template-columns:1fr; } .def { font-size:17px; } }
 </style>
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 </head>
 <body>
 <div class="card">
@@ -403,6 +405,14 @@ document.addEventListener("keydown", e => {
 initTema();
 texte();
 deseneaza();
+</script>
+<script>
+/* Regula casei: PWA pe mobil. Codul service workerului sta in sw.js, nu aici. */
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("../sw.js").catch(function () {});
+  });
+}
 </script>
 </body>
 </html>
