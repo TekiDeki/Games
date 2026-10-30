@@ -168,10 +168,14 @@ footer .sep{opacity:.5; margin:0 4px}
   .card{padding:14px; border-radius:14px}
   .cell{width:40px; height:40px; font-size:19px; border-width:2px}
   .row{gap:5px}
-  /* sub 340px cele cinci patratele de 52px plus spatii nu incap: se micsoreaza proportional */
+  /* randul are atatea patratele cate litere are cuvantul (4 pana la 7), deci nu se poate
+     fixa o latime: patratelele se micsoreaza singure cat sa incapa pe ecran. */
+  .row{width:100%; max-width:100%; justify-content:center}
+  .cell{flex:0 1 40px; width:auto; height:auto; min-width:0; aspect-ratio:1; border-radius:8px}
+  .cell{font-size:clamp(13px, 4.6vw, 19px)}
   @media (max-width: 340px){
     .row{gap:3px}
-    .cell{width:42px; height:42px; border-radius:7px; font-size:19px}
+    .cell{flex-basis:42px; border-radius:7px}
   }
   .key{min-width:27px; height:42px; font-size:13px; padding:0 4px}
   .key.wide{min-width:96px; font-size:14px}
