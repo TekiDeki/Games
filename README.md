@@ -62,6 +62,7 @@ tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong d
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
 tests/test_corp.py         one source of truth for the words: 48 per language, 16 per theme, Serbian Latin <-> Cyrillic
 tests/test_tastare.py      Playwright: the typing game played for real, WPM maths, diacritics, timer, mobile
+tests/test_subsol.py        Playwright: every page has the support link and the report link, in all four languages
 tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests. The page list is discovered with rglob, so a new game is covered the day it is added
 ```
 
