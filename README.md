@@ -49,6 +49,8 @@ word-search/
   index.html               the game (single file)
 typing-test/
   index.html               the game (single file)
+word-from-definition/
+  index.html               the game (single file) plus 158 definitions built into the page
 tools/genereaza-corp.py    writes the word block into every game, from tests/corpus.json
 tests/corpus.json          the one source of truth for words: 48 per language, 16 per theme
 sitemap.xml                every game URL
@@ -59,6 +61,7 @@ tests/test_perechi.py      Playwright: 4 languages, board sizes, pairs, peek, wi
 tests/test_amesteca.py     Playwright: 4 languages, place/remove/clear, hint, keyboard, win
 tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, share, free play
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
+tests/test_definitii.py    Playwright: 24 rounds played for real - the definition never contains the answer, always four distinct options, the definition's language is declared, reset, theme, zero requests
 tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
 tests/test_corp.py         one source of truth for the words: 48 per language, 16 per theme, Serbian Latin <-> Cyrillic
