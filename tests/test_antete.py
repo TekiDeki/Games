@@ -26,8 +26,23 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 HEADERS_FILE = ROOT / "_headers"
 
-PAGINI = ["/", "/guess-the-word/", "/word-pairs/", "/word-scramble/",
-          "/word-of-the-day/", "/odd-one-out/", "/word-search/"]
+def descopera_pagini():
+    """Toate paginile din repo, gasite singure: orice index.html, oriunde ar fi.
+
+    Nu e o lista scrisa de mina: un joc nou intra automat sub testul asta in ziua in care e adaugat,
+    fara sa-si aminteasca nimeni sa actualizeze ceva. `tests/` e sarit (are pagini de test proprii).
+    """
+    pagini = set()
+    for fisier in ROOT.rglob("index.html"):
+        parti = fisier.relative_to(ROOT).parts
+        if "tests" in parti or not parti[-1] == "index.html":
+            continue
+        folder = "/".join(parti[:-1])
+        pagini.add("/" if not folder else f"/{folder}/")
+    return sorted(pagini)
+
+
+PAGINI = descopera_pagini()
 
 OBLIGATORII = [
     "Content-Security-Policy",

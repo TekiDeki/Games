@@ -55,7 +55,7 @@ tests/test_zilei.py        Playwright: 4 languages, board, colours, hint cost, s
 tests/test_intrus.py       Playwright: 4 languages, rounds, themes, timer, score, share
 tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong drags, new table, mobile, no page errors
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
-tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests
+tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests. The page list is discovered with rglob, so a new game is covered the day it is added
 ```
 
 ## Development
