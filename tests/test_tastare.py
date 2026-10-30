@@ -245,6 +245,11 @@ def main():
         ctx8, pg8, j8, _ = nou("seed=1&s=300&n=8", viewport=(390, 780))
         latime = pg8.evaluate("() => document.documentElement.scrollWidth")
         check(latime <= 392, f"fara scroll orizontal la 390px ({latime}px)")
+        rupt = pg8.evaluate("""() => {
+            const sp = [...document.querySelectorAll('.words .w')];
+            return sp.filter(e => e.getClientRects().length > 1).length; }""")
+        check(rupt == 0, f"niciun cuvant nu e rupt pe doua randuri ({rupt})")
+
         tinte = pg8.eval_on_selector_all("#startBtn, #dinouBtn, #limbaBtn, [data-durata]",
                                          "els => els.map(e => { const r = e.getBoundingClientRect(); "
                                          "return Math.min(r.width, r.height); })")

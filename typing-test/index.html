@@ -51,9 +51,9 @@ main{width:100%; max-width:820px}
 .chip.strong b{color:var(--blue)}
 .words{
   font-size:1.6rem; line-height:1.9; letter-spacing:.4px; min-height:120px;
-  padding:8px 2px; user-select:none; word-break:break-word;
+  padding:8px 2px; user-select:none; word-break:normal; overflow-wrap:normal;
 }
-.words span.w{margin-right:.55em; color:var(--muted); border-bottom:2px solid transparent; padding-bottom:1px}
+.words span.w{display:inline-block; white-space:nowrap; margin-right:.55em; color:var(--muted); border-bottom:2px solid transparent; padding-bottom:1px}
 .words span.w.cur{color:var(--text); border-bottom-color:var(--blue)}
 .words span.w.gata{color:var(--green); opacity:.65}
 .words span.w.gres{color:var(--red); text-decoration:underline wavy var(--red)}
