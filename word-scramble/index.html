@@ -218,9 +218,17 @@ footer .sep{opacity:.5; margin:0 4px}
    (ghiceste, cuvantul zilei) nu incap la 44px pe niciun telefon. Acolo tinta ramane celula
    grilei; inaltimea clapelor se ridica totusi la 44px, ca sa fie usor de nimerit pe verticala. */
 @media (pointer: coarse), (max-width: 700px) {
-  html body :is(.cell, .tile, .slot, .key) { min-width: 0 !important; }
-  html body :is(.cell, .tile, .slot) { min-height: 0 !important; }
+  /* Doar tabla de cautare (8 coloane x 44 = 352px) si tastatura (10 clape pe rand) sunt
+     grile cu coloane fixe, unde 44px pe latime nu incape pe niciun telefon: acolo tinta
+     ramane celula grilei, iar clapele au 44px inaltime ca sa fie usor de nimerit. */
+  html body :is(.cell, .key) { min-width: 0 !important; }
+  html body .cell { min-height: 0 !important; }
   html body .key { min-height: 44px !important; }
+  /* Litera din teanc si caseta din cuvant NU sunt intr-o grila: se asaza pe randuri si se
+     pot infasura, deci pot avea 44px pe latime. Inainte erau scoase din regula generala
+     de 44px, iar caseta goala ajungea la 6px latime, adica o linie verticala: cuvantul de
+     ghicit nici nu se mai vedea. */
+  html body .rack .tile, html body .slot { min-width: 44px !important; min-height: 44px !important; }
 }
 </style>
 </head>

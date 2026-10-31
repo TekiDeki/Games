@@ -177,7 +177,9 @@ footer .sep{opacity:.5; margin:0 4px}
     .row{gap:3px}
     .cell{flex-basis:42px; border-radius:7px}
   }
-  .key{min-width:27px; height:42px; font-size:13px; padding:0 4px}
+  /* 10 clape pe rand, fara infasurare: 10 x 24 + 9 x 5 = 285px, incape la 320px.
+     La 27px ies 315px si randul depaseste ecranul, de aceea 24px e limita de jos. */
+  .key{min-width:24px; height:42px; font-size:13px; padding:0 3px}
   .key.wide{min-width:96px; font-size:14px}
   .krow{gap:4px}
   .chip{font-size:12px; padding:3px 9px}
@@ -250,8 +252,7 @@ footer .sep{opacity:.5; margin:0 4px}
    (ghiceste, cuvantul zilei) nu incap la 44px pe niciun telefon. Acolo tinta ramane celula
    grilei; inaltimea clapelor se ridica totusi la 44px, ca sa fie usor de nimerit pe verticala. */
 @media (pointer: coarse), (max-width: 700px) {
-  html body :is(.cell, .tile, .slot, .key) { min-width: 0 !important; }
-  html body :is(.cell, .tile, .slot) { min-height: 0 !important; }
+  html body :is(.cell, .tile) { min-height: 0 !important; }
   html body .key { min-height: 44px !important; }
 }
 </style>
