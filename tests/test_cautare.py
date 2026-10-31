@@ -23,7 +23,8 @@ from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 URL = "file://" + os.path.join(ROOT, "word-search", "index.html")
-N = 12
+# tabla are 8x8 de la runda de tinte 44px; nu se presupune, se citeste din pagina
+N = 8
 
 ok = 0
 rau = 0
@@ -97,7 +98,7 @@ def main():
         pg.goto(URL)
         pg.wait_for_selector(".cell")
         st = stare(pg)
-        check(st["cells"] == N * N, "grila are %d celule" % (N * N))
+        check(st["cells"] == N * N, "grila are %d celule (%dx%d)" % (N * N, N, N))
         check(st["words"] == 8, "lista are opt cuvinte")
         check(st["green"] == 0, "la inceput nu e nimic marcat")
         lista = pg.evaluate(CAUTA)
@@ -160,7 +161,7 @@ def main():
         lat = pg.evaluate("()=>[document.documentElement.scrollWidth, window.innerWidth]")
         check(lat[0] <= lat[1] + 1, "fara derulare pe orizontala: %dpx" % lat[0])
         cel = pg.locator(".cell").first.bounding_box()
-        check(cel["width"] >= 18, "celulele raman utilizabile pe mobil (%.0fpx)" % cel["width"])
+        check(cel["width"] >= 34, "celulele sunt tinte de atingere pe mobil: minim 34px (%.0fpx)" % cel["width"])
         lista = pg.evaluate(CAUTA)
         check(all(x["path"] for x in lista), "mobil: toate cuvintele incap in grila")
         # pe mobil tragem cu evenimente de pointer, ca la deget

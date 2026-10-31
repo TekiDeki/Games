@@ -5,7 +5,7 @@ Verifica ce nu se putea face inainte:
   - jocul se poate juca exclusiv de la tastatura (sageti, Shift+sageti, Enter, Escape)
   - un singur punct de intrare in grila (tabindex rulant), ca la un grid adevarat
   - starea de selectie e anuntata (aria-pressed), nu doar colorata
-  - tinte de atingere de minim 24x24 px, inclusiv la 320 px latime
+  - tinte de atingere de minim 34x34 px (tabla 8x8 ajunge la 44px pe 390px)
   - fara depasire pe orizontala la 320/375/768/1440
 """
 import pathlib
@@ -91,7 +91,7 @@ def main():
             check(intrare == 1, f"o singura celula e in ordinea Tab (are {intrare})")
 
             celule = pg.eval_on_selector_all(".cell", "cs => cs.length")
-            check(celule == 144, f"grila are 144 de celule (are {celule})")
+            check(celule == 64, f"grila are 64 de celule, 8x8 (are {celule})")
 
             # 2. Tab intra in grila si ajunge pe o celula
             pg.eval_on_selector("#msg", "el => el.blur()")
@@ -211,7 +211,9 @@ def main():
               const mici = [...document.querySelectorAll('a, button')].filter(el => {
                 const r = el.getBoundingClientRect();
                 const s = getComputedStyle(el);
-                return s.display !== 'none' && r.width > 0 && (r.width < 24 || r.height < 24);
+                // pragul casei e 34px pe telefon; pe desktop cu mouse ramane minimul WCAG 2.5.8 (24px)
+                const prag = (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 700) ? 34 : 24;
+                return s.display !== 'none' && r.width > 0 && (r.width < prag || r.height < prag);
               }).map(el => ({t: el.textContent.trim().slice(0, 24), w: Math.round(el.getBoundingClientRect().width),
                              h: Math.round(el.getBoundingClientRect().height)}));
               const celule = [...document.querySelectorAll('.cell')].map(c => c.getBoundingClientRect());
@@ -222,9 +224,9 @@ def main():
               };
             }""")
             check(date["overflow"] == 0, f"{w}px: fara depasire pe orizontala ({date['overflow']})")
-            check(date["celulaMin"][0] >= 24 and date["celulaMin"][1] >= 24,
-                  f"{w}px: celulele au minim 24x24 ({date['celulaMin']})")
-            check(len(date["mici"]) == 0, f"{w}px: nicio tinta sub 24x24 {date['mici']}")
+            check(date["celulaMin"][0] >= 34 and date["celulaMin"][1] >= 34,
+                  f"{w}px: celulele au minim 34x34 ({date['celulaMin']})")
+            check(len(date["mici"]) == 0, f"{w}px: nicio tinta sub pragul de atingere {date['mici']}")
             ctx.close()
 
         browser.close()

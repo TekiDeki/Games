@@ -75,7 +75,8 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .langs{display:flex; gap:4px; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:3px}
 .langs button{
-  border:0; background:transparent; color:var(--muted); font:600 13px/1 inherit;
+  border:0; background:transparent; color:var(--muted);
+  font-family:inherit; font-size:13px; font-weight:600; line-height:1;
   padding:7px 9px; border-radius:8px; cursor:pointer;
 }
 .langs button[aria-pressed="true"]{background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
@@ -102,7 +103,8 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 .cell{
   aspect-ratio:1/1; display:grid; place-items:center; padding:0;
   background:var(--panel2); color:var(--text); border:1px solid var(--line);
-  border-radius:6px; font:800 clamp(11px,3.1vw,19px)/1 inherit; letter-spacing:.02em;
+  border-radius:8px; letter-spacing:.02em;
+  font-family:inherit; font-weight:800; line-height:1; font-size:clamp(15px,5vw,24px);
   cursor:pointer; transition:background .08s, border-color .08s, color .08s;
 }
 .cell:hover{border-color:var(--accent)}
@@ -131,7 +133,8 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:16px}
 .btn{
   border:1px solid transparent; background:var(--accent); color:#fff;
-  border-radius:11px; padding:11px 18px; font:600 15px/1 inherit; cursor:pointer;
+  border-radius:11px; padding:11px 18px; cursor:pointer;
+  font-family:inherit; font-size:15px; font-weight:600; line-height:1;
 }
 .btn.ghost{background:var(--panel); color:var(--text); border-color:var(--line)}
 .btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
@@ -167,29 +170,38 @@ footer .sep{margin:0 6px}
   .actions .btn{flex:1 1 auto}
   .word{font-size:12px; padding:5px 9px}
 }
-/* sub 360 px: 12 coloane de minim 24 px incap doar daca stranjem marginile
-   (12x24 + 11x1 = 299 px, iar latimea utila devine 320 - 8 - 12 = 300 px) */
+/* ecrane mici: marginile se strang ca celula sa creasca
+   (8 x 34 + 7 x 1 = 279 px incap lejer in 320 px, deci pragul casei e atins pe orice telefon) */
 @media (max-width:360px){
   .wrap{padding:4px 4px 40px}
   .card{padding:6px; border-radius:12px}
   #grid{gap:1px; width:100%}
-  .cell{border-radius:4px; min-height:24px; min-width:24px}
+  .cell{border-radius:6px; min-height:34px; min-width:34px}
 }
 
   /* regula casei: tinte de atingere pe mobil */
-  /* Tabla are 12 coloane fixe: 12 x 34px + 11 spatii = 442px, deci pe un ecran de 390px
-     nu incap celule de 34px fara scroll orizontal (care ar rupe jocul). Ce se poate face,
-     se face: marginile se strang si celulele ajung la ~30px, iar selectia se face prin
-     tragere peste tabla, nu prin atingerea unei singure litere. */
+  /* 8 coloane: 8 x 44 + 7 spatii = 359px, deci celula ajunge la 44px pe un ecran de 390px si
+     la ~36px pe 320px. Marginile se strang ca sa se castige fiecare pixel pentru tabla. */
   @media (pointer: coarse), (max-width: 700px) {
     .wrap { padding: 8px 6px 30px; }
     .card { padding: 8px; }
     #grid { width: 100%; }
   }
-  /* sub 360px ramane spatiul de 1px (12 x 24px + 11 x 1px = 299px incap in 320px);
-     peste 360px se poate respira putin */
-  @media (min-width: 361px) and (max-width: 700px) {
+  /* spatiul dintre celule creste cu ecranul; la 320px ramane 1px ca sa nu piardem tabla */
+  @media (min-width: 361px) and (max-width: 480px) {
+    .wrap { padding: 4px 4px 30px; }
+    .card { padding: 6px; }
     #grid { gap: 2px; }
+  }
+  @media (min-width: 481px) and (max-width: 700px) {
+    #grid { gap: 3px; }
+  }
+  /* sub 360px antetul nu incape pe un rand (Jocuri + sigla + tema): cuvantul "Jocuri"
+     se ascunde si ramane sageti-ul de 44px, cu eticheta pentru cititoarele de ecran */
+  @media (max-width: 360px) {
+    #homeLbl { display: none; }
+    #homeBtn { min-width: 44px; justify-content: center; padding: 8px 10px; }
+    .brand { font-size: 15px; }
   }
   @media (pointer: coarse), (max-width: 700px) {
     #homeBtn { min-height: 34px; display: inline-flex; align-items: center; }
@@ -257,9 +269,9 @@ footer .sep{margin:0 6px}
   html body :is(.cell, .tile, .slot) { min-height: 0 !important; }
   html body .key { min-height: 44px !important; }
 }
-  /* 12 coloane fixe: celula isi pastreaza 24px (minimul de accesibilitate WCAG 2.2 AA) cat timp
-     tabla incape; sub 300px scade singura, ca sa nu iasa din ecran. */
-  html body .cell { min-width: 24px !important; }
+  /* 8 coloane: celula are 34px minim (regula casei) si ajunge la 44px pe 390px;
+     `aspect-ratio` o tine patrata, deci inaltimea vine singura. */
+  html body .cell { min-width: 34px !important; min-height: 34px !important; }
 </style>
 </head>
 <body>
@@ -279,7 +291,7 @@ footer .sep{margin:0 6px}
     <button data-lang="sr" aria-pressed="false">SR</button>
     <button data-lang="src" aria-pressed="false">СР</button>
   </div>
-  <button class="iconbtn" id="themeBtn" aria-label="Theme">◑</button>
+  <button class="iconbtn" id="themeBtn" aria-label="Theme"><span aria-hidden="true" style="font-size:19px;line-height:1">◑</span></button>
 </header>
 
 <main>
@@ -454,7 +466,10 @@ var L = {
 };
 
 var KEY = "word-search-v1";
-var N = 12;                                   /* grila N x N */
+/* Tabla are 8x8, nu 12x12. Motivul e degetul, nu estetica: 12 coloane intr-un ecran de
+   320px dau celule de 24px, imposibil de nimerit. La 8 coloane celula are ~36px pe 320px
+   si 44px pe 390px. In schimb, cuvintele alese pentru o tabla au cel mult N litere. */
+var N = 8;                                    /* grila N x N */
 var DIRS = [[1,0],[0,1],[1,1],[1,-1],[-1,0],[0,-1],[-1,-1],[-1,1]];
 var TEMA_KEYS = ["animale","mancare","locuri"];
 
@@ -636,8 +651,10 @@ function tabelNou(){
   var d = t();
   opresteCronometrul();
   state.tema = TEMA_KEYS[intre(0, TEMA_KEYS.length-1)];
-  /* 8 din cele 16 ale temei: grila de 12x12 nu incape 16, iar asa fiecare tabla difera */
-  state.cuvinte = amesteca(W[state.lang][state.tema].slice()).slice(0, 8);
+  /* 8 din cele 16 ale temei, dar numai cele care incap pe tabla: un cuvant are cel mult N
+     litere, altfel nu poate fi asezat pe nicio directie. Tema are mereu destule (minimum 14). */
+  var incap = W[state.lang][state.tema].filter(function(w){ return w.length <= N; });
+  state.cuvinte = amesteca(incap.slice()).slice(0, 8);
   state.grid = construieste(state.cuvinte);
   state.gasite = [];
   state.sel = [];
@@ -796,7 +813,9 @@ function aplicaTextele(){
   $("report").textContent = d.report;
   $("shareBtn").textContent = d.share;
   $("againBtn").textContent = d.again;
-  $("homeLbl").textContent = {ro:"Jocuri", en:"Games", sr:"Igre", src:"Игре"}[state.lang];
+  var lbl = {ro:"Jocuri", en:"Games", sr:"Igre", src:"Игре"}[state.lang];
+  $("homeLbl").textContent = lbl;
+  $("homeBtn").setAttribute("aria-label", lbl);   /* pe ecrane mici textul se ascunde, eticheta ramane */
   deseneazaCuvinte();
 }
 

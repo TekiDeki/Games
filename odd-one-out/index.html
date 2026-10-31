@@ -76,7 +76,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 }
 .langs{display:flex; gap:4px; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:3px}
 .langs button{
-  border:0; background:transparent; color:var(--muted); font:600 13px/1 inherit;
+  border:0; background:transparent; color:var(--muted); font-family:inherit; font-size:13px; font-weight:600; line-height:1;
   padding:7px 9px; border-radius:8px; cursor:pointer;
 }
 .langs button[aria-pressed="true"]{background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
@@ -154,7 +154,7 @@ header{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom
 .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:16px}
 .btn{
   border:1px solid transparent; background:var(--accent); color:#fff;
-  border-radius:11px; padding:11px 18px; font:600 15px/1 inherit; cursor:pointer;
+  border-radius:11px; padding:11px 18px; font-family:inherit; font-size:15px; font-weight:600; line-height:1; cursor:pointer;
 }
 .btn.ghost{background:var(--panel); color:var(--text); border-color:var(--line)}
 .btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
