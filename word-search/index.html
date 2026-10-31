@@ -296,13 +296,13 @@ footer .sep{margin:0 6px}
 <main>
 <div class="card">
   <div class="topline">
-    <span class="chip strong" id="themeChip">—</span>
-    <span class="chip" id="timeChip">—</span>
+    <span class="chip strong" id="themeChip">-</span>
+    <span class="chip" id="timeChip">-</span>
     <span class="spacer"></span>
-    <span class="chip" id="foundChip">—</span>
+    <span class="chip" id="foundChip">-</span>
   </div>
 
-  <p class="prompt" id="prompt">—</p>
+  <p class="prompt" id="prompt">-</p>
 
   <div class="gridwrap"><div id="grid" role="group" aria-label="Grid"></div></div>
 
@@ -311,33 +311,33 @@ footer .sep{margin:0 6px}
   <div class="msg neutral" id="msg" aria-live="polite"></div>
 
   <div class="actions">
-    <button class="btn" id="againBtn">—</button>
-    <button class="btn ghost" id="shareBtn">—</button>
+    <button class="btn" id="againBtn">-</button>
+    <button class="btn ghost" id="shareBtn">-</button>
   </div>
 
   <div class="stats">
-    <div><b id="stPlayed">0</b><span id="stPlayedL">—</span></div>
-    <div><b id="stWords" class="hot">0</b><span id="stWordsL">—</span></div>
-    <div><b id="stBest">—</b><span id="stBestL">—</span></div>
-    <div><b id="stRecord">0</b><span id="stRecordL">—</span></div>
+    <div><b id="stPlayed">0</b><span id="stPlayedL">-</span></div>
+    <div><b id="stWords" class="hot">0</b><span id="stWordsL">-</span></div>
+    <div><b id="stBest">-</b><span id="stBestL">-</span></div>
+    <div><b id="stRecord">0</b><span id="stRecordL">-</span></div>
   </div>
 </div>
 
 <section class="card" id="about">
-  <h1 id="h1">—</h1>
-  <p id="p1">—</p>
-  <h2 id="h2">—</h2>
-  <p id="p2">—</p>
-  <p class="note" id="p3">—</p>
+  <h1 id="h1">-</h1>
+  <p id="p1">-</p>
+  <h2 id="h2">-</h2>
+  <p id="p2">-</p>
+  <p class="note" id="p3">-</p>
 </section>
 </main>
 
 <footer>
-  <span id="foot">—</span><br>
-  <span id="supportText">—</span>
-  <a id="supportLink" href="https://PayPal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>—</span></a>
+  <span id="foot">-</span><br>
+  <span id="supportText">-</span>
+  <a id="supportLink" href="https://paypal.me/TekiDeki" target="_blank" rel="noopener">❤️ <span>-</span></a>
   <span class="sep">·</span>
-  <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">—</a>
+  <a id="report" href="https://github.com/TekiDeki" target="_blank" rel="noopener">-</a>
 </footer>
 </div>
 
@@ -757,7 +757,7 @@ function arataStatistici(){
   var st = state.stats[state.lang], d = t();
   $("stPlayed").textContent = st.p||0;
   $("stWords").textContent = st.w||0;
-  $("stBest").textContent = st.b ? mmss(st.b) : "—";
+  $("stBest").textContent = st.b ? mmss(st.b) : "-";
   $("stRecord").textContent = st.r||0;
   $("stPlayedL").textContent = d.played;
   $("stWordsL").textContent = d.words;

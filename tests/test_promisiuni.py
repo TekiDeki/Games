@@ -25,14 +25,14 @@ VIITOR = re.compile(r"r[ăa]m[âa]ne gratuit|stays free|ostaje besplatna|ост�
                     r"|will stay free|va r[ăa]m[âa]ne", re.IGNORECASE)
 
 
-def check(cond, mesaj):
+def check(cond, mesaj, extra=None):
     global ok, rau
     if cond:
         ok += 1
         print("  ok   " + mesaj)
     else:
         rau += 1
-        print("  RAU  " + mesaj)
+        print("  RAU  " + mesaj + ((" (" + str(extra) + ")") if extra else ""))
 
 
 def pagini():
@@ -69,8 +69,13 @@ def main():
         gasite = sorted(set(m.group(0).lower() for m in VIITOR.finditer(text)))
         check(not gasite, f"{nume}: fara promisiune despre viitor {gasite or ''}")
         if "<footer" in text or "foot" in text:
-            check("PayPal.me" in text and "github.com/TekiDeki" in text,
-                  f"{nume}: linkul de sustinere si cel de raportare au ramas in subsol")
+            # R6: linkul de donatie, exact asa cum e scris in REGULILE-CASEI.md
+            check("https://paypal.me/TekiDeki" in text and "github.com/TekiDeki" in text,
+                  f"{nume}: linkul de sustinere (https://paypal.me/TekiDeki) si cel de raportare sunt in subsol")
+        # R31: in textul care se vede nu sta cratima lunga
+        cratime = [i for i, linie in enumerate(text.splitlines(), 1)
+                   if "\u2014" in linie or "&mdash;" in linie]
+        check(not cratime, f"{nume}: fara cratima lunga in textul vizibil (R31)", cratime[:5])
 
     print(f"\n{ok} verificari trecute, {rau} esuate")
     return 0 if rau == 0 else 1
