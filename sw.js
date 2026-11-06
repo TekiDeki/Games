@@ -12,7 +12,7 @@
  *    inainte sa-l punem in cache;
  *  - o singura adresa lipsa nu are voie sa strice instalarea: fiecare intrare se descarca separat.
  */
-var VERSION = 'games-v4';
+var VERSION = 'games-v5';
 var CACHE = VERSION;
 var SHELL = [
   './',
