@@ -94,6 +94,11 @@ def main():
         check(all(x["text"] == by_id[x["id"]]["en"] for x in right),
               "coloana dreapta contine traducerile engleze corecte")
         check(pg.locator(".pair-card.matched").count() == 0, "niciun cuplu nu porneste rezolvat")
+        check(pg.locator("#supportLinkText").inner_text() == "Support the work" and
+              "❤️" in pg.locator("#supportLink").inner_text(),
+              "subsolul are buton de sprijin cu inima")
+        check(pg.locator("#supportLink").get_attribute("href") == "https://paypal.me/TekiDeki",
+              "href-ul de sprijin este exact")
 
         # O pereche gresita: exact o incercare, feedback rosu, apoi selectia se elibereaza.
         wrong = next(x["id"] for x in right if x["id"] != left[0]["id"])

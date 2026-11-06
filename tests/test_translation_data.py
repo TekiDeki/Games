@@ -90,6 +90,12 @@ def main():
           "pagina declara sursa de date separata de corpus")
     check("var W = {" not in html, "jocul nu pretinde ca foloseste corpusul nealiniat")
     check("—" not in html, "nu exista em dash in pagina")
+    check('<meta http-equiv="Content-Security-Policy"' in html and "connect-src 'self'" in html,
+          "pagina are meta CSP pentru oglinda GitHub Pages")
+    check('id="supportLinkText"' in html and "❤️" in html and
+          'href="https://paypal.me/TekiDeki"' in html and
+          "https://PayPal.me/TekiDeki" not in html,
+          "subsolul are propozitie si buton cu inima, nu URL afisat")
 
     hub = (ROOT / "index.html").read_text(encoding="utf-8")
     sw = (ROOT / "sw.js").read_text(encoding="utf-8")
