@@ -19,6 +19,7 @@ Shortcut: **https://freehtml.dev/games** (302)
 | Word search | `/word-search/` | EN, RO, SR Latin, SR Cyrillic | Hidden words. Same 192 words, 12 by 12 grid, eight words per table, all eight directions, drag from the first letter to the last, local stats. |
 | Word from definition | `/word-from-definition/` | EN, RO, SR Latin, SR Cyrillic | Vocabulary. One definition from Wikipedia or Wiktionary, four words to choose from, three themes, local score. Text of the definitions is CC BY-SA 4.0. |
 | Type fast | `/typing-test/` | EN, RO, SR Latin, SR Cyrillic | Typing test. Words come one after another; a wrong letter never goes through. Words per minute and accuracy, best kept locally. |
+| Translation pairs | `/translation-pairs/` | EN, RO, SR Latin, SR Cyrillic | Match Romanian words with English or Serbian translations. 24 explicit pairs, three themes, four, six or eight pairs per round. |
 
 ## House rules
 
@@ -49,10 +50,13 @@ word-search/
   index.html               the game (single file)
 typing-test/
   index.html               the game (single file)
+translation-pairs/
+  index.html               the game (single file) with 24 explicit translation concepts
 word-from-definition/
   index.html               the game (single file) plus 186 definitions built into the page, each in the word's own language
 tools/genereaza-corp.py    writes the word block into every game, from tests/corpus.json
 tests/corpus.json          the one source of truth for words: 48 per language, 16 per theme
+tests/translations.json    explicit Romanian, English and Serbian translation concepts
 sitemap.xml                every game URL
 robots.txt                 points at the sitemap
 _headers                   security headers (CSP with connect-src 'none', HSTS, nosniff, frame DENY)
@@ -66,6 +70,8 @@ tests/test_cautare.py      Playwright: 4 languages, full grid, right and wrong d
 tests/test_tastatura.py    Playwright: keyboard-only play, arrow navigation, Shift selection, Enter, Escape, tap targets 24x24
 tests/test_corp.py         one source of truth for the words: 48 per language, 16 per theme, Serbian Latin <-> Cyrillic
 tests/test_tastare.py      Playwright: the typing game played for real, WPM maths, diacritics, timer, mobile
+tests/test_translation_data.py  explicit translation map, alphabets, transliteration and integration
+tests/test_translation_pairs.py Playwright: real matching, four languages, touch, keyboard and offline
 tests/test_subsol.py        Playwright: every page has the support link and the report link, in all four languages
 tests/test_antete.py       Playwright: every page served with the headers from _headers, zero CSP violations, zero external requests. The page list is discovered with rglob, so a new game is covered the day it is added
 ```

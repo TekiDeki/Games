@@ -86,6 +86,9 @@ def main():
     for f in fisiere:
         text = f.read_text(encoding="utf-8")
         partial = 'name="joc-date" content="definitii"' in text
+        if 'name="joc-date" content="traduceri"' in text:
+            check("var PAIRS = " in text, f"{f.parent.name}: are harta separata de traduceri")
+            continue
         start = text.find("var W = {")
         check(start >= 0, f"{f.parent.name}: are blocul var W")
         if start < 0:

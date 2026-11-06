@@ -26,6 +26,7 @@ RADACINA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JOCURI = [
     "guess-the-word", "odd-one-out", "typing-test", "word-from-definition",
     "word-of-the-day", "word-pairs", "word-scramble", "word-search",
+    "translation-pairs",
 ]
 LATIMI = (320, 390)
 PRAG = 44

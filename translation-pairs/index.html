@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2563eb">
+<title>Translation Pairs - match words and translations</title>
+<meta name="description" content="Match Romanian words with their English or Serbian translations. Choose a theme and four, six or eight pairs. Free browser game with no account or ads.">
+<link rel="canonical" href="https://games.freehtml.dev/translation-pairs/">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Translation Pairs - match words and translations">
+<meta property="og:description" content="Match Romanian words with their English or Serbian translations. Choose a theme and four, six or eight pairs.">
+<meta property="og:url" content="https://games.freehtml.dev/translation-pairs/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cpath d='M16 20h23M16 32h17M16 44h23M42 20l6 6-6 6M42 32l6 6-6 6' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="joc-date" content="traduceri">
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--text:#172033;--muted:#526078;--line:#d8e0ed;--accent:#2563eb;--accent-ink:#fff;--accent-soft:#e7efff;--accent-text:#1d4ed8;--good:#16734a;--good-soft:#e0f4e9;--bad:#b42318;--bad-soft:#ffebe8;--shadow:0 12px 34px #1720330d}
+html[data-theme="dark"]{--bg:#0f172a;--panel:#172033;--text:#eef4ff;--muted:#b7c5dc;--line:#34435d;--accent:#6b9dff;--accent-ink:#0b1220;--accent-soft:#1b2c4d;--accent-text:#9bbcff;--good:#4ade80;--good-soft:#173d2c;--bad:#ff7a70;--bad-soft:#482426;--shadow:0 12px 34px #00000024}
+*{box-sizing:border-box}
+html{min-width:320px;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:var(--accent-text)}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:22px 18px 34px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;font-weight:850;font-size:1.08rem;min-height:44px}
+.brand svg{flex:0 0 42px;width:42px;height:42px}
+.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.langs{display:flex;gap:4px;flex-wrap:wrap}
+.lang,.icon-btn,.btn,.chip{min-height:44px;border:1px solid var(--line);border-radius:12px;padding:9px 14px;background:var(--panel);color:var(--text);font-weight:750}
+.lang{min-width:44px;padding-left:10px;padding-right:10px}
+.lang[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.icon-btn{width:44px;padding:8px;font-size:1.2rem;line-height:1}
+.btn{border-color:var(--accent);background:var(--accent);color:var(--accent-ink);padding-left:20px;padding-right:20px}
+.btn.ghost{border-color:var(--line);background:var(--panel);color:var(--text)}
+main{margin-top:32px}
+.hero{max-width:780px}
+h1{font-size:clamp(1.9rem,4.5vw,3.15rem);line-height:1.08;letter-spacing:-.035em;margin:0 0 14px}
+.lead{font-size:1.1rem;color:var(--muted);margin:0}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:25px 0 14px}
+.chip{display:inline-flex;align-items:center;justify-content:center;gap:5px;text-align:left;max-width:100%}
+.chip-label{color:var(--muted);font-weight:550}
+.stats{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 14px}
+.stat{min-width:88px;flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+.stat strong{display:block;font-size:1.3rem;line-height:1.2}
+.stat span{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}
+.instructions{color:var(--muted);margin:16px 0 12px}
+.board-shell{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
+.board-head,.boards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.board-head{margin-bottom:12px}
+.col-title{text-align:center;color:var(--muted);font-size:.82rem;font-weight:850;letter-spacing:.045em;text-transform:uppercase;overflow-wrap:anywhere}
+.col{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;min-width:0}
+.pair-card{width:100%;min-height:58px;border:2px solid var(--line);border-radius:13px;background:var(--bg);color:var(--text);padding:10px 8px;font-weight:850;font-size:clamp(.84rem,2.4vw,1.05rem);line-height:1.15;overflow-wrap:anywhere;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.pair-card:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px)}
+.pair-card.selected{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-text)}
+.pair-card.matched{background:var(--good-soft);border-color:var(--good);color:var(--good);cursor:default}
+.pair-card.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);animation:shake .22s linear}
+.pair-card:disabled{opacity:1}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+#msg{min-height:30px;text-align:center;font-weight:750;margin:14px 0 0;color:var(--muted)}
+#msg.good{color:var(--good)}
+#msg.bad{color:var(--bad)}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.about{margin-top:34px;border-top:1px solid var(--line);padding-top:25px}
+.about h2{font-size:1.35rem;margin:0 0 10px}
+.about p{color:var(--muted);max-width:790px}
+footer{margin-top:30px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+.footer-links{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+footer a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+#supportText{max-width:300px}
+@media(max-width:600px){
+  .wrap{padding:16px 12px 26px}
+  main{margin-top:25px}
+  .top-actions{width:100%;justify-content:space-between;gap:8px}
+  .langs{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));min-width:0}
+  .lang{padding-left:4px;padding-right:4px}
+  .lead{font-size:1rem}
+  .toolbar{margin-top:20px}
+  .chip{padding-left:10px;padding-right:10px;font-size:.9rem}
+  .board-shell{padding:10px;border-radius:16px}
+  .board-head,.boards{gap:8px}
+  .col{gap:8px}
+  .pair-card{min-height:56px;padding:8px 5px}
+  .stat{min-width:70px;padding:8px 10px}
+  .stat strong{font-size:1.15rem}
+  footer{align-items:flex-start;flex-direction:column}
+  .footer-links{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<script type="application/ld+json" id="ld">{"@context":"https://schema.org","@type":"WebApplication","name":"Translation Pairs","url":"https://games.freehtml.dev/translation-pairs/","description":"Match Romanian words with their English or Serbian translations. Choose a theme and four, six or eight pairs. Free browser game with no account or ads.","applicationCategory":"Game","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="brand" href="../" id="homeLink" aria-label="Home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="var(--accent)"/><path d="M16 20h23M16 32h17M16 44h23M42 20l6 6-6 6M42 32l6 6-6 6" fill="none" stroke="var(--accent-ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span id="brandName">Translation Pairs</span>
+  </a>
+  <div class="top-actions">
+    <nav class="langs" aria-label="Language">
+      <button class="lang" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lang" data-lang="ro" aria-pressed="false">RO</button>
+      <button class="lang" data-lang="sr" aria-pressed="false">SR</button>
+      <button class="lang" data-lang="src" aria-pressed="false">СР</button>
+    </nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light or dark theme" title="Toggle light or dark theme">◑</button>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <h1 id="gameTitle">Match words with their translations</h1>
+    <p class="lead" id="lead">A quick vocabulary game in Romanian, English and Serbian.</p>
+  </section>
+  <div class="toolbar" aria-label="Game settings">
+    <button class="chip" id="themeChip" type="button"></button>
+    <button class="chip" id="targetChip" type="button"></button>
+    <button class="chip" id="sizeChip" type="button"></button>
+  </div>
+  <div class="stats" aria-label="Round statistics">
+    <div class="stat"><strong id="matches">0</strong><span id="matchesLabel">Pairs</span></div>
+    <div class="stat"><strong id="moves">0</strong><span id="movesLabel">Moves</span></div>
+    <div class="stat"><strong id="timer">0:00</strong><span id="timeLabel">Time</span></div>
+    <div class="stat"><strong id="rounds">0</strong><span id="roundsLabel">Rounds</span></div>
+    <div class="stat"><strong id="best">-</strong><span id="bestLabel">Best</span></div>
+  </div>
+  <p class="instructions" id="instructions">Choose a Romanian word and its translation.</p>
+  <section class="board-shell" aria-label="Translation board">
+    <div class="board-head">
+      <div class="col-title" id="leftLabel">Romanian</div>
+      <div class="col-title" id="rightLabel">English</div>
+    </div>
+    <div class="boards" id="board"></div>
+    <p id="msg" role="status" aria-live="polite"></p>
+    <div class="actions"><button class="btn" id="againBtn" type="button">New game</button></div>
+  </section>
+  <section class="about">
+    <h2 id="howTitle">How to play</h2>
+    <p id="how1"></p>
+    <p id="how2"></p>
+    <p id="how3"></p>
+  </section>
+</main>
+<footer>
+  <span id="foot">No account, ads or tracking. Play in your browser.</span>
+  <div class="footer-links">
+    <span id="supportText">If you enjoy the games, you can support them:</span>
+    <a id="supportLink" href="https://paypal.me/TekiDeki" target="_blank" rel="noopener">https://PayPal.me/TekiDeki</a>
+    <a id="report" href="https://github.com/TekiDeki/Games/issues" target="_blank" rel="noopener">Report a problem</a>
+  </div>
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+var I18N={
+  en:{htmlLang:"en",name:"Translation Pairs",title:"Translation Pairs - match words and translations",desc:"Match Romanian words with their English or Serbian translations. Choose a theme and four, six or eight pairs. Free browser game with no account or ads.",h1:"Match words with their translations",lead:"A quick vocabulary game in Romanian, English and Serbian.",theme:"Theme",target:"Translation",animals:"Animals",food:"Food",places:"Places",pairs:"pairs",matches:"Pairs",moves:"Moves",time:"Time",rounds:"Rounds",best:"Best",again:"New game",instruction:"Choose a Romanian word and its translation.",correct:"Correct match.",wrong:"Not a match. Try again.",win:"All pairs matched in {moves} moves.",howTitle:"How to play",how1:"Choose one Romanian word on the left and its English or Serbian translation on the right. A correct pair stays green. A wrong pair flashes red and can be tried again.",how2:"Pick a theme and four, six or eight pairs. The translation button cycles through English, Serbian Latin and Serbian Cyrillic. Your preferences and best score stay in this browser.",how3:"No account, no ads and no analytics. After the service worker has cached the shell, the game also works offline.",foot:"No account, ads or tracking. Play in your browser.",support:"If you enjoy the games, you can support them:",report:"Report a problem",home:"Home",themeToggle:"Toggle light or dark theme",board:"Translation board",romanian:"Romanian",targets:{en:"English",sr:"Serbian Latin",src:"Serbian Cyrillic"}},
+  ro:{htmlLang:"ro",name:"Perechi de traduceri",title:"Perechi de traduceri - potrivește cuvintele",desc:"Potrivește cuvinte românești cu traducerile lor în engleză sau sârbă. Alege o temă și joacă cu 4, 6 sau 8 perechi, gratuit, fără cont sau reclame.",h1:"Potrivește cuvintele cu traducerile",lead:"Un joc rapid de vocabular în română, engleză și sârbă.",theme:"Temă",target:"Traducere",animals:"Animale",food:"Mâncare",places:"Locuri",pairs:"perechi",matches:"Perechi",moves:"Mutări",time:"Timp",rounds:"Runde",best:"Record",again:"Joc nou",instruction:"Alege un cuvânt românesc și traducerea lui.",correct:"Pereche corectă.",wrong:"Nu se potrivesc. Mai încearcă.",win:"Toate perechile sunt potrivite în {moves} mutări.",howTitle:"Cum se joacă",how1:"Alege un cuvânt românesc din stânga și traducerea lui în engleză sau sârbă din dreapta. Perechea corectă rămâne verde. Perechea greșită devine roșie pentru scurt timp și poate fi încercată din nou.",how2:"Alege o temă și 4, 6 sau 8 perechi. Butonul de traducere comută între engleză, sârbă latină și sârbă chirilică. Preferințele și recordul rămân în acest browser.",how3:"Fără cont, reclame sau analitică. După ce service worker-ul salvează pagina, jocul funcționează și fără internet.",foot:"Fără cont, reclame sau urmărire. Joacă în browser.",support:"Dacă îți plac jocurile, le poți susține:",report:"Semnalează o problemă",home:"Acasă",themeToggle:"Comută tema luminoasă sau întunecată",board:"Tabla de traduceri",romanian:"Română",targets:{en:"Engleză",sr:"Sârbă latină",src:"Sârbă chirilică"}},
+  sr:{htmlLang:"sr-Latn",name:"Parovi prevoda",title:"Parovi prevoda - upari reči i prevode",desc:"Uparuj rumunske reči sa njihovim prevodima na engleski ili srpski. Izaberi temu i igraj sa 4, 6 ili 8 parova, besplatno i bez naloga ili reklama.",h1:"Upari reči sa njihovim prevodima",lead:"Brza igra vokabulara na rumunskom, engleskom i srpskom.",theme:"Tema",target:"Prevod",animals:"Životinje",food:"Hrana",places:"Mesta",pairs:"parova",matches:"Parovi",moves:"Potezi",time:"Vreme",rounds:"Runde",best:"Rekord",again:"Nova igra",instruction:"Izaberi rumunsku reč i njen prevod.",correct:"Tačan par.",wrong:"Ne uklapaju se. Pokušaj ponovo.",win:"Svi parovi su upareni u {moves} poteza.",howTitle:"Kako se igra",how1:"Izaberi rumunsku reč sa leve strane i njen prevod na engleski ili srpski sa desne strane. Tačan par ostaje zelen. Pogrešan par nakratko postaje crven i možeš da pokušaš ponovo.",how2:"Izaberi temu i 4, 6 ili 8 parova. Dugme za prevod menja engleski, srpsku latinicu i srpsku ćirilicu. Tvoji izbori i rekord ostaju u ovom pregledaču.",how3:"Bez naloga, reklama i analitike. Kada service worker sačuva stranicu, igra radi i bez interneta.",foot:"Bez naloga, reklama i praćenja. Igraj u svom pregledaču.",support:"Ako ti se igre dopadaju, možeš ih podržati:",report:"Prijavi problem",home:"Početna",themeToggle:"Promeni svetlu ili tamnu temu",board:"Tabla za prevode",romanian:"Rumunski",targets:{en:"Engleski",sr:"Srpska latinica",src:"Srpska ćirilica"}},
+  src:{htmlLang:"sr-Cyrl",name:"Парови превода",title:"Парови превода - упари речи и преводе",desc:"Упари румунске речи са њиховим преводима на енглески или српски. Изабери тему и играј са 4, 6 или 8 парова, бесплатно и без налога или реклама.",h1:"Упари речи са њиховим преводима",lead:"Брза игра вокабулара на румунском, енглеском и српском.",theme:"Тема",target:"Превод",animals:"Животиње",food:"Храна",places:"Места",pairs:"парова",matches:"Парови",moves:"Потези",time:"Време",rounds:"Рунде",best:"Рекорд",again:"Нова игра",instruction:"Изабери румунску реч и њен превод.",correct:"Тачан пар.",wrong:"Не уклапају се. Покушај поново.",win:"Сви парови су упарени у {moves} потеза.",howTitle:"Како се игра",how1:"Изабери румунску реч са леве стране и њен превод на енглески или српски са десне стране. Тачан пар остаје зелен. Погрешан пар накратко постаје црвен и можеш да покушаш поново.",how2:"Изабери тему и 4, 6 или 8 парова. Дугме за превод мења енглески, српску латиницу и српску ћирилицу. Твоји избори и рекорд остају у овом прегледачу.",how3:"Без налога, реклама и аналитике. Када service worker сачува страницу, игра ради и без интернета.",foot:"Без налога, реклама и праћења. Играј у свом прегледачу.",support:"Ако ти се игре допадају, можеш их подржати:",report:"Пријави проблем",home:"Почетна",themeToggle:"Промени светлу или тамну тему",board:"Табла за преводе",romanian:"Румунски",targets:{en:"Енглески",sr:"Српска латиница",src:"Српска ћирилица"}}
+};
+var PAIRS = [
+  {
+    "id": "squirrel",
+    "tema": "animale",
+    "ro": "VEVERIȚĂ",
+    "en": "SQUIRREL",
+    "sr": "VEVERICA",
+    "src": "ВЕВЕРИЦА"
+  },
+  {
+    "id": "butterfly",
+    "tema": "animale",
+    "ro": "FLUTURE",
+    "en": "BUTTERFLY",
+    "sr": "LEPTIR",
+    "src": "ЛЕПТИР"
+  },
+  {
+    "id": "rabbit",
+    "tema": "animale",
+    "ro": "IEPURE",
+    "en": "RABBIT",
+    "sr": "ZEC",
+    "src": "ЗЕЦ"
+  },
+  {
+    "id": "tortoise",
+    "tema": "animale",
+    "ro": "ȚESTOASĂ",
+    "en": "TORTOISE",
+    "sr": "KORNJAČA",
+    "src": "КОРЊАЧА"
+  },
+  {
+    "id": "owl",
+    "tema": "animale",
+    "ro": "BUFNIȚĂ",
+    "en": "OWL",
+    "sr": "SOVA",
+    "src": "СОВА"
+  },
+  {
+    "id": "fox",
+    "tema": "animale",
+    "ro": "VULPE",
+    "en": "FOX",
+    "sr": "LISICA",
+    "src": "ЛИСИЦА"
+  },
+  {
+    "id": "dolphin",
+    "tema": "animale",
+    "ro": "DELFIN",
+    "en": "DOLPHIN",
+    "sr": "DELFIN",
+    "src": "ДЕЛФИН"
+  },
+  {
+    "id": "giraffe",
+    "tema": "animale",
+    "ro": "GIRAFĂ",
+    "en": "GIRAFFE",
+    "sr": "ŽIRAFA",
+    "src": "ЖИРАФА"
+  },
+  {
+    "id": "cheese",
+    "tema": "mancare",
+    "ro": "BRÂNZĂ",
+    "en": "CHEESE",
+    "sr": "SIR",
+    "src": "СИР"
+  },
+  {
+    "id": "honey",
+    "tema": "mancare",
+    "ro": "MIERE",
+    "en": "HONEY",
+    "sr": "MED",
+    "src": "МЕД"
+  },
+  {
+    "id": "salad",
+    "tema": "mancare",
+    "ro": "SALATĂ",
+    "en": "SALAD",
+    "sr": "SALATA",
+    "src": "САЛАТА"
+  },
+  {
+    "id": "soup",
+    "tema": "mancare",
+    "ro": "SUPĂ",
+    "en": "SOUP",
+    "sr": "SUPA",
+    "src": "СУПА"
+  },
+  {
+    "id": "pancakes",
+    "tema": "mancare",
+    "ro": "CLĂTITE",
+    "en": "PANCAKES",
+    "sr": "PALAČINKE",
+    "src": "ПАЛАЧИНКЕ"
+  },
+  {
+    "id": "sausage",
+    "tema": "mancare",
+    "ro": "CÂRNAT",
+    "en": "SAUSAGE",
+    "sr": "KOBASICA",
+    "src": "КОБАСИЦА"
+  },
+  {
+    "id": "bread",
+    "tema": "mancare",
+    "ro": "PÂINE",
+    "en": "BREAD",
+    "sr": "HLEB",
+    "src": "ХЛЕБ"
+  },
+  {
+    "id": "apple",
+    "tema": "mancare",
+    "ro": "MĂR",
+    "en": "APPLE",
+    "sr": "JABUKA",
+    "src": "ЈАБУКА"
+  },
+  {
+    "id": "castle",
+    "tema": "locuri",
+    "ro": "CASTEL",
+    "en": "CASTLE",
+    "sr": "TVRĐAVA",
+    "src": "ТВРЂАВА"
+  },
+  {
+    "id": "library",
+    "tema": "locuri",
+    "ro": "BIBLIOTECĂ",
+    "en": "LIBRARY",
+    "sr": "BIBLIOTEKA",
+    "src": "БИБЛИОТЕКА"
+  },
+  {
+    "id": "museum",
+    "tema": "locuri",
+    "ro": "MUZEU",
+    "en": "MUSEUM",
+    "sr": "MUZEJ",
+    "src": "МУЗЕЈ"
+  },
+  {
+    "id": "bridge",
+    "tema": "locuri",
+    "ro": "POD",
+    "en": "BRIDGE",
+    "sr": "MOST",
+    "src": "МОСТ"
+  },
+  {
+    "id": "garden",
+    "tema": "locuri",
+    "ro": "GRĂDINĂ",
+    "en": "GARDEN",
+    "sr": "BAŠTA",
+    "src": "БАШТА"
+  },
+  {
+    "id": "forest",
+    "tema": "locuri",
+    "ro": "PĂDURE",
+    "en": "FOREST",
+    "sr": "ŠUMA",
+    "src": "ШУМА"
+  },
+  {
+    "id": "station",
+    "tema": "locuri",
+    "ro": "GARĂ",
+    "en": "STATION",
+    "sr": "GARA",
+    "src": "ГАРА"
+  },
+  {
+    "id": "market",
+    "tema": "locuri",
+    "ro": "PIAȚĂ",
+    "en": "MARKET",
+    "sr": "PIJACA",
+    "src": "ПИЈАЦА"
+  }
+];
+var THEMES=["animale","mancare","locuri"],TARGETS=["en","sr","src"],SIZES=[4,6,8];
+var STORE="translation-pairs-v1",THEME_STORE="translation-pairs-v1-theme";
+var state={lang:"en",target:"en",tema:"animale",size:6,rounds:{en:0,sr:0,src:0},best:{en:0,sr:0,src:0}};
+try{
+  var saved=JSON.parse(localStorage.getItem(STORE)||"null");
+  if(saved){
+    if(I18N[saved.lang])state.lang=saved.lang;
+    if(TARGETS.indexOf(saved.target)>=0)state.target=saved.target;
+    if(THEMES.indexOf(saved.tema)>=0)state.tema=saved.tema;
+    if(SIZES.indexOf(saved.size)>=0)state.size=saved.size;
+    TARGETS.forEach(function(t){
+      if(saved.rounds&&Number.isFinite(saved.rounds[t])&&saved.rounds[t]>=0)state.rounds[t]=Math.floor(saved.rounds[t]);
+      if(saved.best&&Number.isFinite(saved.best[t])&&saved.best[t]>=0)state.best[t]=Math.floor(saved.best[t]);
+    });
+  }
+}catch(e){}
+var left=[],right=[],selected=null,bad=[],matched={},moves=0,matchCount=0,startAt=0,elapsed=0,timer=null,feedbackTimer=null,busy=false,over=false;
+function $(id){return document.getElementById(id)}
+function d(){return I18N[state.lang]}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state))}catch(e){}}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
+function fmt(sec){return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0")}
+function stopClock(){if(timer){clearInterval(timer);timer=null}if(startAt)elapsed=Math.floor((Date.now()-startAt)/1000)}
+function startClock(){if(startAt||over)return;startAt=Date.now();timer=setInterval(function(){elapsed=Math.floor((Date.now()-startAt)/1000);$("timer").textContent=fmt(elapsed)},500)}
+function say(text,type){$("msg").textContent=text;$("msg").className=type||""}
+function cycle(value,list){return list[(list.indexOf(value)+1)%list.length]}
+function key(side,index){return side+":"+index}
+function buildBoard(){
+  var board=$("board");board.innerHTML="";
+  [["left",left],["right",right]].forEach(function(part){
+    var side=part[0],items=part[1],col=document.createElement("div");
+    col.className="col";col.setAttribute("role","group");col.setAttribute("aria-label",side==="left"?d().romanian:d().targets[state.target]);
+    items.forEach(function(entry,index){
+      var b=document.createElement("button");b.type="button";b.className="pair-card";
+      b.dataset.side=side;b.dataset.index=index;b.dataset.id=entry.id;
+      b.textContent=entry[side==="left"?"ro":state.target];b.setAttribute("aria-pressed","false");
+      b.addEventListener("click",function(){choose(side,index)});col.appendChild(b);
+    });
+    board.appendChild(col);
+  });
+}
+function renderStats(){
+  $("matches").textContent=matchCount;$("moves").textContent=moves;$("timer").textContent=fmt(elapsed);
+  $("rounds").textContent=state.rounds[state.target];$("best").textContent=state.best[state.target]||"-";
+}
+function render(){
+  document.querySelectorAll(".pair-card").forEach(function(b){
+    var side=b.dataset.side,index=Number(b.dataset.index),entry=(side==="left"?left:right)[index];
+    var isSelected=selected&&selected.side===side&&selected.index===index;
+    b.classList.toggle("selected",!!isSelected);b.classList.toggle("matched",!!matched[entry.id]);
+    b.classList.toggle("bad",bad.indexOf(key(side,index))>=0);
+    b.disabled=!!matched[entry.id]||busy||over;b.setAttribute("aria-pressed",isSelected?"true":"false");
+  });
+  renderStats();
+}
+function renderControls(){
+  var tr=d();
+  $("themeChip").textContent=tr.theme+": "+tr[{animale:"animals",mancare:"food",locuri:"places"}[state.tema]];
+  $("targetChip").textContent=tr.target+": "+tr.targets[state.target];
+  $("sizeChip").textContent=state.size+" "+tr.pairs;
+  $("leftLabel").textContent=tr.romanian;$("rightLabel").textContent=tr.targets[state.target];
+  $("matchesLabel").textContent=tr.matches;$("movesLabel").textContent=tr.moves;$("timeLabel").textContent=tr.time;
+  $("roundsLabel").textContent=tr.rounds;$("bestLabel").textContent=tr.best;$("againBtn").textContent=tr.again;
+  $("instructions").textContent=tr.instruction;
+}
+function applyTexts(){
+  var tr=d();document.documentElement.lang=tr.htmlLang;document.title=tr.title;
+  document.querySelector('meta[name="description"]').content=tr.desc;
+  document.querySelector('meta[property="og:title"]').content=tr.title;
+  document.querySelector('meta[property="og:description"]').content=tr.desc;
+  var ld=JSON.parse($("ld").textContent);ld.name=tr.name;ld.description=tr.desc;ld.inLanguage=tr.htmlLang;$("ld").textContent=JSON.stringify(ld);
+  $("brandName").textContent=tr.name;$("homeLink").setAttribute("aria-label",tr.home);
+  $("gameTitle").textContent=tr.h1;$("lead").textContent=tr.lead;
+  $("howTitle").textContent=tr.howTitle;$("how1").textContent=tr.how1;$("how2").textContent=tr.how2;$("how3").textContent=tr.how3;
+  $("foot").textContent=tr.foot;$("supportText").textContent=tr.support;$("report").textContent=tr.report;
+  $("themeBtn").setAttribute("aria-label",tr.themeToggle);$("themeBtn").title=tr.themeToggle;
+  $("board").setAttribute("aria-label",tr.board);
+  document.querySelectorAll(".langs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.lang===state.lang?"true":"false")});
+  renderControls();
+  document.querySelectorAll(".col").forEach(function(col,i){col.setAttribute("aria-label",i===0?tr.romanian:tr.targets[state.target])});
+}
+function newGame(){
+  if(feedbackTimer){clearTimeout(feedbackTimer);feedbackTimer=null}
+  stopClock();moves=0;matchCount=0;startAt=0;elapsed=0;selected=null;bad=[];matched={};busy=false;over=false;
+  var pool=PAIRS.filter(function(e){return e.tema===state.tema});
+  left=shuffle(pool.slice()).slice(0,state.size);right=shuffle(left.slice());
+  buildBoard();renderControls();render();say(d().instruction);save();
+}
+function finish(){
+  over=true;stopClock();state.rounds[state.target]++;
+  if(!state.best[state.target]||moves<state.best[state.target])state.best[state.target]=moves;
+  save();say(d().win.replace("{moves}",moves),"good");render();
+}
+function choose(side,index){
+  if(busy||over)return;var entry=(side==="left"?left:right)[index];if(matched[entry.id])return;
+  startClock();
+  if(!selected){selected={side:side,index:index};render();return}
+  if(selected.side===side){selected={side:side,index:index};render();return}
+  var first=selected,second={side:side,index:index};selected=null;moves++;
+  var li=first.side==="left"?first.index:second.index,ri=first.side==="left"?second.index:first.index;
+  if(left[li].id===right[ri].id){
+    matched[left[li].id]=true;matchCount++;say(d().correct,"good");
+    if(matchCount===state.size)finish();else render();
+  }else{
+    bad=[key(first.side,first.index),key(second.side,second.index)];busy=true;say(d().wrong,"bad");render();
+    feedbackTimer=setTimeout(function(){feedbackTimer=null;bad=[];busy=false;selected=null;render()},480);
+  }
+}
+function setVisualTheme(value){document.documentElement.dataset.theme=value;try{localStorage.setItem(THEME_STORE,value)}catch(e){}document.querySelector('meta[name="theme-color"]').content=value==="dark"?"#0f172a":"#2563eb"}
+var initialTheme="light";try{initialTheme=localStorage.getItem(THEME_STORE)||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){}
+setVisualTheme(initialTheme);
+$("themeBtn").addEventListener("click",function(){setVisualTheme(document.documentElement.dataset.theme==="dark"?"light":"dark")});
+document.querySelectorAll(".langs button").forEach(function(b){b.addEventListener("click",function(){state.lang=b.dataset.lang;applyTexts();newGame();save()})});
+$("themeChip").addEventListener("click",function(){state.tema=cycle(state.tema,THEMES);newGame()});
+$("targetChip").addEventListener("click",function(){state.target=cycle(state.target,TARGETS);newGame()});
+$("sizeChip").addEventListener("click",function(){state.size=cycle(state.size,SIZES);newGame()});
+$("againBtn").addEventListener("click",newGame);
+applyTexts();newGame();
+if("serviceWorker" in navigator&&location.protocol!=="file:"){navigator.serviceWorker.register("../sw.js").catch(function(){})}
+})();
+</script>
+</body>
+</html>

@@ -36,8 +36,8 @@ def main():
 
     # 1. cate jocuri anunta hubul, cate carduri are
     carduri = len(re.findall(r'<a class="card" href="[^"]+/">', hub))
-    check(carduri == 8, "cardurile de pe hub: %d (textul spune opt)" % carduri)
-    check("Eight games" in hub, "hubul scrie explicit opt jocuri")
+    check(carduri == 9, "cardurile de pe hub: %d (textul spune noua)" % carduri)
+    check("Nine games" in hub, "hubul scrie explicit noua jocuri")
 
     # 2. guess-the-word: cate cuvinte are pe limba
     g = text("guess-the-word/index.html")
@@ -87,7 +87,13 @@ def main():
         check(("Ten rounds" in hub) == (runde.group(1) == "10"),
               "odd-one-out: %s runde in sursa" % runde.group(1))
 
-    # 6. jocurile nu promit offline fara service worker (vezi test_promisiuni.py)
+    # 6. translation-pairs: numarul de concepte explicite din harta
+    import json
+    traduceri = json.loads(text("tests/translations.json"))
+    check(("%d curated pairs" % len(traduceri)) in hub,
+          "hubul scrie numarul real de perechi de traduceri: %d" % len(traduceri))
+
+    # 7. jocurile nu promit offline fara service worker (vezi test_promisiuni.py)
     for p in sorted(ROOT.glob("*/index.html")):
         t = p.read_text(encoding="utf-8")
         if re.search(r"offline|f[ăa]r[ăa] internet", t, re.I) and "serviceWorker" not in t:

@@ -1,0 +1,28 @@
+[
+  {"id":"squirrel","tema":"animale","ro":"VEVERIȚĂ","en":"SQUIRREL","sr":"VEVERICA","src":"ВЕВЕРИЦА"},
+  {"id":"butterfly","tema":"animale","ro":"FLUTURE","en":"BUTTERFLY","sr":"LEPTIR","src":"ЛЕПТИР"},
+  {"id":"rabbit","tema":"animale","ro":"IEPURE","en":"RABBIT","sr":"ZEC","src":"ЗЕЦ"},
+  {"id":"tortoise","tema":"animale","ro":"ȚESTOASĂ","en":"TORTOISE","sr":"KORNJAČA","src":"КОРЊАЧА"},
+  {"id":"owl","tema":"animale","ro":"BUFNIȚĂ","en":"OWL","sr":"SOVA","src":"СОВА"},
+  {"id":"fox","tema":"animale","ro":"VULPE","en":"FOX","sr":"LISICA","src":"ЛИСИЦА"},
+  {"id":"dolphin","tema":"animale","ro":"DELFIN","en":"DOLPHIN","sr":"DELFIN","src":"ДЕЛФИН"},
+  {"id":"giraffe","tema":"animale","ro":"GIRAFĂ","en":"GIRAFFE","sr":"ŽIRAFA","src":"ЖИРАФА"},
+
+  {"id":"cheese","tema":"mancare","ro":"BRÂNZĂ","en":"CHEESE","sr":"SIR","src":"СИР"},
+  {"id":"honey","tema":"mancare","ro":"MIERE","en":"HONEY","sr":"MED","src":"МЕД"},
+  {"id":"salad","tema":"mancare","ro":"SALATĂ","en":"SALAD","sr":"SALATA","src":"САЛАТА"},
+  {"id":"soup","tema":"mancare","ro":"SUPĂ","en":"SOUP","sr":"SUPA","src":"СУПА"},
+  {"id":"pancakes","tema":"mancare","ro":"CLĂTITE","en":"PANCAKES","sr":"PALAČINKE","src":"ПАЛАЧИНКЕ"},
+  {"id":"sausage","tema":"mancare","ro":"CÂRNAT","en":"SAUSAGE","sr":"KOBASICA","src":"КОБАСИЦА"},
+  {"id":"bread","tema":"mancare","ro":"PÂINE","en":"BREAD","sr":"HLEB","src":"ХЛЕБ"},
+  {"id":"apple","tema":"mancare","ro":"MĂR","en":"APPLE","sr":"JABUKA","src":"ЈАБУКА"},
+
+  {"id":"castle","tema":"locuri","ro":"CASTEL","en":"CASTLE","sr":"TVRĐAVA","src":"ТВРЂАВА"},
+  {"id":"library","tema":"locuri","ro":"BIBLIOTECĂ","en":"LIBRARY","sr":"BIBLIOTEKA","src":"БИБЛИОТЕКА"},
+  {"id":"museum","tema":"locuri","ro":"MUZEU","en":"MUSEUM","sr":"MUZEJ","src":"МУЗЕЈ"},
+  {"id":"bridge","tema":"locuri","ro":"POD","en":"BRIDGE","sr":"MOST","src":"МОСТ"},
+  {"id":"garden","tema":"locuri","ro":"GRĂDINĂ","en":"GARDEN","sr":"BAŠTA","src":"БАШТА"},
+  {"id":"forest","tema":"locuri","ro":"PĂDURE","en":"FOREST","sr":"ŠUMA","src":"ШУМА"},
+  {"id":"station","tema":"locuri","ro":"GARĂ","en":"STATION","sr":"GARA","src":"ГАРА"},
+  {"id":"market","tema":"locuri","ro":"PIAȚĂ","en":"MARKET","sr":"PIJACA","src":"ПИЈАЦА"}
+]

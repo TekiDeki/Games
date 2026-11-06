@@ -42,6 +42,9 @@ def main():
         if not f.exists():
             continue
         text = f.read_text(encoding="utf-8")
+        if 'name="joc-date" content="traduceri"' in text:
+            print(f"  SARIT {rel}: are harta separata de traduceri")
+            continue
         start = text.find("var W = {")
         if start < 0:
             print(f"  SARIT {rel}: nu are bloc var W")

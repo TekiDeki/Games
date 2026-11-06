@@ -12,7 +12,7 @@
  *    inainte sa-l punem in cache;
  *  - o singura adresa lipsa nu are voie sa strice instalarea: fiecare intrare se descarca separat.
  */
-var VERSION = 'games-v3';
+var VERSION = 'games-v4';
 var CACHE = VERSION;
 var SHELL = [
   './',
@@ -20,6 +20,7 @@ var SHELL = [
   './guess-the-word/',
   './odd-one-out/',
   './typing-test/',
+  './translation-pairs/',
   './word-from-definition/',
   './word-of-the-day/',
   './word-pairs/',
